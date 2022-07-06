@@ -7,7 +7,7 @@ import { ClientService } from "src/app/services/client.service";
   templateUrl: "./client-add.component.html",
   styleUrls: ["./client-add.component.css"],
 })
-export class AddClientComponent implements OnInit {
+export class ClientAddComponent implements OnInit {
   client: Client = {
     name: "",
     address: "",
