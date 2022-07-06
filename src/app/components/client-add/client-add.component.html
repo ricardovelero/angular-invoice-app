@@ -1,1 +1,58 @@
-<p>client-add works!</p>
+<div>
+  <div class="submit-form">
+    <div *ngIf="!submitted">
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input
+          autofocus
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          [(ngModel)]="client.name"
+          name="title"
+        />
+      </div>
+      <div class="form-group">
+        <label for="address">Dirección</label>
+        <input
+          type="text"
+          class="form-control"
+          id="address"
+          required
+          [(ngModel)]="client.address"
+          name="address"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          required
+          [(ngModel)]="client.email"
+          name="email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="telephone">Teléfono</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="telephone"
+          required
+          [(ngModel)]="client.telephone"
+          name="telephone"
+        />
+      </div>
+      <button (click)="saveClient()" class="btn btn-success">Guardar</button>
+    </div>
+    <div *ngIf="submitted">
+      <h4>El cliente fue agregado correctamente.</h4>
+      <button class="btn btn-success" (click)="newClient()">
+        Agregar otro
+      </button>
+    </div>
+  </div>
+</div>
