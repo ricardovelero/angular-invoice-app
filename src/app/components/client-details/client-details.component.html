@@ -1,1 +1,87 @@
-<p>client-details works!</p>
+<div *ngIf="viewMode; else editable">
+  <div *ngIf="currentClient.id">
+    <h4>Ficha Cliente</h4>
+    <div>
+      <label><strong>Nombre:</strong></label> {{ currentClient.name }}
+    </div>
+    <div>
+      <label><strong>Dirección:</strong></label>
+      {{ currentClient.address }}
+    </div>
+    <div>
+      <label><strong>Teléfono:</strong></label>
+      {{ currentClient.telephone }}
+    </div>
+    <div>
+      <label><strong>Correo Electrónico:</strong></label>
+      {{ currentClient.email }}
+    </div>
+    <a class="badge badge-warning" routerLink="/clients/{{ currentClient.id }}">
+      Edit
+    </a>
+  </div>
+  <div *ngIf="!currentClient">
+    <br />
+    <p>Por favor selecciona un cliente de la lista...</p>
+  </div>
+</div>
+<ng-template #editable>
+  <div *ngIf="currentClient.id" class="edit-form">
+    <h4>Client</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          [(ngModel)]="currentClient.name"
+          name="name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Dirección</label>
+        <input
+          type="text"
+          class="form-control"
+          id="address"
+          [(ngModel)]="currentClient.address"
+          name="address"
+        />
+      </div>
+      <div class="form-group">
+        <label><strong>Estatus:</strong></label>
+        {{ currentClient.isactive ? "Activo" : "Inactivo" }}
+      </div>
+    </form>
+    <button
+      class="badge badge-primary mr-2"
+      *ngIf="currentClient.isactive"
+      (click)="updatePublished(false)"
+    >
+      Desactivar
+    </button>
+    <button
+      *ngIf="!currentClient.isactive"
+      class="badge badge-primary mr-2"
+      (click)="updatePublished(true)"
+    >
+      Activar
+    </button>
+    <button class="badge badge-danger mr-2" (click)="deleteClient()">
+      Borrar
+    </button>
+    <button
+      type="submit"
+      class="badge badge-success mb-2"
+      (click)="updateClient()"
+    >
+      Actualizar
+    </button>
+    <p>{{ message }}</p>
+  </div>
+  <div *ngIf="!currentClient.id">
+    <br />
+    <p>No se puede acceder a este cliente.</p>
+  </div>
+</ng-template>
