@@ -12,10 +12,15 @@ export class ClientDetailsComponent implements OnInit {
   @Input() viewMode = false;
   @Input() currentClient: Client = {
     name: "",
-    address: "",
-    telephone: "",
+    lastname: "",
     email: "",
-    isactive: false,
+    telephone: "",
+    businessemail: "",
+    businesstelephone: "",
+    creditlimit: 0,
+    nifnumber: "",
+    address: "",
+    isactive: true,
   };
 
   message = "";
@@ -41,7 +46,7 @@ export class ClientDetailsComponent implements OnInit {
       error: (e) => console.error(e),
     });
   }
-  updatePublished(status: boolean): void {
+  updateStatus(status: boolean): void {
     const data = {
       name: this.currentClient.name,
       address: this.currentClient.address,

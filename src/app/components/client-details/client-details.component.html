@@ -87,30 +87,14 @@
         {{ currentClient.isactive ? "Activo" : "Inactivo" }}
       </div>
     </form>
-    <button
-      class="badge badge-primary mr-2"
-      *ngIf="currentClient.isactive"
-      (click)="updatePublished(false)"
-    >
+    <button *ngIf="currentClient.isactive" (click)="updateStatus(false)">
       Desactivar
     </button>
-    <button
-      *ngIf="!currentClient.isactive"
-      class="badge badge-primary mr-2"
-      (click)="updatePublished(true)"
-    >
+    <button *ngIf="!currentClient.isactive" (click)="updateStatus(true)">
       Activar
     </button>
-    <button class="badge badge-danger mr-2" (click)="deleteClient()">
-      Borrar
-    </button>
-    <button
-      type="submit"
-      class="badge badge-success mb-2"
-      (click)="updateClient()"
-    >
-      Actualizar
-    </button>
+    <button (click)="deleteClient()">Borrar</button>
+    <button type="submit" (click)="updateClient()">Actualizar</button>
     <p>{{ message }}</p>
   </div>
   <div *ngIf="!currentClient.id">
