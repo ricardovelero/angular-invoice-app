@@ -10,6 +10,7 @@ import { ClientsListComponent } from "./components/clients-list/clients-list.com
 import { ClientAddComponent } from "./components/client-add/client-add.component";
 import { FooterComponent } from "./shared/footer/footer.component";
 import { HeaderComponent } from "./shared/header/header.component";
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HeaderComponent } from "./shared/header/header.component";
     ClientAddComponent,
     FooterComponent,
     HeaderComponent,
+    DashboardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
