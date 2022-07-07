@@ -14,14 +14,15 @@
         />
       </div>
       <div class="form-group">
-        <label for="address">Dirección</label>
+        <label for="name">Apellido</label>
         <input
+          autofocus
           type="text"
           class="form-control"
-          id="address"
+          id="name"
           required
-          [(ngModel)]="client.address"
-          name="address"
+          [(ngModel)]="client.lastname"
+          name="name"
         />
       </div>
       <div class="form-group">
@@ -44,6 +45,61 @@
           required
           [(ngModel)]="client.telephone"
           name="telephone"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">Correo Electrónico de Trabajo</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          required
+          [(ngModel)]="client.businessemail"
+          name="email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="telephone">Teléfono de Trabajo</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="telephone"
+          required
+          [(ngModel)]="client.businesstelephone"
+          name="telephone"
+        />
+      </div>
+      <div class="form-group">
+        <label for="telephone">NIF</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="telephone"
+          required
+          [(ngModel)]="client.nifnumber"
+          name="telephone"
+        />
+      </div>
+      <div class="form-group">
+        <label for="telephone">Limite de Credito</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="telephone"
+          required
+          [(ngModel)]="client.creditlimit"
+          name="telephone"
+        />
+      </div>
+      <div class="form-group">
+        <label for="address">Dirección</label>
+        <input
+          type="text"
+          class="form-control"
+          id="address"
+          required
+          [(ngModel)]="client.address"
+          name="address"
         />
       </div>
       <button (click)="saveClient()" class="btn btn-success">Guardar</button>

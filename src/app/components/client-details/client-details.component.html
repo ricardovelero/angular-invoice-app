@@ -2,28 +2,37 @@
   <div *ngIf="currentClient.id">
     <h4>Ficha Cliente</h4>
     <div>
-      <label><strong>Nombre:</strong></label> {{ currentClient.name }}
+      <label><strong>Nombre y Apellido:</strong></label>
+      {{ currentClient.name }} {{ currentClient.lastname }}
     </div>
     <div>
-      <label><strong>Dirección:</strong></label>
-      {{ currentClient.address }}
+      <label><strong>Correo Electronico:</strong></label>
+      {{ currentClient.email }}
     </div>
     <div>
       <label><strong>Teléfono:</strong></label>
       {{ currentClient.telephone }}
     </div>
     <div>
-      <label><strong>Correo Electrónico:</strong></label>
-      {{ currentClient.email }}
+      <label><strong>Correo Electrónico de Trabajo:</strong></label>
+      {{ currentClient.businessemail }}
+    </div>
+    <div>
+      <label><strong>Teléfono de Trabajo:</strong></label>
+      {{ currentClient.businesstelephone }}
+    </div>
+    <div>
+      <label><strong>Dirección:</strong></label>
+      {{ currentClient.address }}
     </div>
     <a class="badge badge-warning" routerLink="/clients/{{ currentClient.id }}">
-      Edit
+      Editar
     </a>
   </div>
-  <div *ngIf="!currentClient">
-    <br />
-    <p>Por favor selecciona un cliente de la lista...</p>
-  </div>
+</div>
+<div *ngIf="!currentClient">
+  <br />
+  <p>Por favor selecciona un cliente de la lista...</p>
 </div>
 <ng-template #editable>
   <div *ngIf="currentClient.id" class="edit-form">
@@ -31,26 +40,42 @@
     <form>
       <div class="form-group">
         <label for="title">Nombre</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          [(ngModel)]="currentClient.name"
-          name="name"
-        />
+        <input type="text" [(ngModel)]="currentClient.name" />
+      </div>
+      <div class="form-group">
+        <label for="description">Apellido</label>
+        <input type="text" [(ngModel)]="currentClient.lastname" />
+      </div>
+      <div class="form-group">
+        <label for="description">Correo Electrónico</label>
+        <input type="text" [(ngModel)]="currentClient.email" />
+      </div>
+      <div class="form-group">
+        <label for="description">Teléfono</label>
+        <input type="text" [(ngModel)]="currentClient.telephone" />
+      </div>
+      <div class="form-group">
+        <label for="description">Correo Electrónico de Trabajo</label>
+        <input type="text" [(ngModel)]="currentClient.businessemail" />
+      </div>
+      <div class="form-group">
+        <label for="description">Teléfono de Trabajo</label>
+        <input type="text" [(ngModel)]="currentClient.businesstelephone" />
+      </div>
+      <div class="form-group">
+        <label for="description">NIF</label>
+        <input type="text" [(ngModel)]="currentClient.nifnumber" />
+      </div>
+      <div class="form-group">
+        <label for="description">Límite de Crédito</label>
+        <input type="text" [(ngModel)]="currentClient.creditlimit" />
       </div>
       <div class="form-group">
         <label for="description">Dirección</label>
-        <input
-          type="text"
-          class="form-control"
-          id="address"
-          [(ngModel)]="currentClient.address"
-          name="address"
-        />
+        <input type="text" [(ngModel)]="currentClient.address" />
       </div>
       <div class="form-group">
-        <label><strong>Estatus:</strong></label>
+        <label><strong>Estado:</strong></label>
         {{ currentClient.isactive ? "Activo" : "Inactivo" }}
       </div>
     </form>
