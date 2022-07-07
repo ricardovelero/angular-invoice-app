@@ -24,9 +24,14 @@ export class ClientAddComponent implements OnInit {
   saveClient(): void {
     const data = {
       name: this.client.name,
-      address: this.client.address,
-      telephone: this.client.telephone,
+      lastname: this.client.lastname,
       email: this.client.email,
+      telephone: this.client.telephone,
+      bussinesstelephone: this.client.businesstelephone,
+      bussinessemail: this.client.businessemail,
+      nifnumber: this.client.nifnumber,
+      creditlimit: this.client.creditlimit,
+      address: this.client.address,
       isactive: (this.client.isactive = true),
     };
     this.clientService.create(data).subscribe({
