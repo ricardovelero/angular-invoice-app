@@ -54,9 +54,7 @@ export class ClientDetailsComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.currentClient.isactive = status;
-        this.message = res.message
-          ? res.message
-          : "The status was updated successfully!";
+        this.message = "El estado ha sido actualizado correctamente.";
       },
       error: (e) => console.error(e),
     });
@@ -68,9 +66,7 @@ export class ClientDetailsComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.message = res.message
-            ? res.message
-            : "This client was updated successfully!";
+          this.message = "Cliente actualizado con éxito";
         },
         error: (e) => console.error(e),
       });
