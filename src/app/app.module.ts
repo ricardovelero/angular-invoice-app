@@ -11,6 +11,7 @@ import { ClientsListComponent } from "./components/clients-list/clients-list.com
 import { ClientAddComponent } from "./components/client-add/client-add.component";
 import { FooterComponent } from "./shared/footer/footer.component";
 import { HeaderComponent } from "./shared/header/header.component";
+import { SidebarMenuComponent } from './shared/sidebar-menu/sidebar-menu.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HeaderComponent } from "./shared/header/header.component";
     ClientDetailsComponent,
     ClientsListComponent,
     ClientAddComponent,
+    SidebarMenuComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
