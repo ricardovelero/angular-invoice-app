@@ -11,7 +11,13 @@ import { ClientsListComponent } from "./components/clients-list/clients-list.com
 import { ClientAddComponent } from "./components/client-add/client-add.component";
 import { FooterComponent } from "./shared/footer/footer.component";
 import { HeaderComponent } from "./shared/header/header.component";
-import { SidebarMenuComponent } from './shared/sidebar-menu/sidebar-menu.component';
+import { SidebarMenuComponent } from "./shared/sidebar-menu/sidebar-menu.component";
+import { InvoicesListComponent } from "./components/invoices-list/invoices-list.component";
+import { InvoiceAddComponent } from "./components/invoice-add/invoice-add.component";
+import { InvoiceDetailsComponent } from "./components/invoice-details/invoice-details.component";
+import { ItemsListComponent } from "./components/items-list/items-list.component";
+import { ItemAddComponent } from "./components/item-add/item-add.component";
+import { ItemDetailsComponent } from "./components/item-details/item-details.component";
 
 @NgModule({
   declarations: [
@@ -23,6 +29,12 @@ import { SidebarMenuComponent } from './shared/sidebar-menu/sidebar-menu.compone
     ClientsListComponent,
     ClientAddComponent,
     SidebarMenuComponent,
+    InvoicesListComponent,
+    InvoiceAddComponent,
+    InvoiceDetailsComponent,
+    ItemsListComponent,
+    ItemAddComponent,
+    ItemDetailsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
