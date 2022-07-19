@@ -19,7 +19,7 @@ export class ClientsListComponent implements OnInit {
     this.retrieveClients();
   }
   retrieveClients(): void {
-    this.clientService.getAll().subscribe({
+    this.clientService.getAllClients().subscribe({
       next: (data) => {
         this.clients = data;
         console.log(data);
@@ -41,7 +41,7 @@ export class ClientsListComponent implements OnInit {
     this.currentIndex = index;
   }
   removeAllClients(): void {
-    this.clientService.deleteAll().subscribe({
+    this.clientService.deleteAllClients().subscribe({
       next: (res) => {
         console.log(res);
         this.refreshList();
@@ -49,13 +49,14 @@ export class ClientsListComponent implements OnInit {
       error: (e) => console.error(e),
     });
   }
-  searchName(): void {
+  searchName(name: string): void {
     this.currentClient = {};
     this.currentIndex = -1;
-    this.clientService.findByName(this.name).subscribe({
+    this.clientService.findClientByName(name).subscribe({
       next: (data) => {
         this.clients = data;
         console.log(data);
+        console.log("searchName");
       },
       error: (e) => console.error(e),
     });

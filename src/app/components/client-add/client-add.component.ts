@@ -10,10 +10,16 @@ import { ClientService } from "src/app/services/client.service";
 export class ClientAddComponent implements OnInit {
   client: Client = {
     name: "",
-    address: "",
-    telephone: "",
+    lastname: "",
     email: "",
+    telephone: "",
+    businesstelephone: "",
+    businessemail: "",
+    nifnumber: "",
+    creditlimit: 0,
+    address: "",
     isactive: false,
+    send_invoice_by: "",
   };
   submitted = false;
 
@@ -21,20 +27,21 @@ export class ClientAddComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  saveClient(): void {
+  addClient(): void {
     const data = {
       name: this.client.name,
       lastname: this.client.lastname,
       email: this.client.email,
       telephone: this.client.telephone,
-      bussinesstelephone: this.client.businesstelephone,
-      bussinessemail: this.client.businessemail,
+      businesstelephone: this.client.businesstelephone,
+      businessemail: this.client.businessemail,
       nifnumber: this.client.nifnumber,
       creditlimit: this.client.creditlimit,
       address: this.client.address,
       isactive: (this.client.isactive = true),
+      send_invoice_by: this.client.send_invoice_by,
     };
-    this.clientService.create(data).subscribe({
+    this.clientService.createClient(data).subscribe({
       next: (res) => {
         console.log(res);
         this.submitted = true;
