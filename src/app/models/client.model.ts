@@ -1,5 +1,5 @@
 export class Client {
-  id?: any;
+  id?: number;
   name?: string;
   lastname?: string;
   email?: string;
@@ -10,4 +10,5 @@ export class Client {
   creditlimit?: number;
   address?: string;
   isactive?: boolean;
+  send_invoice_by?: string;
 }

@@ -6,15 +6,18 @@
         class="form-control"
         placeholder="Buscar por Nombre"
         [(ngModel)]="name"
+        name="search"
+        (onchange)="searchName(name)"
       />
       <div class="input-group-append">
         <button
           class="btn btn-outline-secondary"
           type="button"
-          (click)="searchName()"
+          (click)="searchName(name)"
         >
           Buscar
         </button>
+        <p>{{ name }}</p>
       </div>
     </div>
   </div>
@@ -22,7 +25,6 @@
     <h4>Listado de Clientes</h4>
     <ul class="list-group">
       <li
-        class="list-group-item"
         *ngFor="let client of clients; let i = index"
         [class.active]="i == currentIndex"
         (click)="setActiveClient(client, i)"
@@ -30,9 +32,9 @@
         {{ client.name }}
       </li>
     </ul>
-    <button class="m-3 btn btn-sm btn-danger" (click)="removeAllClients()">
+    <!-- <button class="m-3 btn btn-sm btn-danger" (click)="removeAllClients()">
       Borrar todos los clientes
-    </button>
+    </button> -->
   </div>
   <div class="col-md-6">
     <app-client-details

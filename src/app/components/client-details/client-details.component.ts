@@ -10,18 +10,7 @@ import { ClientService } from "src/app/services/client.service";
 })
 export class ClientDetailsComponent implements OnInit {
   @Input() viewMode = false;
-  @Input() currentClient: Client = {
-    name: "",
-    lastname: "",
-    email: "",
-    telephone: "",
-    businessemail: "",
-    businesstelephone: "",
-    creditlimit: 0,
-    nifnumber: "",
-    address: "",
-    isactive: true,
-  };
+  @Input() currentClient: Client = {};
 
   message = "";
 
@@ -38,7 +27,7 @@ export class ClientDetailsComponent implements OnInit {
     }
   }
   getClient(id: string): void {
-    this.clientService.get(id).subscribe({
+    this.clientService.getClient(id).subscribe({
       next: (data) => {
         this.currentClient = data;
         console.log(data);
@@ -55,7 +44,7 @@ export class ClientDetailsComponent implements OnInit {
       isactive: status,
     };
     this.message = "";
-    this.clientService.update(this.currentClient.id, data).subscribe({
+    this.clientService.updateClient(this.currentClient.id, data).subscribe({
       next: (res) => {
         console.log(res);
         this.currentClient.isactive = status;
@@ -67,7 +56,7 @@ export class ClientDetailsComponent implements OnInit {
   updateClient(): void {
     this.message = "";
     this.clientService
-      .update(this.currentClient.id, this.currentClient)
+      .updateClient(this.currentClient.id, this.currentClient)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -77,7 +66,7 @@ export class ClientDetailsComponent implements OnInit {
       });
   }
   deleteClient(): void {
-    this.clientService.delete(this.currentClient.id).subscribe({
+    this.clientService.deleteClient(this.currentClient.id).subscribe({
       next: (res) => {
         console.log(res);
         this.router.navigate(["/clients"]);
