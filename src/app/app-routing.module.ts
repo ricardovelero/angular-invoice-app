@@ -8,6 +8,7 @@ import { InvoicesListComponent } from "./components/invoices-list/invoices-list.
 
 const routes: Routes = [
   { path: "", component: DashboardComponent },
+  { path: "home", component: DashboardComponent },
   { path: "invoices", component: InvoicesListComponent },
   { path: "invoice-add", component: InvoicesListComponent },
   { path: "clients", component: ClientsListComponent },
