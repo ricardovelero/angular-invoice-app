@@ -1,45 +1,172 @@
-<div class="list row">
-  <div class="col-md-8">
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Buscar por Nombre"
-        [(ngModel)]="name"
-        name="search"
-        (onchange)="searchName(name)"
-      />
-      <div class="input-group-append">
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          (click)="searchName(name)"
-        >
-          Buscar
-        </button>
-        <p>{{ name }}</p>
-      </div>
-    </div>
+<div class="mt-8 py-4">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
+      Listado de Clientes
+    </h2>
   </div>
-  <div class="col-md-6">
-    <h4>Listado de Clientes</h4>
-    <ul class="list-group">
+</div>
+<div class="bg-gray-100 py-8">
+  <div class="mx-auto sm:px-6">
+    <ul
+      role="list"
+      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+    >
       <li
+        class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200"
         *ngFor="let client of clients; let i = index"
         [class.active]="i == currentIndex"
-        (click)="setActiveClient(client, i)"
       >
-        {{ client.name }}
+        <div
+          class="w-full flex items-center justify-between p-6 space-x-6 cursor-pointer"
+          (click)="opencloseModal(); setActiveClient(client, i)"
+        >
+          <div class="flex-1 truncate">
+            <div class="flex items-center space-x-3">
+              <h3
+                class="text-gray-900 text-sm font-medium truncate hover:text-gray-500"
+              >
+                {{ client.name }} {{ client.lastname }}
+              </h3>
+              <span
+                class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full"
+                >Al día</span
+              >
+            </div>
+            <p class="mt-1 text-gray-500 text-sm truncate">Empresa</p>
+          </div>
+        </div>
+        <div>
+          <div class="-mt-px flex divide-x divide-gray-200">
+            <div class="w-0 flex-1 flex">
+              <a
+                href="mailto:janecooper@example.com"
+                class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+              >
+                <!-- Heroicon name: solid/mail -->
+                <svg
+                  class="w-5 h-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                  />
+                  <path
+                    d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                  />
+                </svg>
+                <span class="ml-3">Email</span>
+              </a>
+            </div>
+            <div class="-ml-px w-0 flex-1 flex">
+              <a
+                href="tel:+1-202-555-0170"
+                class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
+              >
+                <!-- Heroicon name: solid/phone -->
+                <svg
+                  class="w-5 h-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                <span class="ml-3">Facturar</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </li>
     </ul>
-    <!-- <button class="m-3 btn btn-sm btn-danger" (click)="removeAllClients()">
-      Borrar todos los clientes
-    </button> -->
   </div>
-  <div class="col-md-6">
-    <app-client-details
-      [viewMode]="true"
-      [currentClient]="currentClient"
-    ></app-client-details>
+</div>
+<div
+  class="relative z-10"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+  [ngClass]="{
+    'ease-in duration-500 opacity-0 -z-20': !modalToggle,
+    'z-10': modalToggle
+  }"
+>
+  <!--
+    Background backdrop, show/hide based on modal state.
+
+    Entering: "ease-out duration-300"
+      From: "opacity-0"
+      To: "opacity-100"
+    Leaving: "ease-in duration-200"
+      From: "opacity-100"
+      To: "opacity-0"
+  -->
+  <div
+    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    [ngClass]="{
+      'ease-in duration-200 opacity-0': !modalToggle,
+      'ease-out duration-300 opacity-100': modalToggle
+    }"
+  ></div>
+  <div class="fixed z-10 inset-0 overflow-y-auto">
+    <div
+      class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0"
+    >
+      <!--
+      Modal panel, show/hide based on modal state.
+
+      Entering: "ease-out duration-300"
+        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        To: "opacity-100 translate-y-0 sm:scale-100"
+      Leaving: "ease-in duration-200"
+        From: "opacity-100 translate-y-0 sm:scale-100"
+        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    -->
+      <div
+        [ngClass]="{
+          'transition ease-in duration-75 transform opacity-0 scale-95':
+            !modalToggle,
+          'transition ease-out duration-100 transform opacity-100 scale-100':
+            modalToggle
+        }"
+        class="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-3xl sm:w-full sm:p-6"
+      >
+        <div>
+          <div class="mt-3 text-center sm:mt-5">
+            <app-client-details
+              [viewMode]="true"
+              [currentClient]="currentClient"
+            ></app-client-details>
+          </div>
+        </div>
+        <div
+          class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense"
+        >
+          <a
+            routerLink="{{ currentClient.id }}"
+            type="button"
+            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm"
+          >
+            Editar
+          </a>
+          <button
+            (click)="opencloseModal()"
+            type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+          >
+            Volver
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

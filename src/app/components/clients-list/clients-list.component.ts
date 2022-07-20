@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Client } from "../../models/client.model";
 import { ClientService } from "../../services/client.service";
 
@@ -8,6 +8,8 @@ import { ClientService } from "../../services/client.service";
   styleUrls: ["./clients-list.component.css"],
 })
 export class ClientsListComponent implements OnInit {
+  @Input() viewMode = false;
+  modalToggle: boolean = false;
   clients?: Client[];
   currentClient: Client = {};
   currentIndex = -1;
@@ -31,6 +33,14 @@ export class ClientsListComponent implements OnInit {
     this.retrieveClients();
     this.currentClient = {};
     this.currentIndex = -1;
+  }
+  opencloseModal() {
+    if (!this.modalToggle) {
+      this.modalToggle = !this.modalToggle;
+    } else {
+      this.modalToggle = !this.modalToggle;
+    }
+    return this.modalToggle;
   }
   setActiveClient(client: Client, index: number): void {
     this.currentClient = client;
