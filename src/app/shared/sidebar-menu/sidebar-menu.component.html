@@ -10,7 +10,13 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-  <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
+  <div
+    class="fixed inset-0 bg-gray-600 bg-opacity-75"
+    [ngClass]="{
+      'transition-opacity ease-linear duration-300 opacity-0': !menuToggle,
+      'transition-opacity ease-linear duration-300 opacity-100': menuToggle
+    }"
+  ></div>
 
   <div class="fixed inset-0 flex z-40">
     <!--
@@ -25,6 +31,12 @@
         -->
     <div
       class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-cyan-700"
+      [ngClass]="{
+        'transition ease-in-out duration-100 transform -translate-x-full':
+          !menuToggle,
+        'transition ease-in-out duration-300 transform -translate-x-0':
+          menuToggle
+      }"
     >
       <!--
             Close button, show/hide based on off-canvas menu state.
@@ -36,10 +48,17 @@
               From: "opacity-100"
               To: "opacity-0"
           -->
-      <div class="absolute top-0 right-0 -mr-12 pt-2">
+      <div
+        class="absolute top-0 right-0 -mr-12 pt-2"
+        [ngClass]="{
+          'ease-in-out duration-300 opacity-0': !menuToggle,
+          'ease-in-out duration-300 opacity-100': menuToggle
+        }"
+      >
         <button
           type="button"
           class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          (click)="opencloseMenu()"
         >
           <span class="sr-only">Close sidebar</span>
           <!-- Heroicon name: outline/x -->
