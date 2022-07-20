@@ -12,7 +12,8 @@ export class ClientDetailsComponent implements OnInit {
   @Input() viewMode = false;
   @Input() currentClient: Client = {};
 
-  message = "";
+  message: string = "";
+  toggle: boolean = false;
 
   constructor(
     private clientService: ClientService,
@@ -73,5 +74,13 @@ export class ClientDetailsComponent implements OnInit {
       },
       error: (e) => console.error(e),
     });
+  }
+  openCloseMessage() {
+    if (!this.toggle) {
+      this.toggle = !this.toggle;
+    } else {
+      this.toggle = !this.toggle;
+    }
+    return this.toggle;
   }
 }

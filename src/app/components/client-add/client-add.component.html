@@ -1,114 +1,162 @@
-<div>
-  <div class="submit-form">
-    <div *ngIf="!submitted">
-      <div class="form-group">
-        <label for="name">Nombre</label>
-        <input
-          autofocus
-          type="text"
-          class="form-control"
-          id="name"
-          required
-          [(ngModel)]="client.name"
-          name="name"
-        />
-      </div>
-      <div class="form-group">
-        <label for="name">Apellido</label>
-        <input
-          autofocus
-          type="text"
-          class="form-control"
-          id="name"
-          required
-          [(ngModel)]="client.lastname"
-          name="name"
-        />
-      </div>
-      <div class="form-group">
-        <label for="email">Correo Electrónico</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          required
-          [(ngModel)]="client.email"
-          name="email"
-        />
-      </div>
-      <div class="form-group">
-        <label for="telephone">Teléfono</label>
-        <input
-          type="tel"
-          class="form-control"
-          id="telephone"
-          required
-          [(ngModel)]="client.telephone"
-          name="telephone"
-        />
-      </div>
-      <div class="form-group">
-        <label for="email">Correo Electrónico de Trabajo</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          required
-          [(ngModel)]="client.businessemail"
-          name="email"
-        />
-      </div>
-      <div class="form-group">
-        <label for="telephone">Teléfono de Trabajo</label>
-        <input
-          type="tel"
-          class="form-control"
-          id="telephone"
-          required
-          [(ngModel)]="client.businesstelephone"
-          name="telephone"
-        />
-      </div>
-      <div class="form-group">
-        <label for="telephone">NIF</label>
-        <input
-          type="tel"
-          class="form-control"
-          id="telephone"
-          required
-          [(ngModel)]="client.nifnumber"
-          name="telephone"
-        />
-      </div>
-      <div class="form-group">
-        <label for="telephone">Limite de Credito</label>
-        <input
-          type="tel"
-          class="form-control"
-          id="telephone"
-          required
-          [(ngModel)]="client.creditlimit"
-          name="telephone"
-        />
-      </div>
-      <div class="form-group">
-        <label for="address">Dirección</label>
-        <input
-          type="text"
-          class="form-control"
-          id="address"
-          required
-          [(ngModel)]="client.address"
-          name="address"
-        />
-      </div>
-      <button (click)="addClient()" class="btn btn-success">Guardar</button>
+<div *ngIf="!submitted">
+  <div class="mt-8 py-4">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="text-center text-xl leading-6 font-medium text-gray-900">
+        Nuevo Cliente
+      </h3>
     </div>
-    <div *ngIf="submitted">
-      <h4>El cliente fue agregado correctamente.</h4>
-      <button class="btn btn-success" (click)="newClient()">
-        Agregar otro
-      </button>
+  </div>
+  <div class="bg-gray-100 py-8">
+    <div class="max-w-2xl mx-auto sm:px-6">
+      <form class="space-y-8">
+        <div class="form-group">
+          <label for="names" class="block text-sm font-medium text-gray-700"
+            >Nombre</label
+          >
+          <input
+            type="text"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.name"
+            #ctrl="ngModel"
+            name="names"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastname" class="block text-sm font-medium text-gray-700"
+            >Apellidos</label
+          >
+          <input
+            type="text"
+            name="lastname"
+            id="lastname"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.lastname"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email" class="block text-sm font-medium text-gray-700"
+            >Correo Electrónico</label
+          >
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            placeholder="you@example.com"
+            [(ngModel)]="client.email"
+            name="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="telephone" class="block text-sm font-medium text-gray-700"
+            >Teléfono</label
+          >
+          <input
+            type="text"
+            name="telephone"
+            id="telephone"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.telephone"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email" class="block text-sm font-medium text-gray-700"
+            >Correo Electrónico de Trabajo</label
+          >
+          <input
+            type="email"
+            name="businessemail"
+            id="businessemail"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            placeholder="you@example.com"
+            [(ngModel)]="client.businessemail"
+          />
+        </div>
+        <div class="form-group">
+          <label
+            for="businessphone"
+            class="block text-sm font-medium text-gray-700"
+            >Teléfono de Trabajo</label
+          >
+          <input
+            type="text"
+            name="businessphone"
+            id="businessphone"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.businesstelephone"
+          />
+        </div>
+        <div class="form-group">
+          <label for="nifnumber" class="block text-sm font-medium text-gray-700"
+            >NIF</label
+          >
+          <input
+            type="text"
+            name="nifnumber"
+            id="nifnumber"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.nifnumber"
+          />
+        </div>
+        <div class="form-group">
+          <label
+            for="creditlimit"
+            class="block text-sm font-medium text-gray-700"
+            >Límite de Crédito</label
+          >
+          <input
+            type="text"
+            name="creditlimit"
+            id="creditlimit"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.creditlimit"
+          />
+        </div>
+        <div class="form-group">
+          <label for="address" class="block text-sm font-medium text-gray-700"
+            >Dirección</label
+          >
+          <input
+            type="text"
+            name="address"
+            id="address"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.address"
+          />
+        </div>
+      </form>
     </div>
+  </div>
+  <div
+    class="max-w-2xl mx-auto space-y-4 flex flex-col items-center justify-start sm:space-y-0 sm:flex-row sm:items-end sm:justify-around"
+  >
+    <button
+      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      type="submit"
+      (click)="addClient()"
+    >
+      Agregar
+    </button>
+  </div>
+</div>
+<div *ngIf="submitted">
+  <div class="mt-8 py-4">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="text-center text-xl leading-6 font-medium text-gray-900">
+        Cliente agregado correctamente.
+      </h3>
+    </div>
+  </div>
+  <div
+    class="max-w-2xl mx-auto space-y-4 flex flex-col items-center justify-start sm:space-y-0 sm:flex-row sm:items-end sm:justify-around"
+  >
+    <button
+      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      type="submit"
+      (click)="newClient()"
+    >
+      Agregar Otro
+    </button>
   </div>
 </div>
