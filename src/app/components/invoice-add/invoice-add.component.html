@@ -1,1 +1,346 @@
-<p>invoice-add works!</p>
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto">
+    <h1
+      class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 text-center"
+    >
+      Nueva Factura
+    </h1>
+    <p class="mt-1 text-sm text-gray-500 text-center">
+      Completa toda la información para crear una nueva Factura.
+    </p>
+    <form class="space-y-8 divide-y divide-gray-200" method="POST">
+      <div class="space-y-8 divide-y divide-gray-200">
+        <div class="pt-8">
+          <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+            <div class="sm:col-span-3">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                for="clientId"
+              >
+                Cliente
+              </label>
+              <div class="mt-1">
+                <select
+                  class="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  id="country"
+                  name="clientId"
+                  autocomplete="client-name"
+                >
+                  <option value="2">Ricardo Antonio</option>
+                  <option value="3">Vanessa Elizabeth</option>
+                  <option value="4">Benjamin</option>
+                  <option value="5">Julio</option>
+                </select>
+              </div>
+            </div>
+            <div class="sm:col-span-3">
+              <div class="mt-4 sm:mt-5 sm:ml-16">
+                <button
+                  class="float-right inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                  type="button"
+                >
+                  Nuevo Cliente
+                </button>
+              </div>
+            </div>
+            <div class="sm:col-span-3">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                for="invoice_date"
+              >
+                Fecha</label
+              >
+              <div class="mt-1">
+                <input
+                  class="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  id="last-name"
+                  type="date"
+                  name="invoice_date"
+                  autocomplete="invoice_date"
+                />
+              </div>
+            </div>
+            <div class="sm:col-span-3">
+              <label
+                class="block text-sm font-medium text-gray-700"
+                for="due-date"
+              >
+                Fecha Vencimiento
+              </label>
+              <div class="mt-1">
+                <input
+                  class="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  id="email"
+                  name="due-date"
+                  type="date"
+                  autocomplete="due-date"
+                />
+              </div>
+            </div>
+            <div class="sm:col-span-3">
+              <div class="mt-1">
+                <div class="flex items-center">
+                  <input
+                    class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                    id="recurrent"
+                    name="is_recurrent"
+                    type="checkbox"
+                  /><label
+                    class="ml-3 block text-sm font-medium text-gray-700"
+                    for="is_recurrent"
+                    >¿Es Recurrente?</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pt-8">
+          <!-- This example requires Tailwind CSS v2.0+-->
+          <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+              <h1 class="text-xl font-semibold text-gray-900">Ítems</h1>
+              <p class="mt-2 text-sm text-gray-700">
+                Puedes agregar un ítem pinchando en el botón sin perder los
+                datos de la factura.
+              </p>
+            </div>
+            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <button
+                class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                type="button"
+              >
+                Nuevo ítem
+              </button>
+            </div>
+          </div>
+          <div class="mt-8 flex flex-col">
+            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div
+                class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+              >
+                <div
+                  class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+                >
+                  <table class="min-w-full divide-y divide-gray-300">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th
+                          class="px-3 text-left text-sm font-semibold text-gray-900"
+                          scope="col"
+                        >
+                          <span class="sr-only">Eliminar</span>
+                        </th>
+                        <th
+                          class="px-3 text-left text-sm font-semibold text-gray-900 py-3.5 sm:pl-6"
+                          scope="col"
+                        >
+                          Ítem
+                        </th>
+                        <th
+                          class="px-3 text-left text-sm font-semibold text-gray-900 py-3.5"
+                          scope="col"
+                        >
+                          Cantidad
+                        </th>
+                        <th
+                          class="px-3 text-left text-sm font-semibold text-gray-900 py-3.5"
+                          scope="col"
+                        >
+                          Costo
+                        </th>
+                        <th
+                          class="px-3 text-left text-sm font-semibold text-gray-900 py-3.5"
+                          scope="col"
+                        >
+                          Impuesto
+                        </th>
+                        <th
+                          class="px-3 text-left text-sm font-semibold text-gray-900 py-3.5"
+                          scope="col"
+                        >
+                          Precio
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                      <tr>
+                        <td
+                          class="whitespace-nowrap pl-3 py-1 text-sm text-gray-500"
+                        >
+                          <a
+                            class="text-indigo-600 hover:text-indigo-900"
+                            href="#"
+                            ><svg
+                              class="h-6 w-6"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="2"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              ></path>
+                            </svg>
+                          </a>
+                        </td>
+                        <td
+                          class="whitespace-nowrap pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                        >
+                          Programación JS
+                        </td>
+                        <td
+                          class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        ></td>
+                        <td
+                          class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        >
+                          100
+                        </td>
+                        <td
+                          class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        >
+                          1
+                        </td>
+                        <td
+                          class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        >
+                          xxx
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot class="bg-white">
+                      <tr>
+                        <th
+                          scope="row"
+                          colspan="5"
+                          class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell"
+                        >
+                          Subtotal
+                        </th>
+                        <th
+                          scope="row"
+                          class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
+                        >
+                          Subtotal
+                        </th>
+                        <td
+                          class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6"
+                        >
+                          $3,900.00
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          colspan="5"
+                          class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell"
+                        >
+                          Descuento
+                        </th>
+                        <th
+                          scope="row"
+                          class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
+                        >
+                          Descuento
+                        </th>
+                        <td
+                          class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6"
+                        >
+                          $390
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          colspan="5"
+                          class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell"
+                        >
+                          Impuestos
+                        </th>
+                        <th
+                          scope="row"
+                          class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
+                        >
+                          Impuestos
+                        </th>
+                        <td
+                          class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6"
+                        >
+                          $585.00
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          colspan="5"
+                          class="hidden pl-6 pr-3 py-4 text-right text-sm font-semibold text-gray-900 sm:table-cell"
+                        >
+                          Total
+                        </th>
+                        <th
+                          scope="row"
+                          class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden"
+                        >
+                          Total
+                        </th>
+                        <td
+                          class="pl-3 pr-4 pt-4 py-4 text-right text-sm font-semibold text-gray-900 sm:pr-6"
+                        >
+                          $4,485.00
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pt-8">
+          <div class="sm:col-span-6">
+            <label
+              class="block text-sm font-medium text-gray-700"
+              for="invoice_notes"
+            >
+              Notas
+              <div class="mt-1">
+                <textarea
+                  class="shadow-sm block w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  id="about"
+                  name="invoice_notes"
+                  rows="3"
+                ></textarea>
+                <p class="mt-2 text-sm text-gray-500">
+                  Condiciones de venta o alguna observación.
+                </p>
+              </div></label
+            >
+          </div>
+        </div>
+      </div>
+      <div class="pt-5">
+        <div class="flex justify-end">
+          <a routerLink="invoices"
+            ><button
+              class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              type="button"
+            >
+              Cancelar
+            </button></a
+          ><a href="/invoice/add"
+            ><button
+              class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              type="submit"
+            >
+              Crear
+            </button></a
+          >
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
