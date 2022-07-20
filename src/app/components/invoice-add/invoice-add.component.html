@@ -26,10 +26,9 @@
                   name="clientId"
                   autocomplete="client-name"
                 >
-                  <option value="2">Ricardo Antonio</option>
-                  <option value="3">Vanessa Elizabeth</option>
-                  <option value="4">Benjamin</option>
-                  <option value="5">Julio</option>
+                  <option *ngFor="let client of clients" [value]="client.id">
+                    {{ client.name }}
+                  </option>
                 </select>
               </div>
             </div>
