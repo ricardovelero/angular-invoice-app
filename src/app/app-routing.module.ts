@@ -5,6 +5,7 @@ import { ClientDetailsComponent } from "./components/client-details/client-detai
 import { ClientsListComponent } from "./components/clients-list/clients-list.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { InvoiceAddComponent } from "./components/invoice-add/invoice-add.component";
+import { InvoiceDetailsComponent } from "./components/invoice-details/invoice-details.component";
 import { InvoicesListComponent } from "./components/invoices-list/invoices-list.component";
 import { ItemAddComponent } from "./components/item-add/item-add.component";
 import { ItemDetailsComponent } from "./components/item-details/item-details.component";
@@ -14,8 +15,8 @@ const routes: Routes = [
   { path: "", component: DashboardComponent },
   { path: "home", component: DashboardComponent },
   { path: "invoices", component: InvoicesListComponent },
-  { path: "invoice-add", component: InvoicesListComponent },
-  { path: "invoices/:id", component: InvoiceAddComponent },
+  { path: "invoice-add", component: InvoiceAddComponent },
+  { path: "invoices/:id", component: InvoiceDetailsComponent },
   { path: "clients", component: ClientsListComponent },
   { path: "clients/:id", component: ClientDetailsComponent },
   { path: "client-add", component: ClientAddComponent },
