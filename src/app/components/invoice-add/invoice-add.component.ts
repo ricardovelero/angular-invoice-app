@@ -8,6 +8,7 @@ import { ClientService } from "../../services/client.service";
   styleUrls: ["./invoice-add.component.css"],
 })
 export class InvoiceAddComponent implements OnInit {
+  modalToggle: boolean = false;
   clients?: Client[];
 
   constructor(private clientService: ClientService) {}
@@ -15,7 +16,14 @@ export class InvoiceAddComponent implements OnInit {
   ngOnInit(): void {
     this.retrieveClients();
   }
-
+  opencloseModal() {
+    if (!this.modalToggle) {
+      this.modalToggle = !this.modalToggle;
+    } else {
+      this.modalToggle = !this.modalToggle;
+    }
+    return this.modalToggle;
+  }
   retrieveClients(): void {
     this.clientService.getAllClients().subscribe({
       next: (data) => {
