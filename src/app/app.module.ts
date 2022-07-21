@@ -1,9 +1,12 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+
+import { AutoCompleteModule } from "primeng/autocomplete";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { ClientDetailsComponent } from "./components/client-details/client-details.component";
@@ -36,7 +39,15 @@ import { ItemDetailsComponent } from "./components/item-details/item-details.com
     ItemAddComponent,
     ItemDetailsComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    AutoCompleteModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
