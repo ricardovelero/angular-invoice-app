@@ -7,6 +7,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 import { AutoCompleteModule } from "primeng/autocomplete";
+import { RippleModule } from "primeng/ripple";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { ClientDetailsComponent } from "./components/client-details/client-details.component";
@@ -47,6 +48,7 @@ import { ItemDetailsComponent } from "./components/item-details/item-details.com
     BrowserModule,
     BrowserAnimationsModule,
     AutoCompleteModule,
+    RippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
