@@ -736,6 +736,10 @@ select {
   pointer-events: none;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .fixed {
   position: fixed;
 }
@@ -883,6 +887,10 @@ select {
   margin-top: 1.5rem;
 }
 
+.mr-4 {
+  margin-right: 1rem;
+}
+
 .ml-4 {
   margin-left: 1rem;
 }
@@ -901,10 +909,6 @@ select {
 
 .-mr-12 {
   margin-right: -3rem;
-}
-
-.mr-4 {
-  margin-right: 1rem;
 }
 
 .block {
@@ -985,6 +989,10 @@ select {
 
 .w-4 {
   width: 1rem;
+}
+
+.w-1\/4 {
+  width: 25%;
 }
 
 .w-8 {
@@ -1391,10 +1399,6 @@ select {
 
 .p-5 {
   padding: 1.25rem;
-}
-
-.p-2 {
-  padding: 0.5rem;
 }
 
 .py-4 {

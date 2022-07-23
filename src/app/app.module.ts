@@ -6,9 +6,6 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
-import { AutoCompleteModule } from "primeng/autocomplete";
-import { RippleModule } from "primeng/ripple";
-
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { ClientDetailsComponent } from "./components/client-details/client-details.component";
 import { ClientsListComponent } from "./components/clients-list/clients-list.component";
@@ -22,6 +19,29 @@ import { InvoiceDetailsComponent } from "./components/invoice-details/invoice-de
 import { ItemsListComponent } from "./components/items-list/items-list.component";
 import { ItemAddComponent } from "./components/item-add/item-add.component";
 import { ItemDetailsComponent } from "./components/item-details/item-details.component";
+
+import { AutoCompleteModule } from "primeng/autocomplete";
+import { RippleModule } from "primeng/ripple";
+import { TableModule } from "primeng/table";
+import { ToastModule } from "primeng/toast";
+import { CalendarModule } from "primeng/calendar";
+import { SliderModule } from "primeng/slider";
+import { MultiSelectModule } from "primeng/multiselect";
+import { ContextMenuModule } from "primeng/contextmenu";
+import { DialogModule } from "primeng/dialog";
+import { ButtonModule } from "primeng/button";
+import { DropdownModule } from "primeng/dropdown";
+import { ProgressBarModule } from "primeng/progressbar";
+import { InputTextModule } from "primeng/inputtext";
+import { ToolbarModule } from "primeng/toolbar";
+import { RadioButtonModule } from "primeng/radiobutton";
+import { InputNumberModule } from "primeng/inputnumber";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { ConfirmationService } from "primeng/api";
+import { MessageService } from "primeng/api";
+import { InputTextareaModule } from "primeng/inputtextarea";
+import { ItemService } from "./services/item.service";
+import { ClientService } from "./services/client.service";
 
 @NgModule({
   declarations: [
@@ -49,8 +69,24 @@ import { ItemDetailsComponent } from "./components/item-details/item-details.com
     BrowserAnimationsModule,
     AutoCompleteModule,
     RippleModule,
+    TableModule,
+    ToastModule,
+    CalendarModule,
+    ToolbarModule,
+    ConfirmDialogModule,
+    ButtonModule,
+    DialogModule,
+    MultiSelectModule,
+    InputNumberModule,
+    InputTextModule,
+    InputTextareaModule,
+    RadioButtonModule,
+    DropdownModule,
+    ContextMenuModule,
+    SliderModule,
+    ProgressBarModule,
   ],
-  providers: [],
+  providers: [ItemService, ClientService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
