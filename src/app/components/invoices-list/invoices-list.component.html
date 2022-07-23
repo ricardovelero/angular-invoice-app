@@ -1,33 +1,209 @@
+<p-toast></p-toast>
 <div class="mt-8 py-4">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
-      Listado de Facturas
+      Facturas
     </h2>
   </div>
 </div>
 <div class="bg-gray-100 py-8">
-  <div class="max-w-2xl mx-auto sm:px-6">
-    <ul role="list" class="space-y-3">
-      <li
-        class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md"
-      >
-        Factura Factura Factura Factura Factura Factura Factura Factura Factura
-        Factura Factura Factura Factura Factura Factura Factura
-      </li>
-      <li
-        class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md"
-      >
-        Factura Factura Factura Factura Factura Factura Factura Factura
-      </li>
-      <li
-        class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md"
-      >
-        Factura Factura Factura Factura Factura Factura Factura Factura Factura
-        Factura Factura Factura Factura Factura Factura Factura Factura Factura
-        Factura Factura Factura Factura Factura Factura Factura Factura Factura
-        Factura Factura Factura Factura Factura
-      </li>
-      <!-- More items... -->
-    </ul>
+  <div class="mx-auto sm:px-6">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="right">
+        <button
+          pButton
+          pRipple
+          label="Nuevo"
+          icon="pi pi-plus"
+          class="p-button-help mr-4"
+          (click)="openNew()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedInvoices()"
+          [disabled]="!selectedInvoices || !selectedInvoices.length"
+        ></button>
+      </ng-template>
+
+      <ng-template pTemplate="left"> </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="invoices"
+      [rows]="10"
+      [paginator]="true"
+      [globalFilterFields]="['invoice_name', 'invoice_description']"
+      [(selection)]="selectedInvoices"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} facturas"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilterGlobal($event, 'contains')"
+              placeholder="Buscar..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="invoice_name">
+            Nombre <p-sortIcon field="invoice_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="invoice_description">
+            Descripción <p-sortIcon field="invoice_description"></p-sortIcon>
+          </th>
+          <th pSortableColumn="unit_cost">
+            Precio <p-sortIcon field="unit_cost"></p-sortIcon>
+          </th>
+          <th pSortableColumn="quantity">
+            Cantidad <p-sortIcon field="quantity"></p-sortIcon>
+          </th>
+          <th pSortableColumn="actual_price">
+            Costo <p-sortIcon field="actual_price"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tax1">
+            Impuesto <p-sortIcon field="tax1"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-invoice>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="invoice"></p-tableCheckbox>
+          </td>
+          <td>{{ invoice.invoice_name }}</td>
+          <td>{{ invoice.invoice_description }}</td>
+          <td>{{ invoice.unit_cost | currency: "EUR" }}</td>
+          <td>{{ invoice.quantity }}</td>
+          <td>{{ invoice.actual_price | currency: "EUR" }}</td>
+          <td>{{ invoice.tax1 }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success p-mr-2"
+              (click)="editInvoice(invoice)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="eraseInvoice(invoice)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          En total hay {{ invoices ? invoices.length : 0 }} facturas.
+        </div>
+      </ng-template>
+    </p-table>
   </div>
 </div>
+
+<p-dialog
+  [(visible)]="invoiceDialog"
+  header="Datos del factura"
+  [modal]="true"
+  styleClass="p-fluid w-1/4"
+>
+  <ng-template pTemplate="content">
+    <div class="p-field mt-4">
+      <label for="name">Nombre</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="invoice.invoice_name"
+        required
+        autofocus
+      />
+      <small class="p-invalid" *ngIf="submitted && !invoice.invoice_name"
+        >Nombre es requerido.</small
+      >
+    </div>
+    <div class="p-field mt-4">
+      <label for="description">Descripción</label>
+      <textarea
+        id="description"
+        pInputTextarea
+        [(ngModel)]="invoice.invoice_description"
+        required
+        rows="3"
+        cols="20"
+      ></textarea>
+    </div>
+    <div class="p-formgrid p-grid">
+      <div class="p-field mt-4">
+        <label for="price">Costo Unitario</label>
+        <p-inputNumber
+          id="unit_cost"
+          [(ngModel)]="invoice.unit_cost"
+          mode="currency"
+          currency="EUR"
+          locale="es-ES"
+        ></p-inputNumber>
+      </div>
+      <div class="p-field mt-4">
+        <label for="quantity">Cantidad</label>
+        <p-inputNumber
+          id="quantity"
+          [(ngModel)]="invoice.quantity"
+        ></p-inputNumber>
+      </div>
+      <div class="p-field mt-4">
+        <label for="quantity">Precio</label>
+        <p-inputNumber
+          id="actual_price"
+          [(ngModel)]="invoice.actual_price"
+          mode="currency"
+          currency="EUR"
+          locale="es-ES"
+        ></p-inputNumber>
+      </div>
+      <div class="p-field mt-4">
+        <label for="tax1">Impuesto</label>
+        <p-inputNumber id="tax1" [(ngModel)]="invoice.tax1"></p-inputNumber>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveInvoice()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
