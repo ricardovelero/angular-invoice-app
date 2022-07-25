@@ -2,13 +2,13 @@
 <div class="mt-8 py-4">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
-      Facturas
+      Listado Facturas
     </h2>
   </div>
 </div>
 <div class="bg-gray-100 py-8">
   <div class="mx-auto sm:px-6">
-    <p-toolbar styleClass="p-mb-4">
+    <!-- <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="right">
         <button
           pButton
@@ -29,7 +29,7 @@
       </ng-template>
 
       <ng-template pTemplate="left"> </ng-template>
-    </p-toolbar>
+    </p-toolbar> -->
 
     <p-table
       #dt
@@ -61,23 +61,23 @@
           <th style="width: 3rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th pSortableColumn="invoice_name">
-            Nombre <p-sortIcon field="invoice_name"></p-sortIcon>
+          <th pSortableColumn="clientId">
+            Cliente <p-sortIcon field="clientId"></p-sortIcon>
           </th>
-          <th pSortableColumn="invoice_description">
-            Descripción <p-sortIcon field="invoice_description"></p-sortIcon>
+          <th pSortableColumn="invoice_date">
+            Fecha emisión <p-sortIcon field="invoice_date"></p-sortIcon>
           </th>
-          <th pSortableColumn="unit_cost">
-            Precio <p-sortIcon field="unit_cost"></p-sortIcon>
+          <th pSortableColumn="due_date">
+            Fecha vencimiento <p-sortIcon field="due_date"></p-sortIcon>
           </th>
-          <th pSortableColumn="quantity">
-            Cantidad <p-sortIcon field="quantity"></p-sortIcon>
+          <th pSortableColumn="total">
+            Total <p-sortIcon field="total"></p-sortIcon>
           </th>
-          <th pSortableColumn="actual_price">
-            Costo <p-sortIcon field="actual_price"></p-sortIcon>
+          <th pSortableColumn="invoice_notes">
+            Notas <p-sortIcon field="invoice_notes"></p-sortIcon>
           </th>
-          <th pSortableColumn="tax1">
-            Impuesto <p-sortIcon field="tax1"></p-sortIcon>
+          <th pSortableColumn="invoice_status">
+            Estado <p-sortIcon field="invoice_status"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -86,12 +86,12 @@
           <td>
             <p-tableCheckbox [value]="invoice"></p-tableCheckbox>
           </td>
-          <td>{{ invoice.invoice_name }}</td>
-          <td>{{ invoice.invoice_description }}</td>
-          <td>{{ invoice.unit_cost | currency: "EUR" }}</td>
-          <td>{{ invoice.quantity }}</td>
-          <td>{{ invoice.actual_price | currency: "EUR" }}</td>
-          <td>{{ invoice.tax1 }}</td>
+          <td>{{ invoice.clientId }}</td>
+          <td>{{ invoice.invoice_date }}</td>
+          <td>{{ invoice.due_date }}</td>
+          <td>{{ invoice.total | currency: "EUR" }}</td>
+          <td>{{ invoice.invoice_notes }}</td>
+          <td>{{ invoice.invoice_status }}</td>
           <td>
             <button
               pButton
@@ -121,46 +121,43 @@
 
 <p-dialog
   [(visible)]="invoiceDialog"
-  header="Datos del factura"
+  header="Datos de la factura"
   [modal]="true"
   styleClass="p-fluid w-1/4"
 >
   <ng-template pTemplate="content">
     <div class="p-field mt-4">
-      <label for="name">Nombre</label>
+      <label for="clientId">Cliente</label>
       <input
         type="text"
         pInputText
-        id="name"
-        [(ngModel)]="invoice.invoice_name"
+        id="clientId"
+        [(ngModel)]="invoice.clientId"
         required
         autofocus
       />
       <small class="p-invalid" *ngIf="submitted && !invoice.invoice_name"
-        >Nombre es requerido.</small
+        >Cliente es requerido.</small
       >
     </div>
     <div class="p-field mt-4">
-      <label for="description">Descripción</label>
-      <textarea
-        id="description"
-        pInputTextarea
-        [(ngModel)]="invoice.invoice_description"
-        required
-        rows="3"
-        cols="20"
-      ></textarea>
+      <label for="invoice_date">Fecha</label>
+      <p-calendar
+        [(ngModel)]="invoice.invoice_date"
+        [locale]="es"
+        dateFormat="dd/mm/yy"
+        inputId="invoice_date"
+      ></p-calendar>
     </div>
     <div class="p-formgrid p-grid">
       <div class="p-field mt-4">
-        <label for="price">Costo Unitario</label>
-        <p-inputNumber
-          id="unit_cost"
-          [(ngModel)]="invoice.unit_cost"
-          mode="currency"
-          currency="EUR"
-          locale="es-ES"
-        ></p-inputNumber>
+        <label for="due_datef">Due Date</label>
+        <p-calendar
+          [(ngModel)]="invoice.due_date"
+          [locale]="es"
+          dateFormat="dd/mm/yy"
+          inputId="due_date"
+        ></p-calendar>
       </div>
       <div class="p-field mt-4">
         <label for="quantity">Cantidad</label>
@@ -170,10 +167,10 @@
         ></p-inputNumber>
       </div>
       <div class="p-field mt-4">
-        <label for="quantity">Precio</label>
+        <label for="unit_cost">Precio</label>
         <p-inputNumber
-          id="actual_price"
-          [(ngModel)]="invoice.actual_price"
+          id="unit_cost"
+          [(ngModel)]="invoice.unit_cost"
           mode="currency"
           currency="EUR"
           locale="es-ES"
@@ -182,6 +179,13 @@
       <div class="p-field mt-4">
         <label for="tax1">Impuesto</label>
         <p-inputNumber id="tax1" [(ngModel)]="invoice.tax1"></p-inputNumber>
+      </div>
+      <div class="p-field mt-4">
+        <label for="actual_price">Costo Total</label>
+        <p-inputNumber
+          id="actual_price"
+          [(ngModel)]="invoice.actual_price"
+        ></p-inputNumber>
       </div>
     </div>
   </ng-template>

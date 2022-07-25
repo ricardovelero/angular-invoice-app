@@ -23,6 +23,7 @@ export class InvoicesListComponent implements OnInit {
   submitted: boolean = false;
   selectedInvoices: Invoice[] = [];
   ids: string[] = [];
+  es: any;
 
   constructor(
     private invoiceService: InvoiceService,
