@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-3xl mx-auto">
+  <div class="max-w-6xl mx-auto">
     <h1
       class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 text-center"
     >
@@ -21,7 +21,7 @@
             <div class="relative mt-1">
               <p-autoComplete
                 styleClass="w-full"
-                [(ngModel)]="selectedClientAdvanced"
+                [(ngModel)]="selectedClient"
                 [ngModelOptions]="{ standalone: true }"
                 [suggestions]="filteredClients"
                 (completeMethod)="filterClient($event)"
@@ -189,20 +189,66 @@
                       <td
                         class="whitespace-nowrap pr-3 text-sm font-medium text-gray-900 sm:pl-6 text-left"
                       >
-                        Programación JS
+                        <p-autoComplete
+                          #customId
+                          styleClass="w-full"
+                          [(ngModel)]="selectedItem"
+                          [ngModelOptions]="{ standalone: true }"
+                          [suggestions]="filteredItems"
+                          (completeMethod)="filterItem($event)"
+                          field="item_name"
+                          [dropdown]="true"
+                        >
+                          <ng-template let-item pTemplate="item">
+                            <div class="item-item">
+                              <div>
+                                {{ item.item_name }}
+                              </div>
+                            </div>
+                          </ng-template>
+                        </p-autoComplete>
                       </td>
                       <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
-                      ></td>
-                      <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
                       >
-                        100
+                        <p-inputNumber
+                          [size]="1"
+                          [(ngModel)]="qty"
+                          [min]="1"
+                          mode="decimal"
+                        ></p-inputNumber>
                       </td>
                       <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
                       >
-                        1
+                        <p-autoComplete
+                          [size]="4"
+                          [(ngModel)]="selectedItem"
+                          [ngModelOptions]="{ standalone: true }"
+                          [suggestions]="filteredItems"
+                          (completeMethod)="filterItem($event)"
+                          field="unit_cost"
+                          [readonly]="true"
+                          name="cost"
+                        >
+                          <ng-template let-item pTemplate="item"></ng-template>
+                        </p-autoComplete>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
+                      >
+                        <p-autoComplete
+                          [size]="1"
+                          [(ngModel)]="selectedItem"
+                          [ngModelOptions]="{ standalone: true }"
+                          [suggestions]="filteredItems"
+                          (completeMethod)="filterItem($event)"
+                          field="tax1"
+                          [readonly]="true"
+                          name="tax"
+                        >
+                          <ng-template let-item pTemplate="item"></ng-template>
+                        </p-autoComplete>
                       </td>
                       <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
