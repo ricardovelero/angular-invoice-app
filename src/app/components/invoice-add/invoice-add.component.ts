@@ -21,10 +21,12 @@ export class InvoiceAddComponent implements OnInit {
   selectedClient?: Client[];
   filteredClients: any[] | any;
 
-  selectedItem?: Item[];
+  selectedItem: Item[] | any;
   filteredItems: any[] | any;
 
-  qty: number = 1;
+  qty: number | any;
+
+  total: number | any;
 
   constructor(
     private clientService: ClientService,
@@ -46,6 +48,7 @@ export class InvoiceAddComponent implements OnInit {
     let query = event.query;
     this.clientService.findClientByName(query).subscribe((clients) => {
       this.filteredClients = clients;
+      console.log(clients);
     });
   }
 
@@ -54,6 +57,14 @@ export class InvoiceAddComponent implements OnInit {
     this.itemService.findItemByName(query).subscribe((items) => {
       this.filteredItems = items;
     });
+  }
+
+  say() {
+    console.log("Yes");
+  }
+
+  calculateItemTotal() {
+    this.total = this.qty * this.selectedItem?.unit_cost;
   }
 
   opencloseModal() {

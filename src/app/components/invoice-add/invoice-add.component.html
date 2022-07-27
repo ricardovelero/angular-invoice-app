@@ -215,45 +215,35 @@
                           [size]="1"
                           [(ngModel)]="qty"
                           [min]="1"
+                          [showButtons]="true"
+                          buttonLayout="horizontal"
+                          spinnerMode="horizontal"
+                          decrementButtonClass="p-button-danger"
+                          incrementButtonClass="p-button-success"
+                          incrementButtonIcon="pi pi-plus"
+                          decrementButtonIcon="pi pi-minus"
+                          value="number"
+                          name="quantity"
+                          title="quantity"
                           mode="decimal"
+                          [allowEmpty]="false"
+                          (onInput)="calculateItemTotal()"
                         ></p-inputNumber>
                       </td>
                       <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
                       >
-                        <p-autoComplete
-                          [size]="4"
-                          [(ngModel)]="selectedItem"
-                          [ngModelOptions]="{ standalone: true }"
-                          [suggestions]="filteredItems"
-                          (completeMethod)="filterItem($event)"
-                          field="unit_cost"
-                          [readonly]="true"
-                          name="cost"
-                        >
-                          <ng-template let-item pTemplate="item"></ng-template>
-                        </p-autoComplete>
+                        {{ selectedItem?.unit_cost | currency: "EUR" }}
                       </td>
                       <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
                       >
-                        <p-autoComplete
-                          [size]="1"
-                          [(ngModel)]="selectedItem"
-                          [ngModelOptions]="{ standalone: true }"
-                          [suggestions]="filteredItems"
-                          (completeMethod)="filterItem($event)"
-                          field="tax1"
-                          [readonly]="true"
-                          name="tax"
-                        >
-                          <ng-template let-item pTemplate="item"></ng-template>
-                        </p-autoComplete>
+                        {{ selectedItem?.tax1 }}
                       </td>
                       <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
                       >
-                        xxx
+                        {{ total | currency: "EUR" }}
                       </td>
                     </tr>
                   </tbody>
