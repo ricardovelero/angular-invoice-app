@@ -1,2 +1,5 @@
 node_modules
 .angular
+.DS_store
+node_modules
+src/backups
