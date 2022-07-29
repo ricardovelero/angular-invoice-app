@@ -19,29 +19,25 @@ import { InvoiceDetailsComponent } from "./components/invoice-details/invoice-de
 import { ItemsListComponent } from "./components/items-list/items-list.component";
 import { ItemAddComponent } from "./components/item-add/item-add.component";
 import { ItemDetailsComponent } from "./components/item-details/item-details.component";
+import { ItemService } from "./services/item.service";
+import { ClientService } from "./services/client.service";
 
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { RippleModule } from "primeng/ripple";
 import { TableModule } from "primeng/table";
 import { ToastModule } from "primeng/toast";
 import { CalendarModule } from "primeng/calendar";
-import { SliderModule } from "primeng/slider";
-import { MultiSelectModule } from "primeng/multiselect";
-import { ContextMenuModule } from "primeng/contextmenu";
 import { DialogModule } from "primeng/dialog";
 import { ButtonModule } from "primeng/button";
 import { DropdownModule } from "primeng/dropdown";
-import { ProgressBarModule } from "primeng/progressbar";
 import { InputTextModule } from "primeng/inputtext";
 import { ToolbarModule } from "primeng/toolbar";
-import { RadioButtonModule } from "primeng/radiobutton";
 import { InputNumberModule } from "primeng/inputnumber";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
-import { ItemService } from "./services/item.service";
-import { ClientService } from "./services/client.service";
+import { ToggleButtonModule } from "primeng/togglebutton";
 
 @NgModule({
   declarations: [
@@ -76,15 +72,11 @@ import { ClientService } from "./services/client.service";
     ConfirmDialogModule,
     ButtonModule,
     DialogModule,
-    MultiSelectModule,
     InputNumberModule,
     InputTextModule,
     InputTextareaModule,
-    RadioButtonModule,
     DropdownModule,
-    ContextMenuModule,
-    SliderModule,
-    ProgressBarModule,
+    ToggleButtonModule,
   ],
   providers: [ItemService, ClientService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],
