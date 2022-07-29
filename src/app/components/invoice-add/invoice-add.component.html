@@ -18,7 +18,7 @@
           <div class="relative mt-1">
             <p-autoComplete
               styleClass="w-full"
-              [(ngModel)]="selectedClient"
+              [(ngModel)]="newInvoice.client"
               [suggestions]="filteredClients"
               (completeMethod)="filterClient($event)"
               field="name"
@@ -54,7 +54,7 @@
         <div class="mt-1">
           <p-calendar
             inputId="invoice_date"
-            [(ngModel)]="invoice_date"
+            [(ngModel)]="newInvoice.invoice_date"
             name="invoice_date"
             autocomplete="invoice_date"
             styleClass="w-full"
@@ -69,7 +69,7 @@
         <div class="mt-1">
           <p-calendar
             inputId="due_date"
-            [(ngModel)]="due_date"
+            [(ngModel)]="newInvoice.due_date"
             name="due_date"
             autocomplete="due_date"
             styleClass="w-full"
@@ -86,7 +86,7 @@
               >¿Es Recurrente?</label
             >
             <p-toggleButton
-              [(ngModel)]="is_recurrent"
+              [(ngModel)]="newInvoice.is_recurrent"
               onIcon="pi pi-check"
               offIcon="pi pi-times"
               iconPos="right"
@@ -125,7 +125,7 @@
                 #dt
                 [value]="products"
                 [rows]="10"
-                [paginator]="true"
+                [paginator]="false"
                 [rowHover]="true"
                 dataKey="id"
                 [showCurrentPageReport]="true"
@@ -250,6 +250,9 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">
+                  <div class="text-right">
+                    Total Factura: {{ newInvoice.total | currency: "EUR" }}
+                  </div>
                   <div class="p-d-flex p-ai-center p-jc-between">
                     Tienes {{ products ? products.length : 0 }} Ítems.
                   </div>
@@ -270,7 +273,7 @@
           <div class="mt-1">
             <textarea
               pInputTextarea
-              [(ngModel)]="invoice_notes"
+              [(ngModel)]="newInvoice.invoice_notes"
               name="invoice_notes"
               [rows]="3"
               class="shadow-sm block w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -291,23 +294,23 @@
           >
             Cancelar
           </button></a
-        ><a href="/invoice/add"
-          ><button
-            class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            type="submit"
-          >
-            Crear
-          </button></a
+        ><button
+          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          type="submit"
+          (click)="saveNewInvoice(newInvoice)"
         >
+          Crear
+        </button>
       </div>
     </div>
     <ul>
-      <li>The Client: {{ selectedClient | json }}</li>
-      <li>The Date: {{ invoice_date }}</li>
-      <li>The Due Date: {{ due_date }}</li>
-      <li>Is Recurrent: {{ is_recurrent }}</li>
+      <li>The Client: {{ newInvoice.client | json }}</li>
+      <li>The Date: {{ newInvoice.invoice_date }}</li>
+      <li>The Due Date: {{ newInvoice.due_date }}</li>
+      <li>Is Recurrent: {{ newInvoice.is_recurrent }}</li>
       <li>The Items: {{ products | json }}</li>
-      <li>The notes: {{ invoice_notes }}</li>
+      <li>The notes: {{ newInvoice.invoice_notes }}</li>
+      <li>New invoice: {{ newInvoice | json }}</li>
     </ul>
   </div>
 </div>

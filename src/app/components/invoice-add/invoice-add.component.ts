@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
+import { Invoice } from "src/app/models/invoice.model";
 import { Client } from "../../models/client.model";
 import { Item } from "../../models/item.model";
 import { ItemList } from "../../models/item-list.model";
 import { ClientService } from "../../services/client.service";
 import { ItemService } from "../../services/item.service";
+import { InvoiceService } from "src/app/services/invoice.service";
 import { MessageService } from "primeng/api";
 
 import { PrimeNGConfig } from "primeng/api";
@@ -12,9 +14,11 @@ import { PrimeNGConfig } from "primeng/api";
   selector: "app-invoice-add",
   templateUrl: "./invoice-add.component.html",
   styleUrls: ["./invoice-add.component.css"],
-  providers: [ClientService, ItemService, MessageService],
+  providers: [ClientService, ItemService, InvoiceService, MessageService],
 })
 export class InvoiceAddComponent implements OnInit {
+  newInvoice: any = {};
+
   clients: Client[] = [];
   items: Item[] = [];
 
@@ -42,6 +46,7 @@ export class InvoiceAddComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private clientService: ClientService,
     private itemService: ItemService,
+    private invoiceService: InvoiceService,
     private messageService: MessageService
   ) {}
 
@@ -61,6 +66,21 @@ export class InvoiceAddComponent implements OnInit {
       { field: "tax1", header: "Impuesto" },
       { field: "total", header: "Valor" },
     ];
+
+    this.newInvoice = {
+      invoice_number: "",
+      invoice_date: Date,
+      due_date: Date,
+      subtotal: 0,
+      discount_percentage: 0,
+      discount_amount: 0,
+      tax_amount: 0,
+      total: 0,
+      is_recurrent: false,
+      invoice_notes: "",
+      invoice_status: "",
+      billing_month: "",
+    };
   }
 
   onAddItemRow() {
@@ -117,5 +137,27 @@ export class InvoiceAddComponent implements OnInit {
 
   calculateItemTotal(item: ItemList | any, quantity: number) {
     item.total = quantity * item.item_name.unit_cost;
+    this.newInvoice.total += item.total;
+  }
+
+  saveNewInvoice(theInvoice: any) {
+    console.log(theInvoice);
+    // this.invoiceService.createInvoice(invoice).subscribe({
+    //   next: (res) => {
+    //     this.messageService.add({
+    //       severity: "success",
+    //       summary: "Exitoso",
+    //       detail: "Factura creada",
+    //       life: 3000,
+    //     });
+    //   },
+    //   error: (e) =>
+    //     this.messageService.add({
+    //       severity: "error",
+    //       summary: "Error",
+    //       detail: e,
+    //       life: 5000,
+    //     }),
+    // });
   }
 }
