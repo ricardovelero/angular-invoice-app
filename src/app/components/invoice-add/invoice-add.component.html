@@ -8,373 +8,306 @@
     <p class="mt-1 text-sm text-gray-500 text-center">
       Completa toda la información para crear una nueva Factura.
     </p>
-    <form class="space-y-8 divide-y divide-gray-200" method="POST">
-      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-        <div class="sm:col-span-3">
-          <div>
-            <label
-              class="block text-sm font-medium text-gray-700"
-              for="clientId"
+
+    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+      <div class="sm:col-span-3">
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="clientId">
+            Cliente
+          </label>
+          <div class="relative mt-1">
+            <p-autoComplete
+              styleClass="w-full"
+              [(ngModel)]="selectedClient"
+              [suggestions]="filteredClients"
+              (completeMethod)="filterClient($event)"
+              field="name"
+              name="name"
+              [dropdown]="true"
             >
-              Cliente
-            </label>
-            <div class="relative mt-1">
-              <p-autoComplete
-                styleClass="w-full"
-                [(ngModel)]="selectedClient"
-                [ngModelOptions]="{ standalone: true }"
-                [suggestions]="filteredClients"
-                (completeMethod)="filterClient($event)"
-                field="name"
-                [dropdown]="true"
+              <ng-template let-client pTemplate="item">
+                <div class="client-item">
+                  <div>{{ client.name }} {{ client.lastname }}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+      <div class="sm:col-span-3">
+        <div class="mt-4 sm:mt-5 sm:ml-16">
+          <button
+            class="float-right inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+            type="button"
+          >
+            Nuevo Cliente
+          </button>
+        </div>
+      </div>
+      <div class="sm:col-span-3">
+        <label
+          class="block text-sm font-medium text-gray-700"
+          for="invoice_date"
+        >
+          Fecha</label
+        >
+        <div class="mt-1">
+          <p-calendar
+            inputId="invoice_date"
+            [(ngModel)]="invoice_date"
+            name="invoice_date"
+            autocomplete="invoice_date"
+            styleClass="w-full"
+            inputStyleClass="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          ></p-calendar>
+        </div>
+      </div>
+      <div class="sm:col-span-3">
+        <label class="block text-sm font-medium text-gray-700" for="due-date">
+          Fecha Vencimiento
+        </label>
+        <div class="mt-1">
+          <p-calendar
+            inputId="due_date"
+            [(ngModel)]="due_date"
+            name="due_date"
+            autocomplete="due_date"
+            styleClass="w-full"
+            inputStyleClass="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          ></p-calendar>
+        </div>
+      </div>
+      <div class="sm:col-span-3">
+        <div class="mt-1">
+          <div class="flex items-center">
+            <label
+              class="mr-3 block text-sm font-medium text-gray-700"
+              for="is_recurrent"
+              >¿Es Recurrente?</label
+            >
+            <p-toggleButton
+              [(ngModel)]="is_recurrent"
+              onIcon="pi pi-check"
+              offIcon="pi pi-times"
+              iconPos="right"
+            ></p-toggleButton>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-8">
+      <div class="sm:flex sm:items-center mb-10">
+        <div class="sm:flex-auto">
+          <h1 class="text-xl text-center font-semibold text-gray-900">
+            Ítems a Facturar
+          </h1>
+        </div>
+        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+          <button
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+            type="button"
+            (click)="onAddItemRow()"
+          >
+            Agregar ítem
+          </button>
+        </div>
+      </div>
+      <div class="mt-8 flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div
+            class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+          >
+            <div
+              class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+            >
+              <p-table
+                #dt
+                [value]="products"
+                [rows]="10"
+                [paginator]="true"
+                [rowHover]="true"
+                dataKey="id"
+                [showCurrentPageReport]="true"
+                editMode="row"
               >
-                <ng-template let-client pTemplate="item">
-                  <div class="client-item">
-                    <div>{{ client.name }} {{ client.lastname }}</div>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th *ngFor="let col of cols">
+                      {{ col.header }}
+                    </th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template
+                  pTemplate="body"
+                  let-product
+                  let-editing="editing"
+                  let-ri="rowIndex"
+                >
+                  <tr [pEditableRow]="product">
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-autoComplete
+                            styleClass="w-full"
+                            [(ngModel)]="product.item_name"
+                            [suggestions]="filteredItems"
+                            (completeMethod)="filterItem($event)"
+                            (onSelect)="
+                              calculateItemTotal(product, product.quantity)
+                            "
+                            field="item_name"
+                            name="item_name"
+                            [dropdown]="true"
+                          >
+                            <ng-template let-item pTemplate="item">
+                              {{ item.item_name }}
+                            </ng-template>
+                          </p-autoComplete>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{ product.item_name.item_name }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-inputNumber
+                            [size]="1"
+                            [(ngModel)]="product.quantity"
+                            [min]="1"
+                            [showButtons]="true"
+                            buttonLayout="horizontal"
+                            spinnerMode="horizontal"
+                            decrementButtonClass="p-button-danger"
+                            incrementButtonClass="p-button-success"
+                            incrementButtonIcon="pi pi-plus"
+                            decrementButtonIcon="pi pi-minus"
+                            value="number"
+                            name="quantity"
+                            title="quantity"
+                            mode="decimal"
+                            [allowEmpty]="false"
+                            (onInput)="
+                              calculateItemTotal(product, product.quantity)
+                            "
+                          ></p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{ product.quantity }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      {{ product.item_name.unit_cost | currency: "EUR" }}
+                    </td>
+                    <td>{{ product.item_name.tax1 }}</td>
+                    <td>{{ product.total | currency: "EUR" }}</td>
+                    <td style="text-align: center">
+                      <button
+                        *ngIf="!editing"
+                        pButton
+                        type="button"
+                        pInitEditableRow
+                        icon="pi pi-pencil"
+                        class="ui-button-info"
+                        (click)="onRowEditInit(products)"
+                      ></button>
+                      <button
+                        *ngIf="editing"
+                        pButton
+                        type="button"
+                        pSaveEditableRow
+                        icon="pi pi-check"
+                        class="ui-button-success"
+                        style="margin-right: 0.5em"
+                        (click)="onRowEditSave(products, ri)"
+                      ></button>
+                      <button
+                        *ngIf="editing"
+                        pButton
+                        type="button"
+                        pCancelEditableRow
+                        icon="pi pi-times"
+                        class="ui-button-danger"
+                        (click)="onRowEditCancel(products, ri)"
+                      ></button>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" let-columns>
+                  <tr>
+                    <td [attr.colspan]="cols.length">
+                      Por favor, agrega un ítem para facturar
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                  <div class="p-d-flex p-ai-center p-jc-between">
+                    Tienes {{ products ? products.length : 0 }} Ítems.
                   </div>
                 </ng-template>
-              </p-autoComplete>
-            </div>
-          </div>
-        </div>
-        <div class="sm:col-span-3">
-          <div class="mt-4 sm:mt-5 sm:ml-16">
-            <button
-              class="float-right inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-              type="button"
-            >
-              Nuevo Cliente
-            </button>
-          </div>
-        </div>
-        <div class="sm:col-span-3">
-          <label
-            class="block text-sm font-medium text-gray-700"
-            for="invoice_date"
-          >
-            Fecha</label
-          >
-          <div class="mt-1">
-            <input
-              class="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              id="last-name"
-              type="date"
-              name="invoice_date"
-              autocomplete="invoice_date"
-            />
-          </div>
-        </div>
-        <div class="sm:col-span-3">
-          <label class="block text-sm font-medium text-gray-700" for="due-date">
-            Fecha Vencimiento
-          </label>
-          <div class="mt-1">
-            <input
-              class="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              id="email"
-              name="due-date"
-              type="date"
-              autocomplete="due-date"
-            />
-          </div>
-        </div>
-        <div class="sm:col-span-3">
-          <div class="mt-1">
-            <div class="flex items-center">
-              <input
-                class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
-                id="recurrent"
-                name="is_recurrent"
-                type="checkbox"
-              /><label
-                class="ml-3 block text-sm font-medium text-gray-700"
-                for="is_recurrent"
-                >¿Es Recurrente?</label
-              >
+              </p-table>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="pt-8">
-        <!-- This example requires Tailwind CSS v2.0+-->
-        <div class="sm:flex sm:items-center">
-          <div class="sm:flex-auto">
-            <h1 class="text-xl font-semibold text-gray-900">Ítems</h1>
-            <p class="mt-2 text-sm text-gray-700">
-              Puedes agregar un ítem pinchando en el botón sin perder los datos
-              de la factura.
+    </div>
+    <div class="pt-8">
+      <div class="sm:col-span-6">
+        <label
+          class="block text-sm font-medium text-gray-700"
+          for="invoice_notes"
+        >
+          Notas
+          <div class="mt-1">
+            <textarea
+              pInputTextarea
+              [(ngModel)]="invoice_notes"
+              name="invoice_notes"
+              [rows]="3"
+              class="shadow-sm block w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            ></textarea>
+            <p class="mt-2 text-sm text-gray-500">
+              Condiciones de venta o alguna observación.
             </p>
-          </div>
-          <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-            <button
-              class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-              type="button"
-            >
-              Nuevo ítem
-            </button>
-          </div>
-        </div>
-        <div class="mt-8 flex flex-col">
-          <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div
-              class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
-            >
-              <div
-                class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
-              >
-                <table class="min-w-full divide-y divide-gray-300">
-                  <thead class="bg-gray-50">
-                    <tr>
-                      <th
-                        class="px-3 text-left text-sm font-semibold text-gray-900"
-                        scope="col"
-                      >
-                        <span class="sr-only">Eliminar</span>
-                      </th>
-                      <th
-                        class="px-3 text-left text-sm font-semibold text-gray-900 py-3.5 sm:pl-6"
-                        scope="col"
-                      >
-                        Ítem
-                      </th>
-                      <th
-                        class="px-3 text-right text-sm font-semibold text-gray-900 py-3.5"
-                        scope="col"
-                      >
-                        Cantidad
-                      </th>
-                      <th
-                        class="px-3 text-right text-sm font-semibold text-gray-900 py-3.5"
-                        scope="col"
-                      >
-                        Costo
-                      </th>
-                      <th
-                        class="px-3 text-right text-sm font-semibold text-gray-900 py-3.5"
-                        scope="col"
-                      >
-                        Impuesto
-                      </th>
-                      <th
-                        class="px-3 text-right text-sm font-semibold text-gray-900 py-3.5"
-                        scope="col"
-                      >
-                        Precio
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-200 bg-white">
-                    <tr>
-                      <td
-                        class="whitespace-nowrap pl-3 py-1 text-sm text-gray-500"
-                      >
-                        <a class="text-indigo-600 hover:text-indigo-900"
-                          ><svg
-                            class="h-6 w-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                          </svg>
-                        </a>
-                      </td>
-                      <td
-                        class="whitespace-nowrap pr-3 text-sm font-medium text-gray-900 sm:pl-6 text-left"
-                      >
-                        <p-autoComplete
-                          #customId
-                          styleClass="w-full"
-                          [(ngModel)]="selectedItem"
-                          [ngModelOptions]="{ standalone: true }"
-                          [suggestions]="filteredItems"
-                          (completeMethod)="filterItem($event)"
-                          field="item_name"
-                          [dropdown]="true"
-                        >
-                          <ng-template let-item pTemplate="item">
-                            <div class="item-item">
-                              <div>
-                                {{ item.item_name }}
-                              </div>
-                            </div>
-                          </ng-template>
-                        </p-autoComplete>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
-                      >
-                        <p-inputNumber
-                          [size]="1"
-                          [(ngModel)]="qty"
-                          [min]="1"
-                          [showButtons]="true"
-                          buttonLayout="horizontal"
-                          spinnerMode="horizontal"
-                          decrementButtonClass="p-button-danger"
-                          incrementButtonClass="p-button-success"
-                          incrementButtonIcon="pi pi-plus"
-                          decrementButtonIcon="pi pi-minus"
-                          value="number"
-                          name="quantity"
-                          title="quantity"
-                          mode="decimal"
-                          [allowEmpty]="false"
-                          (onInput)="calculateItemTotal()"
-                        ></p-inputNumber>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
-                      >
-                        {{ selectedItem?.unit_cost | currency: "EUR" }}
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
-                      >
-                        {{ selectedItem?.tax1 }}
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right"
-                      >
-                        {{ total | currency: "EUR" }}
-                      </td>
-                    </tr>
-                  </tbody>
-                  <tfoot class="bg-white">
-                    <tr>
-                      <th
-                        scope="row"
-                        colspan="5"
-                        class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell"
-                      >
-                        Subtotal
-                      </th>
-                      <th
-                        scope="row"
-                        class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
-                      >
-                        Subtotal
-                      </th>
-                      <td
-                        class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6"
-                      >
-                        $3,900.00
-                      </td>
-                    </tr>
-                    <tr>
-                      <th
-                        scope="row"
-                        colspan="5"
-                        class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell"
-                      >
-                        Descuento
-                      </th>
-                      <th
-                        scope="row"
-                        class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
-                      >
-                        Descuento
-                      </th>
-                      <td
-                        class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6"
-                      >
-                        $390
-                      </td>
-                    </tr>
-                    <tr>
-                      <th
-                        scope="row"
-                        colspan="5"
-                        class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell"
-                      >
-                        Impuestos
-                      </th>
-                      <th
-                        scope="row"
-                        class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
-                      >
-                        Impuestos
-                      </th>
-                      <td
-                        class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6"
-                      >
-                        $585.00
-                      </td>
-                    </tr>
-                    <tr>
-                      <th
-                        scope="row"
-                        colspan="5"
-                        class="hidden pl-6 pr-3 py-4 text-right text-sm font-semibold text-gray-900 sm:table-cell"
-                      >
-                        Total
-                      </th>
-                      <th
-                        scope="row"
-                        class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden"
-                      >
-                        Total
-                      </th>
-                      <td
-                        class="pl-3 pr-4 pt-4 py-4 text-right text-sm font-semibold text-gray-900 sm:pr-6"
-                      >
-                        $4,485.00
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+          </div></label
+        >
       </div>
-      <div class="pt-8">
-        <div class="sm:col-span-6">
-          <label
-            class="block text-sm font-medium text-gray-700"
-            for="invoice_notes"
+    </div>
+    <div class="pt-5">
+      <div class="flex justify-end">
+        <a routerLink="invoices"
+          ><button
+            class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            type="button"
           >
-            Notas
-            <div class="mt-1">
-              <textarea
-                class="shadow-sm block w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                id="about"
-                name="invoice_notes"
-                rows="3"
-              ></textarea>
-              <p class="mt-2 text-sm text-gray-500">
-                Condiciones de venta o alguna observación.
-              </p>
-            </div></label
+            Cancelar
+          </button></a
+        ><a href="/invoice/add"
+          ><button
+            class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            type="submit"
           >
-        </div>
+            Crear
+          </button></a
+        >
       </div>
-      <div class="pt-5">
-        <div class="flex justify-end">
-          <a routerLink="invoices"
-            ><button
-              class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              type="button"
-            >
-              Cancelar
-            </button></a
-          ><a href="/invoice/add"
-            ><button
-              class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              type="submit"
-            >
-              Crear
-            </button></a
-          >
-        </div>
-      </div>
-    </form>
+    </div>
+    <ul>
+      <li>The Client: {{ selectedClient | json }}</li>
+      <li>The Date: {{ invoice_date }}</li>
+      <li>The Due Date: {{ due_date }}</li>
+      <li>Is Recurrent: {{ is_recurrent }}</li>
+      <li>The Items: {{ products | json }}</li>
+      <li>The notes: {{ invoice_notes }}</li>
+    </ul>
   </div>
 </div>
