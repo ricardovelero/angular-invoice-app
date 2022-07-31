@@ -20,25 +20,21 @@ export class InvoiceAddComponent implements OnInit {
   newInvoice: any = {};
 
   clients: Client[] = [];
+  client: any = {};
   items: Item[] = [];
 
   selectedClient?: Client[];
   filteredClients: any[] | any;
 
   filteredItems: any[] | any;
-  products: Array<ItemList> = [];
   newProduct: any = {};
+  products: any = [];
 
   cols: any[] | any;
 
   clonedItems: { [s: string]: Item } = {};
 
   productDialog?: boolean;
-
-  invoice_date?: Date;
-  due_date?: Date;
-  invoice_notes?: string;
-  is_recurrent: boolean = false;
 
   submitted?: boolean;
 
@@ -68,6 +64,7 @@ export class InvoiceAddComponent implements OnInit {
     ];
 
     this.newInvoice = {
+      clientId: "",
       invoice_number: "",
       invoice_date: Date,
       due_date: Date,
@@ -80,17 +77,13 @@ export class InvoiceAddComponent implements OnInit {
       invoice_notes: "",
       invoice_status: "",
       billing_month: "",
+      items: [],
     };
   }
 
   onAddItemRow() {
     this.newProduct = {
-      id: "",
-      item_name: "",
-      quantity: 1,
-      unit_cost: 0,
-      tax1: 0,
-      total: 0,
+      item: [],
     };
     this.products.push(this.newProduct);
   }
@@ -135,29 +128,31 @@ export class InvoiceAddComponent implements OnInit {
     });
   }
 
-  calculateItemTotal(item: ItemList | any, quantity: number) {
-    item.total = quantity * item.item_name.unit_cost;
-    this.newInvoice.total += item.total;
+  calculateInvoiceTotal(products: any) {
+    this.newInvoice.total = 0;
+    for (let product of products) {
+      this.newInvoice.total += product.item.total;
+    }
   }
 
   saveNewInvoice(theInvoice: any) {
     console.log(theInvoice);
-    // this.invoiceService.createInvoice(invoice).subscribe({
-    //   next: (res) => {
-    //     this.messageService.add({
-    //       severity: "success",
-    //       summary: "Exitoso",
-    //       detail: "Factura creada",
-    //       life: 3000,
-    //     });
-    //   },
-    //   error: (e) =>
-    //     this.messageService.add({
-    //       severity: "error",
-    //       summary: "Error",
-    //       detail: e,
-    //       life: 5000,
-    //     }),
-    // });
+    this.invoiceService.createInvoice(this.newInvoice).subscribe({
+      next: (res) => {
+        this.messageService.add({
+          severity: "success",
+          summary: "Exitoso",
+          detail: "Factura creada",
+          life: 3000,
+        });
+      },
+      error: (e) =>
+        this.messageService.add({
+          severity: "error",
+          summary: "Error",
+          detail: e,
+          life: 5000,
+        }),
+    });
   }
 }
