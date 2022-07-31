@@ -24,7 +24,6 @@ export class ClientsListComponent implements OnInit {
     this.clientService.getAllClients().subscribe({
       next: (data) => {
         this.clients = data;
-        console.log(data);
       },
       error: (e) => console.error(e),
     });
@@ -53,7 +52,6 @@ export class ClientsListComponent implements OnInit {
   removeAllClients(): void {
     this.clientService.deleteAllClients().subscribe({
       next: (res) => {
-        console.log(res);
         this.refreshList();
       },
       error: (e) => console.error(e),
@@ -65,8 +63,6 @@ export class ClientsListComponent implements OnInit {
     this.clientService.findClientByName(name).subscribe({
       next: (data) => {
         this.clients = data;
-        console.log(data);
-        console.log("searchName");
       },
       error: (e) => console.error(e),
     });
