@@ -18,9 +18,10 @@
           <div class="relative mt-1">
             <p-autoComplete
               styleClass="w-full"
-              [(ngModel)]="newInvoice.client"
+              [(ngModel)]="client"
               [suggestions]="filteredClients"
               (completeMethod)="filterClient($event)"
+              (ngModelChange)="newInvoice.clientId = $event.id"
               field="name"
               name="name"
               [dropdown]="true"
@@ -151,12 +152,11 @@
                         <ng-template pTemplate="input">
                           <p-autoComplete
                             styleClass="w-full"
-                            [(ngModel)]="product.item_name"
+                            [(ngModel)]="product.item"
                             [suggestions]="filteredItems"
                             (completeMethod)="filterItem($event)"
-                            (onSelect)="
-                              calculateItemTotal(product, product.quantity)
-                            "
+                            (onSelect)="calculateInvoiceTotal(products)"
+                            (ngModelChange)="newInvoice.items.push($event)"
                             field="item_name"
                             name="item_name"
                             [dropdown]="true"
@@ -167,7 +167,7 @@
                           </p-autoComplete>
                         </ng-template>
                         <ng-template pTemplate="output">
-                          {{ product.item_name.item_name }}
+                          {{ product.item.item_name }}
                         </ng-template>
                       </p-cellEditor>
                     </td>
@@ -176,7 +176,11 @@
                         <ng-template pTemplate="input">
                           <p-inputNumber
                             [size]="1"
-                            [(ngModel)]="product.quantity"
+                            [(ngModel)]="product.item.quantity"
+                            (ngModelChange)="
+                              product.item.total =
+                                $event * product.item.unit_cost
+                            "
                             [min]="1"
                             [showButtons]="true"
                             buttonLayout="horizontal"
@@ -190,9 +194,7 @@
                             title="quantity"
                             mode="decimal"
                             [allowEmpty]="false"
-                            (onInput)="
-                              calculateItemTotal(product, product.quantity)
-                            "
+                            (onInput)="calculateInvoiceTotal(products)"
                           ></p-inputNumber>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -201,10 +203,10 @@
                       </p-cellEditor>
                     </td>
                     <td>
-                      {{ product.item_name.unit_cost | currency: "EUR" }}
+                      {{ product.item.unit_cost | currency: "EUR" }}
                     </td>
-                    <td>{{ product.item_name.tax1 }}</td>
-                    <td>{{ product.total | currency: "EUR" }}</td>
+                    <td>{{ product.item.tax1 }}</td>
+                    <td>{{ product.item.total | currency: "EUR" }}</td>
                     <td style="text-align: center">
                       <button
                         *ngIf="!editing"
@@ -254,7 +256,8 @@
                     Total Factura: {{ newInvoice.total | currency: "EUR" }}
                   </div>
                   <div class="p-d-flex p-ai-center p-jc-between">
-                    Tienes {{ products ? products.length : 0 }} Ítems.
+                    Tienes
+                    {{ products ? products.length : 0 }} Ítems.
                   </div>
                 </ng-template>
               </p-table>
@@ -304,13 +307,13 @@
       </div>
     </div>
     <ul>
-      <li>The Client: {{ newInvoice.client | json }}</li>
-      <li>The Date: {{ newInvoice.invoice_date }}</li>
-      <li>The Due Date: {{ newInvoice.due_date }}</li>
-      <li>Is Recurrent: {{ newInvoice.is_recurrent }}</li>
-      <li>The Items: {{ products | json }}</li>
-      <li>The notes: {{ newInvoice.invoice_notes }}</li>
-      <li>New invoice: {{ newInvoice | json }}</li>
+      <li>newInvoice.client: {{ newInvoice.clientId | json }}</li>
+      <li>newInvoice.invoice_date: {{ newInvoice.invoice_date }}</li>
+      <li>newInvoice.due_date: {{ newInvoice.due_date }}</li>
+      <li>newInvoice..is_recurrent: {{ newInvoice.is_recurrent }}</li>
+      <li>products: {{ products | json }}</li>
+      <li>newInvoice.notes: {{ newInvoice.invoice_notes }}</li>
+      <li>newInvoice: {{ newInvoice | json }}</li>
     </ul>
   </div>
 </div>
