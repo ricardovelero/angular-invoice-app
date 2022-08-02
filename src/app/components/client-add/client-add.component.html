@@ -16,22 +16,10 @@
           <input
             type="text"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            [(ngModel)]="client.name"
+            [(ngModel)]="client.fullName"
             #ctrl="ngModel"
             name="names"
             required
-          />
-        </div>
-        <div class="form-group">
-          <label for="lastname" class="block text-sm font-medium text-gray-700"
-            >Apellidos</label
-          >
-          <input
-            type="text"
-            name="lastname"
-            id="lastname"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            [(ngModel)]="client.lastname"
           />
         </div>
         <div class="form-group">
@@ -57,7 +45,7 @@
             name="telephone"
             id="telephone"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            [(ngModel)]="client.telephone"
+            [(ngModel)]="client.phone"
           />
         </div>
         <div class="form-group">
@@ -70,7 +58,7 @@
             id="businessemail"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
             placeholder="you@example.com"
-            [(ngModel)]="client.businessemail"
+            [(ngModel)]="client.businessEmail"
           />
         </div>
         <div class="form-group">
@@ -84,7 +72,7 @@
             name="businessphone"
             id="businessphone"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            [(ngModel)]="client.businesstelephone"
+            [(ngModel)]="client.businessPhone"
           />
         </div>
         <div class="form-group">
@@ -96,7 +84,7 @@
             name="nifnumber"
             id="nifnumber"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            [(ngModel)]="client.nifnumber"
+            [(ngModel)]="client.nifNumber"
           />
         </div>
         <div class="form-group">
@@ -110,7 +98,7 @@
             name="creditlimit"
             id="creditlimit"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            [(ngModel)]="client.creditlimit"
+            [(ngModel)]="client.creditLimit"
           />
         </div>
         <div class="form-group">
@@ -122,7 +110,55 @@
             name="address"
             id="address"
             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            [(ngModel)]="client.address"
+            [(ngModel)]="client.streetAddress"
+          />
+        </div>
+        <div class="form-group">
+          <label for="zipcode" class="block text-sm font-medium text-gray-700"
+            >Código Postal</label
+          >
+          <input
+            type="text"
+            name="zipcode"
+            id="zipcode"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.zipcode"
+          />
+        </div>
+        <div class="form-group">
+          <label for="city" class="block text-sm font-medium text-gray-700"
+            >Ciudad</label
+          >
+          <input
+            type="text"
+            name="city"
+            id="city"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.city"
+          />
+        </div>
+        <div class="form-group">
+          <label for="province" class="block text-sm font-medium text-gray-700"
+            >Ciudad</label
+          >
+          <input
+            type="text"
+            name="province"
+            id="province"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.province"
+          />
+        </div>
+        <div class="form-group">
+          <label for="country" class="block text-sm font-medium text-gray-700"
+            >País</label
+          >
+          <input
+            type="text"
+            name="country"
+            id="country"
+            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            [(ngModel)]="client.country"
           />
         </div>
       </form>

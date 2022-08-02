@@ -10,13 +10,37 @@
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
           <dt class="text-sm font-medium text-gray-500">Nombre completo</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ currentClient.name }} {{ currentClient.lastname }}
+            {{ currentClient.fullName }}
           </dd>
         </div>
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
           <dt class="text-sm font-medium text-gray-500">Dirección</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ currentClient.address }}
+            {{ currentClient.streetAddress }}
+          </dd>
+        </div>
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+          <dt class="text-sm font-medium text-gray-500">Código Postal</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            {{ currentClient.zipcode }}
+          </dd>
+        </div>
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+          <dt class="text-sm font-medium text-gray-500">Ciudad</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            {{ currentClient.city }}
+          </dd>
+        </div>
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+          <dt class="text-sm font-medium text-gray-500">Provincia</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            {{ currentClient.province }}
+          </dd>
+        </div>
+        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+          <dt class="text-sm font-medium text-gray-500">País</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            {{ currentClient.country }}
           </dd>
         </div>
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -28,7 +52,7 @@
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
           <dt class="text-sm font-medium text-gray-500">Teléfono</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ currentClient.telephone }}
+            {{ currentClient.phone }}
           </dd>
         </div>
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -36,13 +60,13 @@
             Correo Electrónico de Trabajo
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ currentClient.businessemail }}
+            {{ currentClient.businessEmail }}
           </dd>
         </div>
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
           <dt class="text-sm font-medium text-gray-500">Teléfono de Trabajo</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ currentClient.businesstelephone }}
+            {{ currentClient.businessPhone }}
           </dd>
         </div>
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -50,13 +74,13 @@
             Número de Identificación Fiscal
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ currentClient.nifnumber }}
+            {{ currentClient.nifNumber }}
           </dd>
         </div>
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
           <dt class="text-sm font-medium text-gray-500">Limite de Credito</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ currentClient.creditlimit }}
+            {{ currentClient.creditLimit }}
           </dd>
         </div>
       </dl>
@@ -77,29 +101,15 @@
         <form class="space-y-8">
           <div class="form-group">
             <label for="names" class="block text-sm font-medium text-gray-700"
-              >Nombre</label
+              >Nombre Completo</label
             >
             <input
               type="text"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              [(ngModel)]="currentClient.name"
+              [(ngModel)]="currentClient.fullName"
               #ctrl="ngModel"
               name="names"
               required
-            />
-          </div>
-          <div class="form-group">
-            <label
-              for="lastname"
-              class="block text-sm font-medium text-gray-700"
-              >Apellidos</label
-            >
-            <input
-              type="text"
-              name="lastname"
-              id="lastname"
-              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              [(ngModel)]="currentClient.lastname"
             />
           </div>
           <div class="form-group">
@@ -127,7 +137,7 @@
               name="telephone"
               id="telephone"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              [(ngModel)]="currentClient.telephone"
+              [(ngModel)]="currentClient.phone"
             />
           </div>
           <div class="form-group">
@@ -140,7 +150,7 @@
               id="businessemail"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               placeholder="you@example.com"
-              [(ngModel)]="currentClient.businessemail"
+              [(ngModel)]="currentClient.businessEmail"
             />
           </div>
           <div class="form-group">
@@ -154,7 +164,7 @@
               name="businessphone"
               id="businessphone"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              [(ngModel)]="currentClient.businesstelephone"
+              [(ngModel)]="currentClient.businessPhone"
             />
           </div>
           <div class="form-group">
@@ -168,7 +178,7 @@
               name="nifnumber"
               id="nifnumber"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              [(ngModel)]="currentClient.nifnumber"
+              [(ngModel)]="currentClient.nifNumber"
             />
           </div>
           <div class="form-group">
@@ -182,7 +192,7 @@
               name="creditlimit"
               id="creditlimit"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              [(ngModel)]="currentClient.creditlimit"
+              [(ngModel)]="currentClient.creditLimit"
             />
           </div>
           <div class="form-group">
@@ -194,7 +204,57 @@
               name="address"
               id="address"
               class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              [(ngModel)]="currentClient.address"
+              [(ngModel)]="currentClient.streetAddress"
+            />
+          </div>
+          <div class="form-group">
+            <label for="zipcode" class="block text-sm font-medium text-gray-700"
+              >Código Postal</label
+            >
+            <input
+              type="text"
+              name="zipcode"
+              id="zipcode"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              [(ngModel)]="currentClient.zipcode"
+            />
+          </div>
+          <div class="form-group">
+            <label for="city" class="block text-sm font-medium text-gray-700"
+              >Ciudad</label
+            >
+            <input
+              type="text"
+              name="city"
+              id="city"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              [(ngModel)]="currentClient.city"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              for="province"
+              class="block text-sm font-medium text-gray-700"
+              >Provincia</label
+            >
+            <input
+              type="text"
+              name="province"
+              id="province"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              [(ngModel)]="currentClient.province"
+            />
+          </div>
+          <div class="form-group">
+            <label for="country" class="block text-sm font-medium text-gray-700"
+              >País</label
+            >
+            <input
+              type="text"
+              name="country"
+              id="country"
+              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              [(ngModel)]="currentClient.country"
             />
           </div>
           <div class="sm:grid sm:grid-cols-6 sm:gap-1 sm:items-start">
@@ -206,7 +266,7 @@
             <p
               class="shadow-sm block w-full sm:text-sm sm:max-w-xs text-gray-900"
             >
-              {{ currentClient.isactive ? "Activo" : "Inactivo" }}
+              {{ currentClient.isActive ? "Activo" : "Inactivo" }}
             </p>
           </div>
         </form>
@@ -217,14 +277,14 @@
     >
       <button
         class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        *ngIf="currentClient.isactive"
+        *ngIf="currentClient.isActive"
         (click)="updateStatus(false); openCloseMessage()"
       >
         Desactivar
       </button>
       <button
         class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        *ngIf="!currentClient.isactive"
+        *ngIf="!currentClient.isActive"
         (click)="updateStatus(true); openCloseMessage()"
       >
         Activar

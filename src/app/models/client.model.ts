@@ -1,14 +1,17 @@
 export class Client {
   id?: number;
-  name?: string;
-  lastname?: string;
+  fullName?: string;
+  nifNumber?: string;
+  streetAddress?: string;
+  zipcode?: string;
+  city?: string;
+  province?: string;
+  country?: string;
+  company?: string;
   email?: string;
-  telephone?: string;
-  businessemail?: string;
-  businesstelephone?: string;
-  nifnumber?: string;
-  creditlimit?: number;
-  address?: string;
-  isactive?: boolean;
-  send_invoice_by?: string;
+  phone?: string;
+  businessEmail?: string;
+  businessPhone?: string;
+  creditLimit?: number;
+  isActive?: boolean;
 }
