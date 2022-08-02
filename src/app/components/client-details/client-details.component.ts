@@ -31,24 +31,31 @@ export class ClientDetailsComponent implements OnInit {
     this.clientService.getClient(id).subscribe({
       next: (data) => {
         this.currentClient = data;
-        console.log(data);
       },
       error: (e) => console.error(e),
     });
   }
   updateStatus(status: boolean): void {
     const data = {
-      name: this.currentClient.name,
-      address: this.currentClient.address,
-      telephone: this.currentClient.telephone,
+      fullName: this.currentClient.fullName,
       email: this.currentClient.email,
-      isactive: status,
+      telephone: this.currentClient.phone,
+      businessPhone: this.currentClient.businessPhone,
+      businessEmail: this.currentClient.businessEmail,
+      nifNumber: this.currentClient.nifNumber,
+      creditLimit: this.currentClient.creditLimit,
+      streetAddress: this.currentClient.streetAddress,
+      zipcode: this.currentClient.zipcode,
+      city: this.currentClient.city,
+      province: this.currentClient.province,
+      country: this.currentClient.country,
+      isActive: this.currentClient.isActive,
     };
     this.message = "";
     this.clientService.updateClient(this.currentClient.id, data).subscribe({
       next: (res) => {
         console.log(res);
-        this.currentClient.isactive = status;
+        this.currentClient.isActive = status;
         this.message = "El estado ha sido actualizado correctamente.";
       },
       error: (e) => console.error(e),

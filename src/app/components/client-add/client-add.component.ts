@@ -9,17 +9,19 @@ import { ClientService } from "../../services/client.service";
 })
 export class ClientAddComponent implements OnInit {
   client: Client = {
-    name: "",
-    lastname: "",
+    fullName: "",
     email: "",
-    telephone: "",
-    businesstelephone: "",
-    businessemail: "",
-    nifnumber: "",
-    creditlimit: 0,
-    address: "",
-    isactive: false,
-    send_invoice_by: "",
+    phone: "",
+    businessPhone: "",
+    businessEmail: "",
+    nifNumber: "",
+    creditLimit: 0,
+    streetAddress: "",
+    zipcode: "",
+    city: "",
+    province: "",
+    country: "",
+    isActive: true,
   };
   submitted = false;
 
@@ -29,17 +31,19 @@ export class ClientAddComponent implements OnInit {
 
   addClient(): void {
     const data = {
-      name: this.client.name,
-      lastname: this.client.lastname,
+      fullName: this.client.fullName,
       email: this.client.email,
-      telephone: this.client.telephone,
-      businesstelephone: this.client.businesstelephone,
-      businessemail: this.client.businessemail,
-      nifnumber: this.client.nifnumber,
-      creditlimit: this.client.creditlimit,
-      address: this.client.address,
-      isactive: (this.client.isactive = true),
-      send_invoice_by: this.client.send_invoice_by,
+      telephone: this.client.phone,
+      businessPhone: this.client.businessPhone,
+      businessEmail: this.client.businessEmail,
+      nifNumber: this.client.nifNumber,
+      creditLimit: this.client.creditLimit,
+      streetAddress: this.client.streetAddress,
+      zipcode: this.client.zipcode,
+      city: this.client.city,
+      province: this.client.province,
+      country: this.client.country,
+      isActive: this.client.isActive,
     };
     this.clientService.createClient(data).subscribe({
       next: (res) => {
@@ -52,11 +56,19 @@ export class ClientAddComponent implements OnInit {
   newClient(): void {
     this.submitted = false;
     this.client = {
-      name: "",
-      address: "",
-      telephone: "",
+      fullName: "",
       email: "",
-      isactive: true,
+      phone: "",
+      businessPhone: "",
+      businessEmail: "",
+      nifNumber: "",
+      creditLimit: 0,
+      streetAddress: "",
+      zipcode: "",
+      city: "",
+      province: "",
+      country: "",
+      isActive: true,
     };
   }
 }
