@@ -66,7 +66,7 @@ export class InvoiceAddComponent implements OnInit {
     ];
 
     this.newInvoice = {
-      clientId: "",
+      ClientId: "",
       number: "",
       date: Date,
       dueDate: Date,

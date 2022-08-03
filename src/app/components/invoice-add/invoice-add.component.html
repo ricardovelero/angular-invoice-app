@@ -21,7 +21,7 @@
               [(ngModel)]="client"
               [suggestions]="filteredClients"
               (completeMethod)="filterClient($event)"
-              (ngModelChange)="newInvoice.clientId = $event.id"
+              (ngModelChange)="newInvoice.ClientId = $event.id"
               field="name"
               name="name"
               [dropdown]="true"
