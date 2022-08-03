@@ -6,6 +6,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
+import { AuthModule } from "@auth0/auth0-angular";
+
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { ClientDetailsComponent } from "./components/client-details/client-details.component";
 import { ClientsListComponent } from "./components/clients-list/clients-list.component";
@@ -38,6 +40,8 @@ import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
+import { AuthButtonComponent } from './shared/auth-button/auth-button.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +59,8 @@ import { ToggleButtonModule } from "primeng/togglebutton";
     ItemsListComponent,
     ItemAddComponent,
     ItemDetailsComponent,
+    AuthButtonComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +83,10 @@ import { ToggleButtonModule } from "primeng/togglebutton";
     InputTextareaModule,
     DropdownModule,
     ToggleButtonModule,
+    AuthModule.forRoot({
+      domain: "fzdev.eu.auth0.com",
+      clientId: "MkO5fxCBtJmQ4TvLCO7wXfzKhW6XeuJp",
+    }),
   ],
   providers: [ItemService, ClientService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],

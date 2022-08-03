@@ -13,7 +13,7 @@ import { ItemsListComponent } from "./components/items-list/items-list.component
 
 const routes: Routes = [
   { path: "", component: DashboardComponent },
-  { path: "home", component: DashboardComponent },
+  { path: "dashboard", component: DashboardComponent },
   { path: "invoices", component: InvoicesListComponent },
   { path: "invoice-add", component: InvoiceAddComponent },
   { path: "invoices/:id", component: InvoiceDetailsComponent },
