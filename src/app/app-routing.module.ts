@@ -10,6 +10,7 @@ import { InvoicesListComponent } from "./components/invoices-list/invoices-list.
 import { ItemAddComponent } from "./components/item-add/item-add.component";
 import { ItemDetailsComponent } from "./components/item-details/item-details.component";
 import { ItemsListComponent } from "./components/items-list/items-list.component";
+import { ProfileComponent } from "./components/profile/profile.component";
 
 const routes: Routes = [
   { path: "", component: DashboardComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: "items", component: ItemsListComponent },
   { path: "items/:id", component: ItemDetailsComponent },
   { path: "item-add", component: ItemAddComponent },
+  { path: "profile", component: ProfileComponent },
 ];
 
 @NgModule({
