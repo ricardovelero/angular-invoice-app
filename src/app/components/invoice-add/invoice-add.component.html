@@ -28,7 +28,7 @@
             >
               <ng-template let-client pTemplate="item">
                 <div class="client-item">
-                  <div>{{ client.name }} {{ client.lastname }}</div>
+                  <div>{{ client.fullName }}</div>
                 </div>
               </ng-template>
             </p-autoComplete>
@@ -54,10 +54,10 @@
         >
         <div class="mt-1">
           <p-calendar
-            inputId="invoice_date"
-            [(ngModel)]="newInvoice.invoice_date"
-            name="invoice_date"
-            autocomplete="invoice_date"
+            inputId="date"
+            [(ngModel)]="newInvoice.date"
+            name="date"
+            autocomplete="date"
             styleClass="w-full"
             inputStyleClass="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ></p-calendar>
@@ -69,10 +69,10 @@
         </label>
         <div class="mt-1">
           <p-calendar
-            inputId="due_date"
-            [(ngModel)]="newInvoice.due_date"
-            name="due_date"
-            autocomplete="due_date"
+            inputId="dueDate"
+            [(ngModel)]="newInvoice.dueDate"
+            name="dueDate"
+            autocomplete="dueDate"
             styleClass="w-full"
             inputStyleClass="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ></p-calendar>
@@ -83,11 +83,11 @@
           <div class="flex items-center">
             <label
               class="mr-3 block text-sm font-medium text-gray-700"
-              for="is_recurrent"
+              for="isRecurrent"
               >¿Es Recurrente?</label
             >
             <p-toggleButton
-              [(ngModel)]="newInvoice.is_recurrent"
+              [(ngModel)]="newInvoice.isRecurrent"
               onIcon="pi pi-check"
               offIcon="pi pi-times"
               iconPos="right"
@@ -157,17 +157,17 @@
                             (completeMethod)="filterItem($event)"
                             (onSelect)="calculateInvoiceTotal(products)"
                             (ngModelChange)="newInvoice.items.push($event)"
-                            field="item_name"
-                            name="item_name"
+                            field="name"
+                            name="name"
                             [dropdown]="true"
                           >
                             <ng-template let-item pTemplate="item">
-                              {{ item.item_name }}
+                              {{ item.name }}
                             </ng-template>
                           </p-autoComplete>
                         </ng-template>
                         <ng-template pTemplate="output">
-                          {{ product.item.item_name }}
+                          {{ product.item.name }}
                         </ng-template>
                       </p-cellEditor>
                     </td>
@@ -178,8 +178,7 @@
                             [size]="1"
                             [(ngModel)]="product.item.quantity"
                             (ngModelChange)="
-                              product.item.total =
-                                $event * product.item.unit_cost
+                              product.item.total = $event * product.item.cost
                             "
                             [min]="1"
                             [showButtons]="true"
@@ -203,7 +202,7 @@
                       </p-cellEditor>
                     </td>
                     <td>
-                      {{ product.item.unit_cost | currency: "EUR" }}
+                      {{ product.item.cost | currency: "EUR" }}
                     </td>
                     <td>{{ product.item.tax1 }}</td>
                     <td>{{ product.item.total | currency: "EUR" }}</td>
@@ -268,16 +267,13 @@
     </div>
     <div class="pt-8">
       <div class="sm:col-span-6">
-        <label
-          class="block text-sm font-medium text-gray-700"
-          for="invoice_notes"
-        >
+        <label class="block text-sm font-medium text-gray-700" for="notes">
           Notas
           <div class="mt-1">
             <textarea
               pInputTextarea
-              [(ngModel)]="newInvoice.invoice_notes"
-              name="invoice_notes"
+              [(ngModel)]="newInvoice.notes"
+              name="notes"
               [rows]="3"
               class="shadow-sm block w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             ></textarea>
@@ -308,11 +304,11 @@
     </div>
     <ul>
       <li>newInvoice.client: {{ newInvoice.clientId | json }}</li>
-      <li>newInvoice.invoice_date: {{ newInvoice.invoice_date }}</li>
-      <li>newInvoice.due_date: {{ newInvoice.due_date }}</li>
-      <li>newInvoice..is_recurrent: {{ newInvoice.is_recurrent }}</li>
+      <li>newInvoice.date: {{ newInvoice.date }}</li>
+      <li>newInvoice.dueDate: {{ newInvoice.dueDate }}</li>
+      <li>newInvoice.isRecurrent: {{ newInvoice.isRecurrent }}</li>
       <li>products: {{ products | json }}</li>
-      <li>newInvoice.notes: {{ newInvoice.invoice_notes }}</li>
+      <li>newInvoice.notes: {{ newInvoice.notes }}</li>
       <li>newInvoice: {{ newInvoice | json }}</li>
     </ul>
   </div>
