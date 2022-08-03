@@ -7,6 +7,7 @@ import { ClientService } from "../../services/client.service";
 import { ItemService } from "../../services/item.service";
 import { InvoiceService } from "src/app/services/invoice.service";
 import { MessageService } from "primeng/api";
+import { ConfirmationService } from "primeng/api";
 
 import { PrimeNGConfig } from "primeng/api";
 
@@ -14,7 +15,7 @@ import { PrimeNGConfig } from "primeng/api";
   selector: "app-invoice-add",
   templateUrl: "./invoice-add.component.html",
   styleUrls: ["./invoice-add.component.css"],
-  providers: [ClientService, ItemService, InvoiceService, MessageService],
+  providers: [ClientService, ItemService, InvoiceService],
 })
 export class InvoiceAddComponent implements OnInit {
   newInvoice: any = {};
@@ -43,7 +44,8 @@ export class InvoiceAddComponent implements OnInit {
     private clientService: ClientService,
     private itemService: ItemService,
     private invoiceService: InvoiceService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -56,27 +58,25 @@ export class InvoiceAddComponent implements OnInit {
     });
 
     this.cols = [
-      { field: "item_name", header: "Item" },
+      { field: "name", header: "Item" },
       { field: "quantity", header: "Cantidad" },
-      { field: "unit_cost", header: "Precio" },
+      { field: "cost", header: "Precio" },
       { field: "tax1", header: "Impuesto" },
       { field: "total", header: "Valor" },
     ];
 
     this.newInvoice = {
       clientId: "",
-      invoice_number: "",
-      invoice_date: Date,
-      due_date: Date,
+      number: "",
+      date: Date,
+      dueDate: Date,
       subtotal: 0,
-      discount_percentage: 0,
-      discount_amount: 0,
-      tax_amount: 0,
+      taxAmount: 0,
       total: 0,
-      is_recurrent: false,
-      invoice_notes: "",
-      invoice_status: "",
-      billing_month: "",
+      isRecurrent: false,
+      notes: "",
+      status: "",
+      billingMonth: "",
       items: [],
     };
   }
