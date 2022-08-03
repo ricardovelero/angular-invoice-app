@@ -96,7 +96,7 @@ export class ItemsListComponent implements OnInit {
 
   eraseItem(item: Item | any) {
     this.confirmationService.confirm({
-      message: "¿Está seguro de que quiere borrar " + item.item_name + "?",
+      message: "¿Está seguro de que quiere borrar " + item.name + "?",
       header: "Por favor, confirmar...",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
@@ -131,7 +131,7 @@ export class ItemsListComponent implements OnInit {
 
   saveItem() {
     this.submitted = true;
-    if (this.item.item_name.trim()) {
+    if (this.item.name.trim()) {
       if (this.item.id) {
         this.items[this.findIndexById(this.item.id)] = this.item;
         this.itemService.updateItem(this.item.id, this.item).subscribe({
@@ -173,7 +173,7 @@ export class ItemsListComponent implements OnInit {
       }
       this.items = [...this.items];
       this.itemDialog = false;
-      //this.item = {};
+      this.item = {};
     }
   }
   findIndexById(id: string): number {
