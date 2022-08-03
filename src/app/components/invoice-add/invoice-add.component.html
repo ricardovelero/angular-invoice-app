@@ -22,8 +22,8 @@
               [suggestions]="filteredClients"
               (completeMethod)="filterClient($event)"
               (ngModelChange)="newInvoice.ClientId = $event.id"
-              field="name"
-              name="name"
+              field="fullName"
+              name="fullName"
               [dropdown]="true"
             >
               <ng-template let-client pTemplate="item">
