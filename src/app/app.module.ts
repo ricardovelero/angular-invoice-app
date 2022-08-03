@@ -42,6 +42,7 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { AuthButtonComponent } from './shared/auth-button/auth-button.component';
 import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { HomeComponent } from './components/home/home.component';
     ItemDetailsComponent,
     AuthButtonComponent,
     HomeComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

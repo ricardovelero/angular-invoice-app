@@ -21,7 +21,10 @@
               <h1
                 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate"
               >
-                Buenos días, Usuario
+                Buenos días,
+                <ng-container *ngIf="auth.user$ | async as user">
+                  {{ user.name }}</ng-container
+                >
               </h1>
             </div>
             <dl
