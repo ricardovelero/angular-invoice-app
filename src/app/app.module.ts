@@ -7,6 +7,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 import { AuthModule } from "@auth0/auth0-angular";
+import { environment as env } from "../environments/environment";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { ClientDetailsComponent } from "./components/client-details/client-details.component";
@@ -40,9 +41,9 @@ import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
-import { AuthButtonComponent } from './shared/auth-button/auth-button.component';
-import { HomeComponent } from './components/home/home.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { AuthButtonComponent } from "./shared/auth-button/auth-button.component";
+import { HomeComponent } from "./components/home/home.component";
+import { ProfileComponent } from "./components/profile/profile.component";
 
 @NgModule({
   declarations: [
@@ -86,8 +87,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     DropdownModule,
     ToggleButtonModule,
     AuthModule.forRoot({
-      domain: "fzdev.eu.auth0.com",
-      clientId: "MkO5fxCBtJmQ4TvLCO7wXfzKhW6XeuJp",
+      ...env.auth,
     }),
   ],
   providers: [ItemService, ClientService, MessageService, ConfirmationService],
