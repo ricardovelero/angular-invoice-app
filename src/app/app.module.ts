@@ -42,6 +42,7 @@ import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { AuthButtonComponent } from "./shared/auth-button/auth-button.component";
+import { SignupButtonComponent } from "./shared/signup-button/signup-button.component";
 import { HomeComponent } from "./components/home/home.component";
 import { ProfileComponent } from "./components/profile/profile.component";
 
@@ -62,6 +63,7 @@ import { ProfileComponent } from "./components/profile/profile.component";
     ItemAddComponent,
     ItemDetailsComponent,
     AuthButtonComponent,
+    SignupButtonComponent,
     HomeComponent,
     ProfileComponent,
   ],
