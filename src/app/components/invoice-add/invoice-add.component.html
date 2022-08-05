@@ -197,7 +197,7 @@
                           ></p-inputNumber>
                         </ng-template>
                         <ng-template pTemplate="output">
-                          {{ product.quantity }}
+                          {{ product.item.quantity }}
                         </ng-template>
                       </p-cellEditor>
                     </td>
@@ -296,14 +296,14 @@
         ><button
           class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           type="submit"
-          (click)="saveNewInvoice(newInvoice)"
+          (click)="saveNewInvoice()"
         >
           Crear
         </button>
       </div>
     </div>
     <ul>
-      <li>newInvoice.client: {{ newInvoice.clientId | json }}</li>
+      <li>newInvoice.client: {{ newInvoice.ClientId | json }}</li>
       <li>newInvoice.date: {{ newInvoice.date }}</li>
       <li>newInvoice.dueDate: {{ newInvoice.dueDate }}</li>
       <li>newInvoice.isRecurrent: {{ newInvoice.isRecurrent }}</li>
