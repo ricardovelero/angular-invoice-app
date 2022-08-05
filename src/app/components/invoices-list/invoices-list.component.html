@@ -8,7 +8,7 @@
 </div>
 <div class="bg-gray-100 py-8">
   <div class="mx-auto sm:px-6">
-    <!-- <p-toolbar styleClass="p-mb-4">
+    <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="right">
         <button
           pButton
@@ -16,20 +16,20 @@
           label="Nuevo"
           icon="pi pi-plus"
           class="p-button-help mr-4"
-          (click)="openNew()"
+          (click)="goToPage('invoice-add')"
         ></button>
-        <button
+        <!-- <button
           pButton
           pRipple
           icon="pi pi-trash"
           class="p-button-danger"
           (click)="deleteSelectedInvoices()"
           [disabled]="!selectedInvoices || !selectedInvoices.length"
-        ></button>
+        ></button> -->
       </ng-template>
 
       <ng-template pTemplate="left"> </ng-template>
-    </p-toolbar> -->
+    </p-toolbar>
 
     <p-table
       #dt

@@ -5,6 +5,7 @@ import { InvoiceService } from "../../services/invoice.service";
 import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { Table } from "primeng/table";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-invoices-list",
@@ -29,7 +30,8 @@ export class InvoicesListComponent implements OnInit {
     private invoiceService: InvoiceService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +39,10 @@ export class InvoicesListComponent implements OnInit {
     this.invoiceService.getAllInvoices().subscribe((invoices) => {
       this.invoices = invoices;
     });
+  }
+
+  goToPage(pageName: string) {
+    this.router.navigate([`${pageName}`]);
   }
   openNew() {
     this.invoice = {};
