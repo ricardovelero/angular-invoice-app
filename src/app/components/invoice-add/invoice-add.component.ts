@@ -10,6 +10,7 @@ import { MessageService } from "primeng/api";
 import { ConfirmationService } from "primeng/api";
 
 import { PrimeNGConfig } from "primeng/api";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-invoice-add",
@@ -45,7 +46,8 @@ export class InvoiceAddComponent implements OnInit {
     private itemService: ItemService,
     private invoiceService: InvoiceService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -135,8 +137,7 @@ export class InvoiceAddComponent implements OnInit {
     }
   }
 
-  saveNewInvoice(theInvoice: any) {
-    console.log(theInvoice);
+  saveNewInvoice() {
     this.invoiceService.createInvoice(this.newInvoice).subscribe({
       next: (res) => {
         this.messageService.add({
@@ -154,5 +155,6 @@ export class InvoiceAddComponent implements OnInit {
           life: 5000,
         }),
     });
+    this.router.navigate(["invoices"]);
   }
 }
