@@ -86,12 +86,12 @@
           <td>
             <p-tableCheckbox [value]="invoice"></p-tableCheckbox>
           </td>
-          <td>{{ invoice.clientId }}</td>
-          <td>{{ invoice.invoice_date | date: "longDate":"es" }}</td>
-          <td>{{ invoice.due_date | date: "longDate":"es" }}</td>
+          <td>{{ invoice.ClientId }}</td>
+          <td>{{ invoice.date | date: "longDate":"es" }}</td>
+          <td>{{ invoice.dueDate | date: "longDate":"es" }}</td>
           <td>{{ invoice.total | currency: "EUR" }}</td>
-          <td>{{ invoice.invoice_notes }}</td>
-          <td>{{ invoice.invoice_status }}</td>
+          <td>{{ invoice.notes }}</td>
+          <td>{{ invoice.status }}</td>
           <td>
             <button
               pButton
@@ -132,7 +132,7 @@
         type="text"
         pInputText
         id="clientId"
-        [(ngModel)]="invoice.clientId"
+        [(ngModel)]="invoice.ClientId"
         required
         autofocus
       />
@@ -143,7 +143,7 @@
     <div class="p-field mt-4">
       <label for="invoice_date">Fecha</label>
       <p-calendar
-        [(ngModel)]="invoice.invoice_date"
+        [(ngModel)]="invoice.date"
         [locale]="es"
         dateFormat="dd/mm/yy"
         inputId="invoice_date"
@@ -153,7 +153,7 @@
       <div class="p-field mt-4">
         <label for="due_datef">Due Date</label>
         <p-calendar
-          [(ngModel)]="invoice.due_date"
+          [(ngModel)]="invoice.dueDate"
           [locale]="es"
           dateFormat="dd/mm/yy"
           inputId="due_date"
@@ -170,7 +170,7 @@
         <label for="unit_cost">Precio</label>
         <p-inputNumber
           id="unit_cost"
-          [(ngModel)]="invoice.unit_cost"
+          [(ngModel)]="invoice.cost"
           mode="currency"
           currency="EUR"
           locale="es-ES"
