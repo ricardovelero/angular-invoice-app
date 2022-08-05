@@ -86,7 +86,7 @@
           <td>
             <p-tableCheckbox [value]="invoice"></p-tableCheckbox>
           </td>
-          <td>{{ invoice.ClientId }}</td>
+          <td>{{ invoice.Client.fullName }}</td>
           <td>{{ invoice.date | date: "longDate":"es" }}</td>
           <td>{{ invoice.dueDate | date: "longDate":"es" }}</td>
           <td>{{ invoice.total | currency: "EUR" }}</td>
