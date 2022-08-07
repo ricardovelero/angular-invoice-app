@@ -5,74 +5,102 @@
     >
       <div class="flex-1 min-w-0">
         <!-- Profile -->
-        <div class="flex items-center">
-          <img
-            class="hidden h-16 w-16 rounded-full sm:block"
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
-            alt=""
-          />
-          <div>
-            <div class="flex items-center">
-              <img
-                class="h-16 w-16 rounded-full sm:hidden"
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
-                alt=""
-              />
-              <h1
-                class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate"
-              >
-                Buenos días,
-                <ng-container *ngIf="auth.user$ | async as user">
-                  {{ user.name }}</ng-container
+        <ng-container *ngIf="auth.user$ | async as user">
+          <div class="flex items-center">
+            <img
+              class="hidden h-16 w-16 rounded-full sm:block"
+              [src]="user.picture"
+              alt="User Profile picture"
+            />
+            <div>
+              <div class="flex items-center">
+                <img
+                  class="h-16 w-16 rounded-full sm:hidden"
+                  [src]="user.picture"
+                  alt="User Profile picture"
+                />
+                <h1
+                  class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate"
                 >
-              </h1>
+                  Buenos días, {{ user.name }}
+                </h1>
+              </div>
+              <dl
+                class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap"
+              >
+                <ng-template [ngIf]="user.website">
+                  <dt class="sr-only">Sitio web</dt>
+                  <dd
+                    class="flex items-center text-sm text-gray-500 font-medium capitalize sm:mr-6"
+                  >
+                    <!-- Heroicon name: solid/office-building -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    {{ user.website }}
+                  </dd>
+                </ng-template>
+                <dt class="sr-only">Estado de Usuario</dt>
+                <dd
+                  class="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0"
+                >
+                  <!-- Heroicon name: solid/check-circle -->
+                  <ng-template
+                    [ngIf]="user.email_verified"
+                    [ngIfElse]="notverified"
+                  >
+                    <svg
+                      class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </ng-template>
+                  <ng-template #notverified>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="flex-shrink-0 mr-1.5 h-5 w-5 text-red-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </ng-template>
+                  {{
+                    user.email_verified
+                      ? "Usuario verificado"
+                      : "Usuario sin verificar"
+                  }}
+                </dd>
+              </dl>
             </div>
-            <dl
-              class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap"
-            >
-              <dt class="sr-only">Empresa</dt>
-              <dd
-                class="flex items-center text-sm text-gray-500 font-medium capitalize sm:mr-6"
-              >
-                <!-- Heroicon name: solid/office-building -->
-                <svg
-                  class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                Soluciones iO, SL
-              </dd>
-              <dt class="sr-only">Estado de Usuario</dt>
-              <dd
-                class="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize"
-              >
-                <!-- Heroicon name: solid/check-circle -->
-                <svg
-                  class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                Usuario verificado
-              </dd>
-            </dl>
           </div>
-        </div>
+        </ng-container>
       </div>
       <div class="mt-6 flex space-x-3 md:mt-0 md:ml-4">
         <a routerLink="client-add">
