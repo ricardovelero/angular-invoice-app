@@ -12,21 +12,63 @@ import { ItemDetailsComponent } from "./components/item-details/item-details.com
 import { ItemsListComponent } from "./components/items-list/items-list.component";
 import { ProfileComponent } from "./components/profile/profile.component";
 
+import { AuthGuard } from "@auth0/auth0-angular";
+
 const routes: Routes = [
   { path: "", component: DashboardComponent },
-  { path: "dashboard", component: DashboardComponent },
-  { path: "invoices", component: InvoicesListComponent },
-  { path: "invoice-add", component: InvoiceAddComponent },
-  { path: "dashboard/invoice-add", component: InvoiceAddComponent },
-  { path: "invoices/:id", component: InvoiceDetailsComponent },
-  { path: "clients", component: ClientsListComponent },
-  { path: "clients/:id", component: ClientDetailsComponent },
-  { path: "client-add", component: ClientAddComponent },
-  { path: "dashboard/client-add", component: ClientAddComponent },
-  { path: "items", component: ItemsListComponent },
-  { path: "items/:id", component: ItemDetailsComponent },
-  { path: "item-add", component: ItemAddComponent },
-  { path: "profile", component: ProfileComponent },
+  {
+    path: "dashboard",
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "invoices",
+    component: InvoicesListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "invoice-add",
+    component: InvoiceAddComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "dashboard/invoice-add",
+    component: InvoiceAddComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "invoices/:id",
+    component: InvoiceDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "clients",
+    component: ClientsListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "clients/:id",
+    component: ClientDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "client-add",
+    component: ClientAddComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "dashboard/client-add",
+    component: ClientAddComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: "items", component: ItemsListComponent, canActivate: [AuthGuard] },
+  {
+    path: "items/:id",
+    component: ItemDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: "item-add", component: ItemAddComponent, canActivate: [AuthGuard] },
+  { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
