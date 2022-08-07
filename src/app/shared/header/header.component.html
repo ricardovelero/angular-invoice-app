@@ -87,7 +87,7 @@
 
       <!-- Profile dropdown -->
       <div class="ml-3 relative">
-        <div>
+        <div *ngIf="auth.user$ | async as user">
           <button
             type="button"
             class="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50"
@@ -98,8 +98,8 @@
           >
             <img
               class="h-8 w-8 rounded-full"
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
+              [src]="user.picture"
+              alt="User profile picture"
             />
             <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"
               ><span class="sr-only">Abrir menu para </span>Usuario</span
