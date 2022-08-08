@@ -8,6 +8,8 @@ import { AppComponent } from "./app.component";
 
 import { AuthModule } from "@auth0/auth0-angular";
 import { environment as env } from "../environments/environment";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthHttpInterceptor } from "@auth0/auth0-angular";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { ClientDetailsComponent } from "./components/client-details/client-details.component";
@@ -24,6 +26,10 @@ import { ItemAddComponent } from "./components/item-add/item-add.component";
 import { ItemDetailsComponent } from "./components/item-details/item-details.component";
 import { ItemService } from "./services/item.service";
 import { ClientService } from "./services/client.service";
+import { AuthButtonComponent } from "./shared/auth-button/auth-button.component";
+import { SignupButtonComponent } from "./shared/signup-button/signup-button.component";
+import { HomeComponent } from "./components/home/home.component";
+import { ProfileComponent } from "./components/profile/profile.component";
 
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { RippleModule } from "primeng/ripple";
@@ -41,10 +47,6 @@ import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
-import { AuthButtonComponent } from "./shared/auth-button/auth-button.component";
-import { SignupButtonComponent } from "./shared/signup-button/signup-button.component";
-import { HomeComponent } from "./components/home/home.component";
-import { ProfileComponent } from "./components/profile/profile.component";
 
 @NgModule({
   declarations: [
@@ -90,9 +92,22 @@ import { ProfileComponent } from "./components/profile/profile.component";
     ToggleButtonModule,
     AuthModule.forRoot({
       ...env.auth,
+      httpInterceptor: {
+        allowedList: [`${env.dev.serverUrl}/api/*`],
+      },
     }),
   ],
-  providers: [ItemService, ClientService, MessageService, ConfirmationService],
+  providers: [
+    ItemService,
+    ClientService,
+    MessageService,
+    ConfirmationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
