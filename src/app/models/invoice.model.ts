@@ -1,15 +1,13 @@
 export class Invoice {
   id?: string;
-  invoice_number?: string;
-  invoice_date?: string;
-  due_date?: string;
+  number?: string;
+  date?: string;
+  dueDate?: string;
   subtotal?: number;
-  discount_percentage?: number;
-  discount_amount?: number;
-  tax_amount?: number;
+  taxAmount?: number;
   total?: number;
-  is_recurrent?: boolean;
-  invoice_notes?: string;
-  invoice_status?: string;
+  isRecurrent?: boolean;
+  notes?: string;
+  status?: string;
   billing_month?: string;
 }
