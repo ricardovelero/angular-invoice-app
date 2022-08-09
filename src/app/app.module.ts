@@ -93,7 +93,9 @@ import { ToggleButtonModule } from "primeng/togglebutton";
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
-        allowedList: [`${env.dev.serverUrl}/api/*`],
+        allowedList: [
+          `https://facturazen-backend-9tcee.ondigitalocean.app/api/*`,
+        ],
       },
     }),
   ],
