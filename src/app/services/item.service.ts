@@ -4,8 +4,8 @@ import { Observable } from "rxjs";
 import { Item } from "../models/item.model";
 import { address as env } from "../../environments/environment";
 
-// const baseUrl = `${env.remote}/api/items`;
-const baseUrl = `${env.local}/api/items`;
+const baseUrl = `${env.remote}/api/items`;
+// const baseUrl = `${env.local}/api/items`;
 // const baseUrl = "https://localhost:8080/api/items";
 
 @Injectable({
