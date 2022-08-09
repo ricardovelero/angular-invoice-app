@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Client } from "../../models/client.model";
 import { ClientService } from "../../services/client.service";
+import { Router } from "@angular/router";
+import { AuthService } from "@auth0/auth0-angular";
 
 @Component({
   selector: "app-client-add",
@@ -23,9 +25,14 @@ export class ClientAddComponent implements OnInit {
     country: "",
     isActive: true,
   };
+
   submitted = false;
 
-  constructor(private clientService: ClientService) {}
+  constructor(
+    private clientService: ClientService,
+    private router: Router,
+    public auth: AuthService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -70,5 +77,8 @@ export class ClientAddComponent implements OnInit {
       country: "",
       isActive: true,
     };
+  }
+  toClientList(): void {
+    this.router.navigate(["clients"]);
   }
 }
