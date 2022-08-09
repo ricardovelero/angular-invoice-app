@@ -40,6 +40,8 @@ export class InvoiceAddComponent implements OnInit {
 
   submitted?: boolean;
 
+  clicked: boolean = false;
+
   constructor(
     private primengConfig: PrimeNGConfig,
     private clientService: ClientService,
@@ -81,6 +83,7 @@ export class InvoiceAddComponent implements OnInit {
       billingMonth: "",
       items: [],
     };
+    this.onAddItemRow();
   }
 
   onAddItemRow() {

@@ -106,9 +106,10 @@
         </div>
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
+            [disabled]="clicked"
             class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             type="button"
-            (click)="onAddItemRow()"
+            (click)="onAddItemRow(); clicked = true"
           >
             Agregar ítem
           </button>
@@ -224,7 +225,7 @@
                         icon="pi pi-check"
                         class="ui-button-success"
                         style="margin-right: 0.5em"
-                        (click)="onRowEditSave(products, ri)"
+                        (click)="onRowEditSave(products, ri); clicked = false"
                       ></button>
                       <button
                         *ngIf="editing"
@@ -233,7 +234,7 @@
                         pCancelEditableRow
                         icon="pi pi-times"
                         class="ui-button-danger"
-                        (click)="onRowEditCancel(products, ri)"
+                        (click)="onRowEditCancel(products, ri); clicked = false"
                       ></button>
                     </td>
                   </tr>
@@ -307,8 +308,8 @@
       <li>newInvoice.date: {{ newInvoice.date }}</li>
       <li>newInvoice.dueDate: {{ newInvoice.dueDate }}</li>
       <li>newInvoice.isRecurrent: {{ newInvoice.isRecurrent }}</li>
-      <li>products: {{ products | json }}</li>
       <li>newInvoice.notes: {{ newInvoice.notes }}</li>
+      <li>products: {{ products | json }}</li>
       <li>newInvoice: {{ newInvoice | json }}</li>
     </ul> -->
   </div>
