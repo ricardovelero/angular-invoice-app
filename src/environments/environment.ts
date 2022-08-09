@@ -18,5 +18,5 @@ export const environment = {
 
 export const address = {
   local: "https://localhost:8080",
-  remote: "https://fancy-dodos-ring-213-94-15-90.loca.lt",
+  remote: "https://facturazen-backend-9tcee.ondigitalocean.app/",
 };
