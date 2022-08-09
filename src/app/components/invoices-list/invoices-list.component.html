@@ -127,16 +127,15 @@
 >
   <ng-template pTemplate="content">
     <div class="p-field mt-4">
-      <label for="clientId">Cliente</label>
+      <label for="fullName">Cliente</label>
       <input
         type="text"
         pInputText
-        id="clientId"
-        [(ngModel)]="invoice.ClientId"
-        required
-        autofocus
+        id="fullName"
+        [(ngModel)]="invoice.Client.fullName"
+        disabled="true"
       />
-      <small class="p-invalid" *ngIf="submitted && !invoice.invoice_name"
+      <small class="p-invalid" *ngIf="submitted && !invoice.Client.fullName"
         >Cliente es requerido.</small
       >
     </div>
@@ -151,41 +150,13 @@
     </div>
     <div class="p-formgrid p-grid">
       <div class="p-field mt-4">
-        <label for="due_datef">Due Date</label>
+        <label for="dueDate">Fecha Vencimiento</label>
         <p-calendar
           [(ngModel)]="invoice.dueDate"
           [locale]="es"
           dateFormat="dd/mm/yy"
-          inputId="due_date"
+          inputId="dueDate"
         ></p-calendar>
-      </div>
-      <div class="p-field mt-4">
-        <label for="quantity">Cantidad</label>
-        <p-inputNumber
-          id="quantity"
-          [(ngModel)]="invoice.quantity"
-        ></p-inputNumber>
-      </div>
-      <div class="p-field mt-4">
-        <label for="unit_cost">Precio</label>
-        <p-inputNumber
-          id="unit_cost"
-          [(ngModel)]="invoice.cost"
-          mode="currency"
-          currency="EUR"
-          locale="es-ES"
-        ></p-inputNumber>
-      </div>
-      <div class="p-field mt-4">
-        <label for="tax1">Impuesto</label>
-        <p-inputNumber id="tax1" [(ngModel)]="invoice.tax1"></p-inputNumber>
-      </div>
-      <div class="p-field mt-4">
-        <label for="actual_price">Costo Total</label>
-        <p-inputNumber
-          id="actual_price"
-          [(ngModel)]="invoice.actual_price"
-        ></p-inputNumber>
       </div>
     </div>
   </ng-template>
