@@ -7,7 +7,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 import { AuthModule } from "@auth0/auth0-angular";
-import { environment as env } from "../environments/environment.prod";
+import { environment as env } from "../environments/environment";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthHttpInterceptor } from "@auth0/auth0-angular";
 
