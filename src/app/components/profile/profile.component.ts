@@ -7,7 +7,11 @@ import { AuthService } from "@auth0/auth0-angular";
   styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
+  userProfile: string | any;
+
   constructor(public auth: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.auth.user$.subscribe((profile) => (this.userProfile = profile));
+  }
 }

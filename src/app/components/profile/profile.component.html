@@ -1,7 +1,7 @@
 <div class="mt-8 py-4">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
-      Información de Usuario
+      Tu Perfil
     </h2>
     <p class="text-center mt-1 text-sm text-gray-500">
       Puedes actualizar información usando los enlaces del lado derecho.
@@ -50,4 +50,7 @@
       </dl>
     </div>
   </div>
+</div>
+<div class="row" *ngIf="userProfile">
+  <pre class="col-12 text-light bg-dark p-4">{{ userProfile.sub }}</pre>
 </div>
