@@ -4,18 +4,20 @@ const audience = "https://api.facturazen.es";
 //const serverUrl = "https://localhost:8080";
 const serverUrl = "https://facturazen-backend-9tcee.ondigitalocean.app/";
 
-export const environment = {
-  production: false,
-  auth: {
-    domain,
-    clientId,
-    redirectUri: window.location.origin,
-    audience,
+export const environment = [
+  {
+    production: false,
+    auth: {
+      domain,
+      clientId,
+      redirectUri: window.location.origin,
+      audience,
+    },
+    dev: {
+      serverUrl,
+    },
   },
-  dev: {
-    serverUrl,
-  },
-};
+];
 
 export const address = {
   local: "https://localhost:8080",
