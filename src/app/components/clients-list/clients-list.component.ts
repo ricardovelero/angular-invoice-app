@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { Client } from "../../models/client.model";
 import { ClientService } from "../../services/client.service";
 
@@ -15,7 +16,7 @@ export class ClientsListComponent implements OnInit {
   currentIndex = -1;
   name: string = "";
 
-  constructor(private clientService: ClientService) {}
+  constructor(private clientService: ClientService, private router: Router) {}
 
   ngOnInit(): void {
     this.retrieveClients();
@@ -32,6 +33,9 @@ export class ClientsListComponent implements OnInit {
     this.retrieveClients();
     this.currentClient = {};
     this.currentIndex = -1;
+  }
+  goToPage(pageName: string) {
+    this.router.navigate([`${pageName}`]);
   }
   opencloseModal() {
     if (!this.modalToggle) {
