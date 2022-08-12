@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="mt-8 py-4">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
@@ -7,87 +8,123 @@
 </div>
 <div class="bg-gray-100 py-8">
   <div class="mx-auto sm:px-6">
-    <ul
-      role="list"
-      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-    >
-      <li
-        class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200"
-        *ngFor="let client of clients; let i = index"
-        [class.active]="i == currentIndex"
-      >
-        <div
-          class="w-full flex items-center justify-between p-6 space-x-6 cursor-pointer"
-          (click)="opencloseModal(); setActiveClient(client, i)"
+    <ng-container *ngIf="!(clients | keyvalue)?.length">
+      <!-- Empty state -->
+      <div class="text-center">
+        <svg
+          class="mx-auto h-12 w-12 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
         >
-          <div class="flex-1 truncate">
-            <div class="flex items-center space-x-3">
-              <h3
-                class="text-gray-900 text-sm font-medium truncate hover:text-gray-500"
-              >
-                {{ client.fullName }}
-              </h3>
-              <span
-                class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full"
-                >Al día</span
-              >
-            </div>
-            <p class="mt-1 text-gray-500 text-sm truncate">Empresa</p>
-          </div>
+          <path
+            vector-effect="non-scaling-stroke"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">No hay clientes</h3>
+        <p class="mt-1 text-sm text-gray-500">
+          Agrega tu primer cliente para facturar
+        </p>
+        <div class="mt-6">
+          <button
+            (click)="goToPage('client-add')"
+            pButton
+            pRipple
+            label="Crear primer Cliente"
+            icon="pi pi-plus"
+            class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          ></button>
         </div>
-        <div>
-          <div class="-mt-px flex divide-x divide-gray-200">
-            <div class="w-0 flex-1 flex">
-              <a
-                [href]="'mailto:' + client.email"
-                class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
-              >
-                <!-- Heroicon name: solid/mail -->
-                <svg
-                  class="w-5 h-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(clients | keyvalue)?.length">
+      <ul
+        role="list"
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        <li
+          class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200"
+          *ngFor="let client of clients; let i = index"
+          [class.active]="i == currentIndex"
+        >
+          <div
+            class="w-full flex items-center justify-between p-6 space-x-6 cursor-pointer"
+            (click)="opencloseModal(); setActiveClient(client, i)"
+          >
+            <div class="flex-1 truncate">
+              <div class="flex items-center space-x-3">
+                <h3
+                  class="text-gray-900 text-sm font-medium truncate hover:text-gray-500"
                 >
-                  <path
-                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
-                  />
-                  <path
-                    d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
-                  />
-                </svg>
-                <span class="ml-3">Email</span>
-              </a>
-            </div>
-            <div class="-ml-px w-0 flex-1 flex">
-              <a
-                routerLink="invoices"
-                class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
-              >
-                <!-- Heroicon name: solid/phone -->
-                <svg
-                  class="w-5 h-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  aria-hidden="true"
+                  {{ client.fullName }}
+                </h3>
+                <span
+                  class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full"
+                  >Al día</span
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                <span class="ml-3">Facturar</span>
-              </a>
+              </div>
+              <p class="mt-1 text-gray-500 text-sm truncate">Empresa</p>
             </div>
           </div>
-        </div>
-      </li>
-    </ul>
+          <div>
+            <div class="-mt-px flex divide-x divide-gray-200">
+              <div class="w-0 flex-1 flex">
+                <a
+                  [href]="'mailto:' + client.email"
+                  class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                >
+                  <!-- Heroicon name: solid/mail -->
+                  <svg
+                    class="w-5 h-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                    />
+                    <path
+                      d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                    />
+                  </svg>
+                  <span class="ml-3">Email</span>
+                </a>
+              </div>
+              <div class="-ml-px w-0 flex-1 flex">
+                <a
+                  routerLink="invoices"
+                  class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
+                >
+                  <!-- Heroicon name: solid/phone -->
+                  <svg
+                    class="w-5 h-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  <span class="ml-3">Facturar</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
   </div>
 </div>
 <div
