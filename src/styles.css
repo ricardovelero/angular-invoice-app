@@ -974,6 +974,14 @@ select {
   margin-right: -3rem;
 }
 
+.-ml-1 {
+  margin-left: -0.25rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1030,6 +1038,10 @@ select {
   height: 2.5rem;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -1080,6 +1092,10 @@ select {
 
 .w-14 {
   width: 3.5rem;
+}
+
+.w-12 {
+  width: 3rem;
 }
 
 .min-w-full {
