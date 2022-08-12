@@ -2,116 +2,152 @@
 <div class="mt-8 py-4">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
-      Ítems
+      Listado de Ítems
     </h2>
   </div>
 </div>
 <div class="bg-gray-100 py-8">
   <div class="mx-auto sm:px-6">
-    <p-toolbar styleClass="p-mb-4">
-      <ng-template pTemplate="right">
-        <button
-          pButton
-          pRipple
-          label="Nuevo"
-          icon="pi pi-plus"
-          class="p-button-help mr-4"
-          (click)="openNew()"
-        ></button>
-        <button
-          pButton
-          pRipple
-          icon="pi pi-trash"
-          class="p-button-danger"
-          (click)="deleteSelectedItems()"
-          [disabled]="!selectedItems || !selectedItems.length"
-        ></button>
-      </ng-template>
-
-      <ng-template pTemplate="left"> </ng-template>
-    </p-toolbar>
-
-    <p-table
-      #dt
-      [value]="items"
-      [rows]="10"
-      [paginator]="true"
-      [globalFilterFields]="['name', 'description']"
-      [(selection)]="selectedItems"
-      [rowHover]="true"
-      dataKey="id"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} ítems"
-      [showCurrentPageReport]="true"
-    >
-      <ng-template pTemplate="caption">
-        <div class="p-d-flex p-ai-center p-jc-between">
-          <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input
-              pInputText
-              type="text"
-              (input)="applyFilterGlobal($event, 'contains')"
-              placeholder="Buscar..."
-            />
-          </span>
+    <ng-container *ngIf="!(items | keyvalue)?.length">
+      <!-- Empty state -->
+      <div class="text-center">
+        <svg
+          class="mx-auto h-12 w-12 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            vector-effect="non-scaling-stroke"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">No hay ítems</h3>
+        <p class="mt-1 text-sm text-gray-500">
+          Agrega tu primer ítem a facturar
+        </p>
+        <div class="mt-6">
+          <button
+            (click)="openNew()"
+            pButton
+            pRipple
+            label="Crear primer Ítem"
+            icon="pi pi-plus"
+            class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          ></button>
         </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 3rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
-          <th pSortableColumn="name">
-            Nombre <p-sortIcon field="name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="description">
-            Descripción <p-sortIcon field="description"></p-sortIcon>
-          </th>
-          <th pSortableColumn="cost">
-            Costo <p-sortIcon field="cost"></p-sortIcon>
-          </th>
-          <th pSortableColumn="tax1">
-            Impuesto <p-sortIcon field="tax1"></p-sortIcon>
-          </th>
-          <th pSortableColumn="tax2">
-            Impuesto 2<p-sortIcon field="tax2"></p-sortIcon>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-item>
-        <tr>
-          <td>
-            <p-tableCheckbox [value]="item"></p-tableCheckbox>
-          </td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.description }}</td>
-          <td>{{ item.cost | currency: "EUR" }}</td>
-          <td>{{ item.tax1 }}</td>
-          <td>{{ item.tax2 }}</td>
-          <td>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-success p-mr-2"
-              (click)="editItem(item)"
-            ></button>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-warning"
-              (click)="eraseItem(item)"
-            ></button>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="summary">
-        <div class="p-d-flex p-ai-center p-jc-between">
-          En total hay {{ items ? items.length : 0 }} ítems.
-        </div>
-      </ng-template>
-    </p-table>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(items | keyvalue)?.length">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="right">
+          <button
+            pButton
+            pRipple
+            label="Nuevo Ítem"
+            icon="pi pi-plus"
+            class="p-button-help mr-4"
+            (click)="openNew()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-danger"
+            (click)="deleteSelectedItems()"
+            [disabled]="!selectedItems || !selectedItems.length"
+          ></button>
+        </ng-template>
+
+        <ng-template pTemplate="left"> </ng-template>
+      </p-toolbar>
+
+      <p-table
+        #dt
+        [value]="items"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'description']"
+        [(selection)]="selectedItems"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} ítems"
+        [showCurrentPageReport]="true"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="applyFilterGlobal($event, 'contains')"
+                placeholder="Buscar..."
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="name">
+              Nombre <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="description">
+              Descripción <p-sortIcon field="description"></p-sortIcon>
+            </th>
+            <th pSortableColumn="cost">
+              Costo <p-sortIcon field="cost"></p-sortIcon>
+            </th>
+            <th pSortableColumn="tax1">
+              Impuesto <p-sortIcon field="tax1"></p-sortIcon>
+            </th>
+            <th pSortableColumn="tax2">
+              Impuesto 2<p-sortIcon field="tax2"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="item"></p-tableCheckbox>
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.cost | currency: "EUR" }}</td>
+            <td>{{ item.tax1 }}</td>
+            <td>{{ item.tax2 }}</td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-success p-mr-2"
+                (click)="editItem(item)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-warning"
+                (click)="eraseItem(item)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{ items ? items.length : 0 }} ítems.
+          </div>
+        </ng-template>
+      </p-table>
+    </ng-container>
   </div>
 </div>
 
