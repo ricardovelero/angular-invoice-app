@@ -46,6 +46,8 @@ export class InvoiceAddComponent implements OnInit {
 
   today: Date = new Date();
 
+  modalToggle: boolean = false;
+
   constructor(
     private primengConfig: PrimeNGConfig,
     private clientService: ClientService,
@@ -186,5 +188,13 @@ export class InvoiceAddComponent implements OnInit {
         }),
     });
     this.router.navigate(["invoices"]);
+  }
+  opencloseModal() {
+    if (!this.modalToggle) {
+      this.modalToggle = !this.modalToggle;
+    } else {
+      this.modalToggle = !this.modalToggle;
+    }
+    return this.modalToggle;
   }
 }

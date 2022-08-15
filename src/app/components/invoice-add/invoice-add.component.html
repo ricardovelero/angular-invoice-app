@@ -37,6 +37,7 @@
       <div class="sm:col-span-1">
         <div class="mt-4 sm:mt-6">
           <button
+            (click)="opencloseModal()"
             pRipple
             class="inline-flex items-center justify-center sm:w-auto px-3 py-3 rounded-r-md mt-1 border border-transparent bg-indigo-600 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             type="button"
@@ -369,5 +370,44 @@
       <li>newInvoice: {{ newInvoice | json }}</li>
     </ul> -->
     <!-- <p>lastInvoice: {{ lastInvoice | json }}</p> -->
+  </div>
+</div>
+<div
+  class="relative z-10"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+  [ngClass]="{
+    'ease-in duration-500 opacity-0 -z-20': !modalToggle,
+    'z-10': modalToggle
+  }"
+>
+  <div
+    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    [ngClass]="{
+      'ease-in duration-200 opacity-0': !modalToggle,
+      'ease-out duration-300 opacity-100': modalToggle
+    }"
+  ></div>
+  <div class="fixed z-10 inset-0 overflow-y-auto">
+    <div
+      class="flex items-end sm:items-center justify-center min-h-full p-1 text-center sm:p-0"
+    >
+      <div
+        [ngClass]="{
+          'transition ease-in duration-75 transform opacity-0 scale-95':
+            !modalToggle,
+          'transition ease-out duration-100 transform opacity-100 scale-100':
+            modalToggle
+        }"
+        class="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-3xl sm:w-full sm:p-6"
+      >
+        <div>
+          <div class="mt-1 sm:mt-1">
+            <app-client-add></app-client-add>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
