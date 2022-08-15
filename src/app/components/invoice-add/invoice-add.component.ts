@@ -79,7 +79,7 @@ export class InvoiceAddComponent implements OnInit {
       total: 0,
       isRecurrent: false,
       notes: "",
-      status: "",
+      status: "Pendiente",
       billingMonth: "",
       items: [],
     };
