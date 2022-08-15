@@ -39,7 +39,7 @@
           [value]="invoices"
           [rows]="10"
           [paginator]="true"
-          [globalFilterFields]="['invoice_name', 'invoice_description']"
+          [globalFilterFields]="['number', 'Client.fullName', 'status']"
           [(selection)]="selectedInvoices"
           [rowHover]="true"
           dataKey="id"
@@ -68,7 +68,7 @@
                 Cliente <p-sortIcon field="Client.fullName"></p-sortIcon>
               </th>
               <th pSortableColumn="number">
-                Número <p-sortIcon field="notes"></p-sortIcon>
+                Número <p-sortIcon field="number"></p-sortIcon>
               </th>
               <th pSortableColumn="date">
                 Fecha emisión <p-sortIcon field="date"></p-sortIcon>
