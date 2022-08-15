@@ -14,6 +14,7 @@ export class ClientAddComponent implements OnInit {
     fullName: "",
     email: "",
     phone: "",
+    businessName: "",
     businessPhone: "",
     businessEmail: "",
     nifNumber: "",
@@ -41,6 +42,7 @@ export class ClientAddComponent implements OnInit {
       fullName: this.client.fullName,
       email: this.client.email,
       telephone: this.client.phone,
+      businessName: this.client.businessName,
       businessPhone: this.client.businessPhone,
       businessEmail: this.client.businessEmail,
       nifNumber: this.client.nifNumber,
@@ -54,7 +56,6 @@ export class ClientAddComponent implements OnInit {
     };
     this.clientService.createClient(data).subscribe({
       next: (res) => {
-        console.log(res);
         this.submitted = true;
       },
       error: (e) => console.error(e),
@@ -66,6 +67,7 @@ export class ClientAddComponent implements OnInit {
       fullName: "",
       email: "",
       phone: "",
+      businessName: "",
       businessPhone: "",
       businessEmail: "",
       nifNumber: "",
