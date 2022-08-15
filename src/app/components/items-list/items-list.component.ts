@@ -102,7 +102,10 @@ export class ItemsListComponent implements OnInit {
     this.confirmationService.confirm({
       message: "¿Está seguro de que quiere borrar " + item.name + "?",
       header: "Por favor, confirmar...",
+      acceptLabel: "Sí",
+      rejectLabel: "No",
       icon: "pi pi-exclamation-triangle",
+      rejectButtonStyleClass: "p-button-text",
       accept: () => {
         this.itemService.deleteItem(item.id).subscribe({
           next: (res) => {
