@@ -94,16 +94,17 @@ export class InvoiceAddComponent implements OnInit {
   }
 
   onRowEditInit(item: ItemList | any) {
-    this.clonedItems[item.id] = { ...item };
+    this.clonedItems[item.item.id] = { ...item };
   }
 
   onRowEditSave(item: ItemList | any, index: any) {
-    if (item[index].quantity > 0) {
+    console.log(item);
+    if (item.item.quantity > 0) {
       delete this.clonedItems[item.id];
       this.messageService.add({
         severity: "success",
-        summary: "Success",
-        detail: "Ítem actuzalizado",
+        summary: "Éxito",
+        detail: "Ítem actuzalizado con éxito",
       });
     } else {
       this.messageService.add({
@@ -115,8 +116,9 @@ export class InvoiceAddComponent implements OnInit {
   }
 
   onRowEditCancel(item: ItemList | any, index: number) {
-    this.items[index] = this.clonedItems[item.id];
-    delete this.clonedItems[item.id];
+    console.log(this.clonedItems);
+    this.items[index] = this.clonedItems[item.item.id];
+    delete this.clonedItems[item.item.id];
   }
 
   filterClient(event: any) {
@@ -134,9 +136,12 @@ export class InvoiceAddComponent implements OnInit {
   }
 
   calculateInvoiceTotal(products: any) {
+    this.newInvoice.subtotal = 0;
     this.newInvoice.total = 0;
     for (let product of products) {
       this.newInvoice.total += product.item.total;
+      this.newInvoice.subtotal += product.item.subtotal;
+      this.newInvoice.taxAmount = product.item.total - product.item.subtotal;
     }
   }
 

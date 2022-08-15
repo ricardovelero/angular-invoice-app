@@ -1,4 +1,7 @@
 <p-toast></p-toast>
+<ng-container *ngIf="showSpinner">
+  <app-spinner></app-spinner>
+</ng-container>
 <div class="mt-8 py-4">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
@@ -8,7 +11,7 @@
 </div>
 <div class="bg-gray-100 py-8">
   <div class="mx-auto sm:px-6">
-    <ng-container *ngIf="!(items | keyvalue)?.length">
+    <ng-container *ngIf="isEmpty">
       <!-- Empty state -->
       <div class="text-center">
         <svg
@@ -42,7 +45,7 @@
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="(items | keyvalue)?.length">
+    <ng-container *ngIf="!isEmpty">
       <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="right">
           <button

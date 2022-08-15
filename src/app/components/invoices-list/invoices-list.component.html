@@ -1,58 +1,30 @@
 <p-toast></p-toast>
-<div class="mt-8 py-4">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
-      Listado de Facturas
-    </h2>
+<ng-container *ngIf="showSpinner; else loaded">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-template #loaded>
+  <div class="mt-8 py-4">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
+        Listado de Facturas
+      </h2>
+    </div>
   </div>
-</div>
-<div class="bg-gray-100 py-8">
-  <div class="mx-auto sm:px-6">
-    <ng-container *ngIf="!(invoices | keyvalue)?.length">
-      <!-- Empty state -->
-      <div class="text-center">
-        <svg
-          class="mx-auto h-12 w-12 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            vector-effect="non-scaling-stroke"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
-        </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">No hay facturas</h3>
-        <p class="mt-1 text-sm text-gray-500">Empieza a facturar hoy</p>
-        <div class="mt-6">
-          <button
-            (click)="goToPage('invoice-add')"
-            pButton
-            pRipple
-            label="Nueva Factura"
-            icon="pi pi-plus"
-            class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          ></button>
-        </div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="(invoices | keyvalue)?.length">
-      <p-toolbar styleClass="p-mb-4">
-        <ng-template pTemplate="left"> </ng-template>
-        <ng-template pTemplate="right">
-          <button
-            (click)="goToPage('invoice-add')"
-            pButton
-            pRipple
-            label="Nueva Factura"
-            icon="pi pi-plus"
-            class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          ></button>
-          <!-- <button
+  <div class="bg-gray-100 py-8">
+    <div class="mx-auto sm:px-6">
+      <ng-container *ngIf="!isEmpty">
+        <p-toolbar styleClass="p-mb-4">
+          <ng-template pTemplate="left"> </ng-template>
+          <ng-template pTemplate="right">
+            <button
+              (click)="goToPage('invoice-add')"
+              pButton
+              pRipple
+              label="Nueva Factura"
+              icon="pi pi-plus"
+              class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            ></button>
+            <!-- <button
           pButton
           pRipple
           icon="pi pi-trash"
@@ -60,157 +32,192 @@
           (click)="deleteSelectedInvoices()"
           [disabled]="!selectedInvoices || !selectedInvoices.length"
         ></button> -->
-        </ng-template>
-      </p-toolbar>
-      <p-table
-        #dt
-        [value]="invoices"
-        [rows]="10"
-        [paginator]="true"
-        [globalFilterFields]="['invoice_name', 'invoice_description']"
-        [(selection)]="selectedInvoices"
-        [rowHover]="true"
-        dataKey="id"
-        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} facturas"
-        [showCurrentPageReport]="true"
-      >
-        <ng-template pTemplate="caption">
-          <div class="p-d-flex p-ai-center p-jc-between">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input
-                pInputText
-                type="text"
-                (input)="applyFilterGlobal($event, 'contains')"
-                placeholder="Buscar..."
-              />
-            </span>
+          </ng-template>
+        </p-toolbar>
+        <p-table
+          #dt
+          [value]="invoices"
+          [rows]="10"
+          [paginator]="true"
+          [globalFilterFields]="['invoice_name', 'invoice_description']"
+          [(selection)]="selectedInvoices"
+          [rowHover]="true"
+          dataKey="id"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} facturas"
+          [showCurrentPageReport]="true"
+        >
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="applyFilterGlobal($event, 'contains')"
+                  placeholder="Buscar..."
+                />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th pSortableColumn="Client.fullName">
+                Cliente <p-sortIcon field="Client.fullName"></p-sortIcon>
+              </th>
+              <th pSortableColumn="date">
+                Fecha emisión <p-sortIcon field="date"></p-sortIcon>
+              </th>
+              <th pSortableColumn="dueDate">
+                Fecha vencimiento <p-sortIcon field="dueDate"></p-sortIcon>
+              </th>
+              <th pSortableColumn="total">
+                Total <p-sortIcon field="total"></p-sortIcon>
+              </th>
+              <th pSortableColumn="notes">
+                Notas <p-sortIcon field="notes"></p-sortIcon>
+              </th>
+              <th pSortableColumn="status">
+                Estado <p-sortIcon field="status"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-invoice>
+            <tr>
+              <td>
+                <p-tableCheckbox [value]="invoice"></p-tableCheckbox>
+              </td>
+              <td>{{ invoice.Client.fullName }}</td>
+              <td>{{ invoice.date | date: "longDate":"es" }}</td>
+              <td>{{ invoice.dueDate | date: "longDate":"es" }}</td>
+              <td>{{ invoice.total | currency: "EUR" }}</td>
+              <td>{{ invoice.notes }}</td>
+              <td>{{ invoice.status }}</td>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-success p-mr-2"
+                  (click)="editInvoice(invoice)"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="eraseInvoice(invoice)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              En total hay {{ invoices ? invoices.length : 0 }} facturas.
+            </div>
+          </ng-template>
+        </p-table>
+      </ng-container>
+      <ng-container *ngIf="isEmpty">
+        <!-- Empty state -->
+        <div class="text-center">
+          <svg
+            class="mx-auto h-12 w-12 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              vector-effect="non-scaling-stroke"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+          <h3 class="mt-2 text-sm font-medium text-gray-900">
+            No hay facturas
+          </h3>
+          <p class="mt-1 text-sm text-gray-500">Empieza a facturar hoy</p>
+          <div class="mt-6">
+            <button
+              (click)="goToPage('invoice-add')"
+              pButton
+              pRipple
+              label="Nueva Factura"
+              icon="pi pi-plus"
+              class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            ></button>
           </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 3rem">
-              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th pSortableColumn="Client.fullName">
-              Cliente <p-sortIcon field="Client.fullName"></p-sortIcon>
-            </th>
-            <th pSortableColumn="date">
-              Fecha emisión <p-sortIcon field="date"></p-sortIcon>
-            </th>
-            <th pSortableColumn="dueDate">
-              Fecha vencimiento <p-sortIcon field="dueDate"></p-sortIcon>
-            </th>
-            <th pSortableColumn="total">
-              Total <p-sortIcon field="total"></p-sortIcon>
-            </th>
-            <th pSortableColumn="notes">
-              Notas <p-sortIcon field="notes"></p-sortIcon>
-            </th>
-            <th pSortableColumn="status">
-              Estado <p-sortIcon field="status"></p-sortIcon>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-invoice>
-          <tr>
-            <td>
-              <p-tableCheckbox [value]="invoice"></p-tableCheckbox>
-            </td>
-            <td>{{ invoice.Client.fullName }}</td>
-            <td>{{ invoice.date | date: "longDate":"es" }}</td>
-            <td>{{ invoice.dueDate | date: "longDate":"es" }}</td>
-            <td>{{ invoice.total | currency: "EUR" }}</td>
-            <td>{{ invoice.notes }}</td>
-            <td>{{ invoice.status }}</td>
-            <td>
-              <button
-                pButton
-                pRipple
-                icon="pi pi-pencil"
-                class="p-button-rounded p-button-success p-mr-2"
-                (click)="editInvoice(invoice)"
-              ></button>
-              <button
-                pButton
-                pRipple
-                icon="pi pi-trash"
-                class="p-button-rounded p-button-warning"
-                (click)="eraseInvoice(invoice)"
-              ></button>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-          <div class="p-d-flex p-ai-center p-jc-between">
-            En total hay {{ invoices ? invoices.length : 0 }} facturas.
-          </div>
-        </ng-template>
-      </p-table>
-    </ng-container>
+        </div>
+      </ng-container>
+    </div>
   </div>
-</div>
 
-<p-dialog
-  [(visible)]="invoiceDialog"
-  header="Datos de la factura"
-  [modal]="true"
-  styleClass="p-fluid w-1/4"
->
-  <ng-template pTemplate="content">
-    <div class="p-field mt-4">
-      <label for="fullName">Cliente</label>
-      <input
-        type="text"
-        pInputText
-        id="fullName"
-        [(ngModel)]="invoice.Client.fullName"
-        disabled="true"
-      />
-      <small class="p-invalid" *ngIf="submitted && !invoice.Client.fullName"
-        >Cliente es requerido.</small
-      >
-    </div>
-    <div class="p-field mt-4">
-      <label for="invoice_date">Fecha</label>
-      <p-calendar
-        [(ngModel)]="invoice.date"
-        [locale]="es"
-        dateFormat="dd/mm/yy"
-        inputId="invoice_date"
-      ></p-calendar>
-    </div>
-    <div class="p-formgrid p-grid">
+  <p-dialog
+    [(visible)]="invoiceDialog"
+    header="Datos de la factura"
+    [modal]="true"
+    styleClass="p-fluid w-1/4"
+  >
+    <ng-template pTemplate="content">
       <div class="p-field mt-4">
-        <label for="dueDate">Fecha Vencimiento</label>
+        <label for="fullName">Cliente</label>
+        <input
+          type="text"
+          pInputText
+          id="fullName"
+          [(ngModel)]="invoice.Client.fullName"
+          disabled="true"
+        />
+        <small class="p-invalid" *ngIf="submitted && !invoice.Client.fullName"
+          >Cliente es requerido.</small
+        >
+      </div>
+      <div class="p-field mt-4">
+        <label for="invoice_date">Fecha</label>
         <p-calendar
-          [(ngModel)]="invoice.dueDate"
+          [(ngModel)]="invoice.date"
           [locale]="es"
           dateFormat="dd/mm/yy"
-          inputId="dueDate"
+          inputId="invoice_date"
         ></p-calendar>
       </div>
-    </div>
-  </ng-template>
+      <div class="p-formgrid p-grid">
+        <div class="p-field mt-4">
+          <label for="dueDate">Fecha Vencimiento</label>
+          <p-calendar
+            [(ngModel)]="invoice.dueDate"
+            [locale]="es"
+            dateFormat="dd/mm/yy"
+            inputId="dueDate"
+          ></p-calendar>
+        </div>
+      </div>
+    </ng-template>
 
-  <ng-template pTemplate="footer">
-    <button
-      pButton
-      pRipple
-      label="Cancelar"
-      icon="pi pi-times"
-      class="p-button-text"
-      (click)="hideDialog()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      label="Guardar"
-      icon="pi pi-check"
-      class="p-button-text"
-      (click)="saveInvoice()"
-    ></button>
-  </ng-template>
-</p-dialog>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Guardar"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveInvoice()"
+      ></button>
+    </ng-template>
+  </p-dialog>
 
-<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+  <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+</ng-template>

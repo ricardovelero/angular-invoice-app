@@ -25,6 +25,8 @@ export class InvoicesListComponent implements OnInit {
   selectedInvoices: Invoice[] = [];
   ids: string[] = [];
   es: any;
+  showSpinner: boolean = true;
+  isEmpty: boolean = false;
 
   constructor(
     private invoiceService: InvoiceService,
@@ -38,7 +40,9 @@ export class InvoicesListComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.invoiceService.getAllInvoices().subscribe((invoices) => {
       this.invoices = invoices;
+      this.isEmpty = invoices.length < 1 ? true : false;
     });
+    this.showSpinner = false;
   }
 
   goToPage(pageName: string) {
