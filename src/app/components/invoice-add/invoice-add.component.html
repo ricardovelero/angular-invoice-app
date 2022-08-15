@@ -84,6 +84,8 @@
           <p-calendar
             inputId="date"
             [(ngModel)]="newInvoice.date"
+            [defaultDate]="today"
+            dateFormat="dd/mm/yy"
             name="date"
             autocomplete="date"
             styleClass="w-full"
@@ -99,6 +101,7 @@
           <p-calendar
             inputId="dueDate"
             [(ngModel)]="newInvoice.dueDate"
+            dateFormat="dd/mm/yy"
             name="dueDate"
             autocomplete="dueDate"
             styleClass="w-full"
@@ -365,5 +368,6 @@
       <li>products: {{ products | json }}</li>
       <li>newInvoice: {{ newInvoice | json }}</li>
     </ul> -->
+    <!-- <p>lastInvoice: {{ lastInvoice | json }}</p> -->
   </div>
 </div>
