@@ -47,6 +47,7 @@ import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { ToggleButtonModule } from "primeng/togglebutton";
     SignupButtonComponent,
     HomeComponent,
     ProfileComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
