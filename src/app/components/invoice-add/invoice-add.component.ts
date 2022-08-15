@@ -24,6 +24,8 @@ export class InvoiceAddComponent implements OnInit {
   clients: Client[] = [];
   client: any = {};
   items: Item[] = [];
+  lastInvoice: Invoice[] = [];
+  newNumber: any;
 
   selectedClient?: Client[];
   filteredClients: any[] | any;
@@ -42,6 +44,8 @@ export class InvoiceAddComponent implements OnInit {
 
   clicked: boolean = false;
 
+  today: Date = new Date();
+
   constructor(
     private primengConfig: PrimeNGConfig,
     private clientService: ClientService,
@@ -59,6 +63,10 @@ export class InvoiceAddComponent implements OnInit {
     });
     this.itemService.getAllItems().subscribe((items) => {
       this.items = items;
+    });
+    this.invoiceService.getLastInvoice().subscribe((invoices) => {
+      this.lastInvoice = invoices;
+      this.checkInvoiceNumber(this.lastInvoice);
     });
 
     this.cols = [
@@ -83,7 +91,21 @@ export class InvoiceAddComponent implements OnInit {
       billingMonth: "",
       items: [],
     };
+
     this.onAddItemRow();
+
+    this.newInvoice.date = this.today;
+  }
+
+  checkInvoiceNumber(data: any) {
+    let lastChar: number = data.number.charAt(data.number.length - 1);
+    if (isFinite(lastChar)) {
+      lastChar = lastChar * 1 + 1;
+      this.newNumber = data.number.replace(/[0-9]$/, lastChar);
+    } else {
+      this.newNumber = data.number;
+    }
+    this.newInvoice.number = this.newNumber;
   }
 
   onAddItemRow() {
