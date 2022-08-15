@@ -10,21 +10,27 @@ import { ClientService } from "../../services/client.service";
 })
 export class ClientsListComponent implements OnInit {
   @Input() viewMode = false;
+
   modalToggle: boolean = false;
   clients?: Client[];
   currentClient: Client = {};
   currentIndex = -1;
   name: string = "";
 
+  showSpinner: boolean = true;
+  isEmpty: boolean = false;
+
   constructor(private clientService: ClientService, private router: Router) {}
 
   ngOnInit(): void {
     this.retrieveClients();
+    this.showSpinner = false;
   }
   retrieveClients(): void {
     this.clientService.getAllClients().subscribe({
       next: (data) => {
         this.clients = data;
+        this.isEmpty = this.clients.length < 1 ? true : false;
       },
       error: (e) => console.error(e),
     });
