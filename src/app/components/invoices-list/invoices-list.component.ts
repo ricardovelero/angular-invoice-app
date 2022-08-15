@@ -63,7 +63,7 @@ export class InvoicesListComponent implements OnInit {
   }
   saveInvoice() {
     this.submitted = true;
-    if (this.invoice.invoice_name.trim()) {
+    if (this.invoice.number.trim()) {
       if (this.invoice.id) {
         this.invoices[this.findIndexById(this.invoice.id)] = this.invoice;
         this.invoiceService
@@ -124,9 +124,14 @@ export class InvoicesListComponent implements OnInit {
   eraseInvoice(invoice: Invoice | any) {
     this.confirmationService.confirm({
       message:
-        "¿Está seguro de que quiere borrar " + invoice.invoice_number + "?",
+        "¿Está seguro de que quiere borrar la Factura Número " +
+        invoice.number +
+        "?",
       header: "Por favor, confirmar...",
+      acceptLabel: "Sí",
+      rejectLabel: "No",
       icon: "pi pi-exclamation-triangle",
+      rejectButtonStyleClass: "p-button-text",
       accept: () => {
         this.invoiceService.deleteInvoice(invoice.id).subscribe({
           next: (res) => {
