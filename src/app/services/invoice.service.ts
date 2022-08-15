@@ -18,6 +18,9 @@ export class InvoiceService {
   getAllInvoices(): Observable<Invoice[]> {
     return this.http.get<Invoice[]>(baseUrl);
   }
+  getLastInvoice(): Observable<Invoice[]> {
+    return this.http.get<Invoice[]>(`${baseUrl}/last`);
+  }
   getInvoice(id: any): Observable<Invoice> {
     return this.http.get(`${baseUrl}/${id}`);
   }
