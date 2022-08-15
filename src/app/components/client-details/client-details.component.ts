@@ -82,6 +82,9 @@ export class ClientDetailsComponent implements OnInit {
       error: (e) => console.error(e),
     });
   }
+  goToPage(pageName: string) {
+    this.router.navigate([`${pageName}`]);
+  }
   openCloseMessage() {
     if (!this.toggle) {
       this.toggle = !this.toggle;
