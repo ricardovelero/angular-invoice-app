@@ -29,6 +29,8 @@ export class ItemsListComponent implements OnInit {
   selectedItems: Item[] = [];
 
   submitted: boolean = false;
+  showSpinner: boolean = true;
+  isEmpty: boolean = false;
 
   constructor(
     private itemService: ItemService,
@@ -41,7 +43,9 @@ export class ItemsListComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.itemService.getAllItems().subscribe((items) => {
       this.items = items;
+      this.isEmpty = this.items.length < 1 ? true : false;
     });
+    this.showSpinner = false;
   }
 
   openNew() {

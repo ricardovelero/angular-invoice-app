@@ -10,6 +10,7 @@ export class Client {
   company?: string;
   email?: string;
   phone?: string;
+  businessName?: string;
   businessEmail?: string;
   businessPhone?: string;
   creditLimit?: number;
