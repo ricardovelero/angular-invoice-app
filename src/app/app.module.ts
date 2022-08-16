@@ -30,6 +30,7 @@ import { AuthButtonComponent } from "./shared/auth-button/auth-button.component"
 import { SignupButtonComponent } from "./shared/signup-button/signup-button.component";
 import { HomeComponent } from "./components/home/home.component";
 import { ProfileComponent } from "./components/profile/profile.component";
+import { SpinnerComponent } from "./shared/spinner/spinner.component";
 
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { RippleModule } from "primeng/ripple";
@@ -47,7 +48,7 @@ import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
-import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { MenubarModule } from "primeng/menubar";
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     InputTextareaModule,
     DropdownModule,
     ToggleButtonModule,
+    MenubarModule,
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
