@@ -18,9 +18,15 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.invoiceService.getAllInvoices().subscribe((invoices) => {
-      this.invoices = invoices;
-      this.totalPending(invoices);
+    this.invoiceService.getAllInvoices().subscribe({
+      next: (invoices) => {
+        this.invoices = invoices;
+        this.totalPending(invoices);
+      },
+      error: (e) => {
+        console.error(e);
+        this.total = 0;
+      },
     });
   }
   totalPending(invoices: Invoice[]) {
