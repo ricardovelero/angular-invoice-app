@@ -122,7 +122,6 @@ export class InvoiceAddComponent implements OnInit {
   }
 
   onRowEditSave(item: ItemList | any, index: any) {
-    console.log(item);
     if (item.item.quantity > 0) {
       delete this.clonedItems[item.id];
       this.messageService.add({
@@ -140,7 +139,6 @@ export class InvoiceAddComponent implements OnInit {
   }
 
   onRowEditCancel(item: ItemList | any, index: number) {
-    console.log(this.clonedItems);
     this.items[index] = this.clonedItems[item.item.id];
     delete this.clonedItems[item.item.id];
   }
