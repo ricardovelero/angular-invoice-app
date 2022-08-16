@@ -844,6 +844,14 @@ select {
   z-index: 40;
 }
 
+.z-0 {
+  z-index: 0;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
 .col-span-1 {
   grid-column: span 1 / span 1;
 }
@@ -995,6 +1003,10 @@ select {
   margin-top: 0px;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1115,6 +1127,10 @@ select {
   width: 3.5rem;
 }
 
+.w-36 {
+  width: 9rem;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -1161,6 +1177,10 @@ select {
 
 .max-w-full {
   max-width: 100%;
+}
+
+.max-w-xl {
+  max-width: 36rem;
 }
 
 .flex-1 {
@@ -1532,6 +1552,11 @@ select {
 .bg-indigo-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(55 48 163 / var(--tw-bg-opacity));
+}
+
+.bg-red-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-75 {

@@ -1,5 +1,13 @@
 <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-<div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
+<div
+  class="relative lg:hidden"
+  [ngClass]="{
+    'z-0': !menuToggle,
+    'z-40': menuToggle
+  }"
+  role="dialog"
+  aria-modal="true"
+>
   <!--
         Off-canvas menu backdrop, show/hide based on off-canvas menu state.
   
@@ -18,7 +26,13 @@
     }"
   ></div>
 
-  <div class="fixed inset-0 flex z-40">
+  <div
+    class="fixed inset-0 flex"
+    [ngClass]="{
+      'z-0': !menuToggle,
+      'z-40': menuToggle
+    }"
+  >
     <!--
           Off-canvas menu, show/hide based on off-canvas menu state.
   
