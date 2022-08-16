@@ -53,62 +53,9 @@ export class InvoicesListComponent implements OnInit {
     this.submitted = false;
     this.invoiceDialog = true;
   }
-  editInvoice(invoice: Invoice) {
-    this.invoice = { ...invoice };
-    this.invoiceDialog = true;
-  }
   hideDialog() {
     this.invoiceDialog = false;
     this.submitted = false;
-  }
-  saveInvoice() {
-    this.submitted = true;
-    if (this.invoice.number.trim()) {
-      if (this.invoice.id) {
-        this.invoices[this.findIndexById(this.invoice.id)] = this.invoice;
-        this.invoiceService
-          .updateInvoice(this.invoice.id, this.invoice)
-          .subscribe({
-            next: (res) => {
-              this.messageService.add({
-                severity: "success",
-                summary: "Exitoso",
-                detail: "Factura actualizada",
-                life: 3000,
-              });
-            },
-            error: (e) =>
-              this.messageService.add({
-                severity: "error",
-                summary: "Error",
-                detail: e,
-                life: 5000,
-              }),
-          });
-      } else {
-        this.invoiceService.createInvoice(this.invoice).subscribe({
-          next: (res) => {
-            this.messageService.add({
-              severity: "success",
-              summary: "Exitoso",
-              detail: "Factura creada",
-              life: 3000,
-            });
-            this.invoices.push(this.invoice);
-          },
-          error: (e) =>
-            this.messageService.add({
-              severity: "error",
-              summary: "Error",
-              detail: e,
-              life: 5000,
-            }),
-        });
-      }
-      this.invoices = [...this.invoices];
-      this.invoiceDialog = false;
-      //this.invoice = {};
-    }
   }
   findIndexById(id: string): number {
     let index = -1;
@@ -163,6 +110,9 @@ export class InvoicesListComponent implements OnInit {
       message: "¿Está seguro de que quiere borrar los ítems seleccionados?",
       header: "Confirme",
       icon: "pi pi-exclamation-triangle",
+      acceptLabel: "Sí",
+      rejectLabel: "No",
+      rejectButtonStyleClass: "p-button-text",
       accept: () => {
         const invoicesToDelete = this.invoices.filter((val) =>
           this.selectedInvoices.includes(val)
