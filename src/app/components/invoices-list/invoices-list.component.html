@@ -96,13 +96,14 @@
               <td>{{ invoice.total | currency: "EUR" }}</td>
               <td>{{ invoice.status }}</td>
               <td>
-                <button
-                  pButton
-                  pRipple
-                  icon="pi pi-pencil"
-                  class="up-button-rounded p-button-text"
-                  (click)="showSpinner = true"
-                ></button>
+                <a routerLink="{{ invoice.id }}">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-pencil"
+                    class="up-button-rounded p-button-text"
+                  ></button
+                ></a>
                 <button
                   pButton
                   pRipple

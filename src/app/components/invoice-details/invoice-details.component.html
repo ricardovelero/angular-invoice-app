@@ -1,1 +1,149 @@
-<p>invoice-details works!</p>
+<div class="bg-white shadow mt-16 p-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="mt-8 py-4 sm:flex-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
+          Detalle de Factura Nº {{ currentInvoice.number }}
+        </h2>
+      </div>
+    </div>
+    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <button
+        type="button"
+        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Imprimir
+      </button>
+    </div>
+  </div>
+  <div class="sm:flex sm:items-center">
+    {{ currentInvoice.Client.fullName }}
+  </div>
+  <div class="-mx-4 mt-8 flex flex-col sm:-mx-6 md:mx-0">
+    <table class="min-w-full divide-y divide-gray-300">
+      <thead>
+        <tr>
+          <th
+            scope="col"
+            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0"
+          >
+            Ítem
+          </th>
+          <th
+            scope="col"
+            class="hidden py-3.5 px-3 text-right text-sm font-semibold text-gray-900 sm:table-cell"
+          >
+            Cantidad
+          </th>
+          <th
+            scope="col"
+            class="hidden py-3.5 px-3 text-right text-sm font-semibold text-gray-900 sm:table-cell"
+          >
+            Costo
+          </th>
+          <th
+            scope="col"
+            class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0"
+          >
+            Valor
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="border-b border-gray-200"
+          *ngFor="let item of currentInvoice.Items; let i = index"
+        >
+          <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
+            <div class="font-medium text-gray-900">
+              {{ item.name }}
+            </div>
+            <div class="mt-0.5 text-gray-500 sm:hidden">
+              {{ item.InvoiceItems.quantity }} a {{ item.cost }} c/u
+            </div>
+          </td>
+          <td
+            class="hidden py-4 px-3 text-right text-sm text-gray-500 sm:table-cell"
+          >
+            {{ item.InvoiceItems.quantity }}
+          </td>
+          <td
+            class="hidden py-4 px-3 text-right text-sm text-gray-500 sm:table-cell"
+          >
+            {{ item.cost }}
+          </td>
+          <td
+            class="py-4 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
+          >
+            {{ item.InvoiceItems.quantity * item.cost }}
+          </td>
+        </tr>
+
+        <!-- More projects... -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <th
+            scope="row"
+            colspan="3"
+            class="hidden pl-6 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell md:pl-0"
+          >
+            Subtotal
+          </th>
+          <th
+            scope="row"
+            class="pl-4 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden"
+          >
+            Subtotal
+          </th>
+          <td
+            class="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
+          >
+            {{ currentInvoice.subtotal | currency: "EUR" }}
+          </td>
+        </tr>
+        <tr>
+          <th
+            scope="row"
+            colspan="3"
+            class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell md:pl-0"
+          >
+            Tax
+          </th>
+          <th
+            scope="row"
+            class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
+          >
+            Tax
+          </th>
+          <td
+            class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
+          >
+            {{ currentInvoice.taxAmount | currency: "EUR" }}
+          </td>
+        </tr>
+        <tr>
+          <th
+            scope="row"
+            colspan="3"
+            class="hidden pl-6 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell md:pl-0"
+          >
+            Total
+          </th>
+          <th
+            scope="row"
+            class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden"
+          >
+            Total
+          </th>
+          <td
+            class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0"
+          >
+            {{ currentInvoice.total | currency: "EUR" }}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<!-- {{ currentInvoice | json }} -->
