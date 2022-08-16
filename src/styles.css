@@ -1115,6 +1115,12 @@ select {
   min-width: 0px;
 }
 
+.min-w-fit {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+
 .max-w-7xl {
   max-width: 80rem;
 }
@@ -1137,6 +1143,16 @@ select {
 
 .max-w-xs {
   max-width: 20rem;
+}
+
+.max-w-fit {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+}
+
+.max-w-full {
+  max-width: 100%;
 }
 
 .flex-1 {
@@ -2612,6 +2628,10 @@ select {
 
   .lg\:max-w-6xl {
     max-width: 72rem;
+  }
+
+  .lg\:max-w-7xl {
+    max-width: 80rem;
   }
 
   .lg\:translate-x-1\/2 {
