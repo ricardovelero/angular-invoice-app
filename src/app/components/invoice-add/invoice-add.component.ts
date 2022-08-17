@@ -80,8 +80,8 @@ export class InvoiceAddComponent implements OnInit {
     if (this.route.snapshot.params["id"]) {
       this.getInvoice(this.route.snapshot.params["id"]);
     } else {
-      this.newInvoice.date = this.today;
       this.onAddItemRow();
+      this.newInvoice.date = this.today;
       this.invoiceService.getLastInvoice().subscribe((invoices) => {
         this.lastInvoice = invoices;
         this.checkInvoiceNumber(this.lastInvoice);
@@ -108,8 +108,11 @@ export class InvoiceAddComponent implements OnInit {
     this.invoiceService.getInvoice(id).subscribe({
       next: (data) => {
         this.newInvoice = data;
-        for (let item of this.newInvoice.Items) {
-          this.products.push(item);
+        for (let stuff of this.newInvoice.Items) {
+          this.newProduct = {
+            item: { stuff },
+          };
+          this.products.push(this.newProduct);
         }
         this.client = this.newInvoice.Client;
       },
@@ -130,7 +133,7 @@ export class InvoiceAddComponent implements OnInit {
 
   onAddItemRow() {
     this.newProduct = {
-      item: [],
+      item: {},
     };
     this.products.push(this.newProduct);
   }
