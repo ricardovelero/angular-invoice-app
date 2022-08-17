@@ -9,5 +9,5 @@ export class Invoice {
   isRecurrent?: boolean;
   notes?: string;
   status?: string;
-  billing_month?: string;
+  billingMonth?: string;
 }
