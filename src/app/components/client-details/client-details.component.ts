@@ -39,7 +39,7 @@ export class ClientDetailsComponent implements OnInit {
     const data = {
       fullName: this.currentClient.fullName,
       email: this.currentClient.email,
-      telephone: this.currentClient.phone,
+      phone: this.currentClient.phone,
       businessPhone: this.currentClient.businessPhone,
       businessEmail: this.currentClient.businessEmail,
       nifNumber: this.currentClient.nifNumber,
