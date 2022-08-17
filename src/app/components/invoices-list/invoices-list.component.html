@@ -103,7 +103,7 @@
               <td>{{ invoice.total | currency: "EUR" }}</td>
               <td>{{ invoice.status }}</td>
               <td>
-                <a routerLink="{{ invoice.id }}">
+                <a routerLink="/invoice-add/{{ invoice.id }}">
                   <button
                     pButton
                     pRipple

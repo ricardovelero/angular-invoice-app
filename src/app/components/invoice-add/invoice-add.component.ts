@@ -10,7 +10,7 @@ import { MessageService } from "primeng/api";
 import { ConfirmationService } from "primeng/api";
 
 import { PrimeNGConfig } from "primeng/api";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-invoice-add",
@@ -55,29 +55,12 @@ export class InvoiceAddComponent implements OnInit {
     private invoiceService: InvoiceService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.clientService.getAllClients().subscribe((clients) => {
-      this.clients = clients;
-    });
-    this.itemService.getAllItems().subscribe((items) => {
-      this.items = items;
-    });
-    this.invoiceService.getLastInvoice().subscribe((invoices) => {
-      this.lastInvoice = invoices;
-      this.checkInvoiceNumber(this.lastInvoice);
-    });
-
-    this.cols = [
-      { field: "name", header: "Item" },
-      { field: "quantity", header: "Cantidad" },
-      { field: "cost", header: "Precio" },
-      { field: "tax1", header: "Impuesto" },
-      { field: "total", header: "Valor" },
-    ];
 
     this.newInvoice = {
       ClientId: "",
@@ -94,9 +77,44 @@ export class InvoiceAddComponent implements OnInit {
       items: [],
     };
 
-    this.onAddItemRow();
+    if (this.route.snapshot.params["id"]) {
+      this.getInvoice(this.route.snapshot.params["id"]);
+    } else {
+      this.newInvoice.date = this.today;
+      this.onAddItemRow();
+      this.invoiceService.getLastInvoice().subscribe((invoices) => {
+        this.lastInvoice = invoices;
+        this.checkInvoiceNumber(this.lastInvoice);
+      });
+    }
 
-    this.newInvoice.date = this.today;
+    this.clientService.getAllClients().subscribe((clients) => {
+      this.clients = clients;
+    });
+    this.itemService.getAllItems().subscribe((items) => {
+      this.items = items;
+    });
+
+    this.cols = [
+      { field: "name", header: "Item" },
+      { field: "quantity", header: "Cantidad" },
+      { field: "cost", header: "Precio" },
+      { field: "tax1", header: "Impuesto" },
+      { field: "total", header: "Valor" },
+    ];
+  }
+
+  getInvoice(id: string): void {
+    this.invoiceService.getInvoice(id).subscribe({
+      next: (data) => {
+        this.newInvoice = data;
+        for (let item of this.newInvoice.Items) {
+          this.products.push(item);
+        }
+        this.client = this.newInvoice.Client;
+      },
+      error: (e) => console.error(e),
+    });
   }
 
   checkInvoiceNumber(data: any) {
