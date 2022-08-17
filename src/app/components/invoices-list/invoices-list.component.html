@@ -61,9 +61,7 @@
           </ng-template>
           <ng-template pTemplate="header">
             <tr>
-              <th style="width: 3rem">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
+              <th class="text-xs">Ver detalles</th>
               <th pSortableColumn="Client.fullName">
                 Cliente <p-sortIcon field="Client.fullName"></p-sortIcon>
               </th>
@@ -82,12 +80,21 @@
               <th pSortableColumn="status">
                 Estado <p-sortIcon field="status"></p-sortIcon>
               </th>
+              <th class="text-xs">Editar</th>
+              <th class="text-xs">Borrar</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-invoice>
             <tr>
               <td>
-                <p-tableCheckbox [value]="invoice"></p-tableCheckbox>
+                <a routerLink="{{ invoice.id }}">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-eye"
+                    class="up-button-rounded p-button-text"
+                  ></button
+                ></a>
               </td>
               <td>{{ invoice.Client.fullName }}</td>
               <td>{{ invoice.number }}</td>
@@ -104,6 +111,8 @@
                     class="up-button-rounded p-button-text"
                   ></button
                 ></a>
+              </td>
+              <td>
                 <button
                   pButton
                   pRipple
