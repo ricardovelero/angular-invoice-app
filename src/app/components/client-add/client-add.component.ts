@@ -41,7 +41,7 @@ export class ClientAddComponent implements OnInit {
     const data = {
       fullName: this.client.fullName,
       email: this.client.email,
-      telephone: this.client.phone,
+      phone: this.client.phone,
       businessName: this.client.businessName,
       businessPhone: this.client.businessPhone,
       businessEmail: this.client.businessEmail,
