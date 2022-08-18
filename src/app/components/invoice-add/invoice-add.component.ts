@@ -46,7 +46,11 @@ export class InvoiceAddComponent implements OnInit {
 
   today: Date = new Date();
 
+  defaultDueDate: Date = new Date();
+
   modalToggle: boolean = false;
+
+  isEditting: boolean = false;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -61,30 +65,36 @@ export class InvoiceAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-
-    this.newInvoice = {
-      ClientId: "",
-      number: "",
-      date: Date,
-      dueDate: Date,
-      subtotal: 0,
-      taxAmount: 0,
-      total: 0,
-      isRecurrent: false,
-      notes: "",
-      status: "Pendiente",
-      billingMonth: "",
-      items: [],
-    };
-
     if (this.route.snapshot.params["id"]) {
+      this.isEditting = true;
       this.getInvoice(this.route.snapshot.params["id"]);
     } else {
-      this.onAddItemRow();
+      this.newInvoice = {
+        ClientId: "",
+        number: "",
+        date: Date,
+        dueDate: Date,
+        subtotal: 0,
+        taxAmount: 0,
+        total: 0,
+        isRecurrent: false,
+        notes: "",
+        status: "Pendiente",
+        billingMonth: "",
+        items: [],
+      };
       this.newInvoice.date = this.today;
+      this.newInvoice.dueDate = this.defaultDueDate.setDate(
+        this.today.getDate() + 30
+      );
+      this.onAddItemRow();
       this.invoiceService.getLastInvoice().subscribe((invoices) => {
-        this.lastInvoice = invoices;
-        this.checkInvoiceNumber(this.lastInvoice);
+        if (invoices) {
+          this.lastInvoice = invoices;
+          this.checkInvoiceNumber(this.lastInvoice);
+        } else {
+          this.newInvoice.number = "100";
+        }
       });
     }
 
@@ -108,13 +118,18 @@ export class InvoiceAddComponent implements OnInit {
     this.invoiceService.getInvoice(id).subscribe({
       next: (data) => {
         this.newInvoice = data;
-        for (let stuff of this.newInvoice.Items) {
-          this.newProduct = {
-            item: { stuff },
-          };
-          this.products.push(this.newProduct);
+        var obj: any = {};
+        for (let item of this.newInvoice.Items) {
+          obj["item"] = item;
+          this.products.push(obj);
         }
         this.client = this.newInvoice.Client;
+        this.newInvoice.date = new Date(
+          this.newInvoice.date.replace(/-/g, "/")
+        );
+        this.newInvoice.dueDate = new Date(
+          this.newInvoice.dueDate.replace(/-/g, "/")
+        );
       },
       error: (e) => console.error(e),
     });
@@ -133,7 +148,7 @@ export class InvoiceAddComponent implements OnInit {
 
   onAddItemRow() {
     this.newProduct = {
-      item: {},
+      item: [],
     };
     this.products.push(this.newProduct);
   }

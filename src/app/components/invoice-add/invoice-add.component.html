@@ -4,11 +4,13 @@
     <h1
       class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 text-center"
     >
-      Nueva Factura
+      <div *ngIf="!isEditting; else editmode">Nueva Factura</div>
+      <ng-template #editmode>Editar Factura</ng-template>
     </h1>
+    <!-- 
     <p class="mt-1 text-sm text-gray-500 text-center">
       Completa toda la información para crear una nueva Factura.
-    </p>
+    </p> -->
 
     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-0 sm:grid-cols-6">
       <div class="sm:col-span-3">
@@ -104,6 +106,7 @@
           <p-calendar
             inputId="dueDate"
             [(ngModel)]="newInvoice.dueDate"
+            [defaultDate]="defaultDueDate"
             dateFormat="dd/mm/yy"
             name="dueDate"
             autocomplete="dueDate"
@@ -364,15 +367,16 @@
     </div>
     <!-- <ul>
       <li>client: {{ client | json }}</li>
-      <li>newInvoice.client: {{ newInvoice.Client.fullName | json }}</li>
-      <li>newInvoice.date: {{ newInvoice.date }}</li>
+      <li>products: {{ products | json }}</li> -->
+    <!-- <li>
+        newInvoice.client: {{ newInvoice.Client.fullName | json }}
+      </li> -->
+    <!-- <li>newInvoice.date: {{ newInvoice.date }}</li>
       <li>newInvoice.dueDate: {{ newInvoice.dueDate }}</li>
       <li>newInvoice.isRecurrent: {{ newInvoice.isRecurrent }}</li>
       <li>newInvoice.notes: {{ newInvoice.notes }}</li>
-      <li>products: {{ products | json }}</li>
       <li>newInvoice: {{ newInvoice | json }}</li>
     </ul> -->
-    <!-- <p>lastInvoice: {{ lastInvoice | json }}</p> -->
   </div>
 </div>
 <div
