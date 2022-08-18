@@ -84,9 +84,7 @@ export class InvoiceAddComponent implements OnInit {
         items: [],
       };
       this.newInvoice.date = this.today;
-      this.newInvoice.dueDate = this.defaultDueDate.setDate(
-        this.today.getDate() + 30
-      );
+      this.newInvoice.dueDate = this.addDays(this.today, 30);
       this.onAddItemRow();
       this.invoiceService.getLastInvoice().subscribe((invoices) => {
         if (invoices) {
@@ -112,6 +110,12 @@ export class InvoiceAddComponent implements OnInit {
       { field: "tax1", header: "Impuesto" },
       { field: "total", header: "Valor" },
     ];
+  }
+
+  addDays(date: Date, days: number) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   }
 
   getInvoice(id: string): void {
