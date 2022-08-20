@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Invoice } from "src/app/models/invoice.model";
 import { Client } from "../../models/client.model";
 import { Item } from "../../models/item.model";
@@ -48,7 +48,7 @@ export class InvoiceAddComponent implements OnInit {
 
   defaultDueDate: Date = new Date();
 
-  modalToggle: boolean = false;
+  displayModal: boolean = false;
 
   isEditting: boolean = false;
 
@@ -70,7 +70,7 @@ export class InvoiceAddComponent implements OnInit {
       this.getInvoice(this.route.snapshot.params["id"]);
     } else {
       this.newInvoice = {
-        ClientId: "",
+        ClientId: 0,
         number: "",
         date: Date,
         dueDate: Date,
@@ -227,12 +227,11 @@ export class InvoiceAddComponent implements OnInit {
     });
     this.router.navigate(["invoices"]);
   }
-  opencloseModal() {
-    if (!this.modalToggle) {
-      this.modalToggle = !this.modalToggle;
-    } else {
-      this.modalToggle = !this.modalToggle;
-    }
-    return this.modalToggle;
+  showModalDialog() {
+    this.displayModal = true;
+  }
+  clientFromChild(client: any) {
+    this.client = client;
+    this.newInvoice.ClientId = this.client.id;
   }
 }
