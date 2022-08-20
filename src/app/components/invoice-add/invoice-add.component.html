@@ -37,30 +37,12 @@
         </div>
       </div>
       <div class="sm:col-span-1">
-        <div class="mt-4 sm:mt-6">
-          <button
-            (click)="opencloseModal()"
-            pRipple
-            class="inline-flex items-center justify-center sm:w-auto px-3 py-3 rounded-r-md mt-1 border border-transparent bg-indigo-600 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            type="button"
-          >
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 4v16m8-8H4"
-                />
-              </svg>
-            </div>
-          </button>
+        <div class="mt-4 sm:mt-7 sm:ml-3">
+          <p-button
+            (click)="showModalDialog()"
+            icon="pi pi-plus"
+            label="Nuevo Cliente"
+          ></p-button>
         </div>
       </div>
       <div class="sm:col-span-2">
@@ -365,56 +347,31 @@
         </button>
       </div>
     </div>
-    <!-- <ul>
+    <ul>
       <li>client: {{ client | json }}</li>
-      <li>products: {{ products | json }}</li> -->
-    <!-- <li>
-        newInvoice.client: {{ newInvoice.Client.fullName | json }}
-      </li> -->
-    <!-- <li>newInvoice.date: {{ newInvoice.date }}</li>
+      <li>products: {{ products | json }}</li>
+      <li>newInvoice.date: {{ newInvoice.date }}</li>
       <li>newInvoice.dueDate: {{ newInvoice.dueDate }}</li>
       <li>newInvoice.isRecurrent: {{ newInvoice.isRecurrent }}</li>
       <li>newInvoice.notes: {{ newInvoice.notes }}</li>
       <li>newInvoice: {{ newInvoice | json }}</li>
-    </ul> -->
+    </ul>
   </div>
 </div>
-<div
-  class="relative z-10"
-  aria-labelledby="modal-title"
-  role="dialog"
-  aria-modal="true"
-  [ngClass]="{
-    'ease-in duration-500 opacity-0 -z-20': !modalToggle,
-    'z-10': modalToggle
-  }"
+<p-dialog
+  header="Agregar Cliente"
+  [(visible)]="displayModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  [focusTrap]="true"
 >
-  <div
-    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-    [ngClass]="{
-      'ease-in duration-200 opacity-0': !modalToggle,
-      'ease-out duration-300 opacity-100': modalToggle
-    }"
-  ></div>
-  <div class="fixed z-10 inset-0 overflow-y-auto">
-    <div
-      class="flex items-end sm:items-center justify-center min-h-full p-1 text-center sm:p-0"
-    >
-      <div
-        [ngClass]="{
-          'transition ease-in duration-75 transform opacity-0 scale-95':
-            !modalToggle,
-          'transition ease-out duration-100 transform opacity-100 scale-100':
-            modalToggle
-        }"
-        class="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-3xl sm:w-full sm:p-6"
-      >
-        <div>
-          <div class="mt-1 sm:mt-1">
-            <app-client-add></app-client-add>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <app-client-add
+    [isShort]="true"
+    (displayModal)="displayModal = false"
+    (theClient)="clientFromChild($event)"
+  ></app-client-add>
+</p-dialog>
