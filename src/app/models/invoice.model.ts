@@ -1,8 +1,8 @@
 export class Invoice {
   id?: string;
   number?: string;
-  date?: string;
-  dueDate?: string;
+  date?: Date;
+  dueDate?: Date;
   subtotal?: number;
   taxAmount?: number;
   total?: number;
