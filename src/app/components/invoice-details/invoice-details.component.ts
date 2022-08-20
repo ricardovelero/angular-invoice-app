@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Invoice } from "../../models/invoice.model";
 import { InvoiceService } from "../../services/invoice.service";
 import { PrimeNGConfig } from "primeng/api";
@@ -11,7 +11,7 @@ import { ActivatedRoute } from "@angular/router";
   providers: [InvoiceService],
 })
 export class InvoiceDetailsComponent implements OnInit {
-  @Input() currentInvoice: Invoice | any;
+  currentInvoice: Invoice | any;
 
   constructor(
     private invoiceService: InvoiceService,
@@ -21,10 +21,7 @@ export class InvoiceDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.getInvoice(this.route.snapshot.params["id"]);
-  }
-  getInvoice(id: string): void {
-    this.invoiceService.getInvoice(id).subscribe({
+    this.invoiceService.getInvoice(this.route.snapshot.params["id"]).subscribe({
       next: (data) => {
         this.currentInvoice = data;
       },
