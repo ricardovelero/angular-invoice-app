@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -49,6 +50,7 @@ import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { MenubarModule } from "primeng/menubar";
+import { InputComponent } from './shared/input/input.component';
 
 @NgModule({
   declarations: [
@@ -71,11 +73,13 @@ import { MenubarModule } from "primeng/menubar";
     HomeComponent,
     ProfileComponent,
     SpinnerComponent,
+    InputComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
