@@ -48,7 +48,6 @@ export class ClientAddComponent implements OnInit {
   };
 
   submitted: boolean = false;
-  clientId: number = 0;
 
   constructor(
     private clientService: ClientService,
