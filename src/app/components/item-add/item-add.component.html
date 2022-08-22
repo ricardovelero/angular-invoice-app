@@ -1,1 +1,44 @@
-<p>item-add works!</p>
+<div class="pt-8">
+  <form [formGroup]="itemForm" (ngSubmit)="addItem()">
+    <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+      <div class="sm:col-span-2">
+        <app-input
+          label="Nombre"
+          [control]="itemForm.controls.name"
+        ></app-input>
+      </div>
+      <div class="sm:col-span-4">
+        <app-input
+          label="Descripcion"
+          [control]="itemForm.controls.description"
+        ></app-input>
+      </div>
+      <div class="sm:col-span-2">
+        <app-input label="Costo" [control]="itemForm.controls.cost"></app-input>
+      </div>
+      <div class="sm:col-span-2">
+        <app-input label="IVA" [control]="itemForm.controls.tax1"></app-input>
+      </div>
+      <div class="sm:col-span-2">
+        <app-input label="Tax2" [control]="itemForm.controls.tax2"></app-input>
+      </div>
+    </div>
+    <div class="sm:col-span-6 mt-6 float-right">
+      <p-button
+        icon="pi pi-times"
+        (click)="parentModal(false)"
+        label="Cancelar"
+        styleClass="p-button-text mr-6"
+      ></p-button>
+      <p-button
+        [disabled]="itemForm.invalid"
+        icon="pi pi-check"
+        (click)="addItem(); parentModal(false)"
+        label="Guardar"
+      ></p-button>
+    </div>
+  </form>
+  <!-- <div>Form contents: {{ itemForm.value | json }}</div>
+  <div>Form is valid: {{ itemForm.valid }}</div>
+  <div>Errors around name: {{ itemForm.controls.name.errors | json }}</div> -->
+</div>
