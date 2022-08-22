@@ -24,6 +24,7 @@ export class InvoiceAddComponent implements OnInit {
   clients: Client[] = [];
   client: any = {};
   items: Item[] = [];
+  item: any = {};
   lastInvoice: Invoice[] = [];
   newNumber: any;
 
@@ -49,6 +50,7 @@ export class InvoiceAddComponent implements OnInit {
   defaultDueDate: Date = new Date();
 
   displayModal: boolean = false;
+  displayItemModal: boolean = false;
 
   isEditting: boolean = false;
 
@@ -85,7 +87,7 @@ export class InvoiceAddComponent implements OnInit {
       };
       this.newInvoice.date = this.today;
       this.newInvoice.dueDate = this.addDays(this.today, 30);
-      this.onAddItemRow();
+      // this.onAddItemRow();
       this.invoiceService.getLastInvoice().subscribe((invoices) => {
         if (invoices) {
           this.lastInvoice = invoices;
@@ -233,5 +235,14 @@ export class InvoiceAddComponent implements OnInit {
   clientFromChild(client: any) {
     this.client = client;
     this.newInvoice.ClientId = this.client.id;
+  }
+  showItemModalDialog() {
+    this.displayItemModal = true;
+  }
+  itemFromChild(item: any) {
+    var obj: any = {};
+    obj["item"] = item;
+    this.products.push(obj);
+    this.newInvoice.items.push(item);
   }
 }
