@@ -124,13 +124,11 @@
           </h1>
         </div>
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <button
-            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-            type="button"
-            (click)="clicked = true"
-          >
-            Crear Nuevo Ítem
-          </button>
+          <p-button
+            (click)="showItemModalDialog()"
+            icon="pi pi-plus"
+            label="Nuevo Ítem"
+          ></p-button>
         </div>
       </div>
       <div class="mt-8 flex flex-col">
@@ -156,6 +154,10 @@
                     <th *ngFor="let col of cols">
                       {{ col.header }}
                     </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                     <th></th>
                   </tr>
                 </ng-template>
@@ -204,7 +206,7 @@
                               product.item.subtotal = $event * product.item.cost
                             "
                             [min]="1"
-                            [showButtons]="true"
+                            [showButtons]="false"
                             buttonLayout="horizontal"
                             spinnerMode="horizontal"
                             decrementButtonClass="ui-button-success"
@@ -231,6 +233,10 @@
                     <td pEditableColumn>
                       {{ product.item.total | currency: "EUR" }}
                     </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td style="text-align: center">
                       <button
                         *ngIf="!editing"
@@ -279,7 +285,12 @@
                 <ng-template pTemplate="emptymessage" let-columns>
                   <tr>
                     <td [attr.colspan]="cols.length">
-                      Por favor, agrega un ítem para facturar
+                      <button
+                        (click)="onAddItemRow()"
+                        class="underline text-indigo-500"
+                      >
+                        Por favor, haga click aqui para agregar un ítem.
+                      </button>
                     </td>
                     <td></td>
                     <td></td>
@@ -374,4 +385,21 @@
     (displayModal)="displayModal = false"
     (theClient)="clientFromChild($event)"
   ></app-client-add>
+</p-dialog>
+
+<p-dialog
+  header="Agregar Ítem"
+  [(visible)]="displayItemModal"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  [focusTrap]="true"
+>
+  <app-item-add
+    (displayItemModal)="displayItemModal = false"
+    (theItem)="itemFromChild($event)"
+  ></app-item-add>
 </p-dialog>
