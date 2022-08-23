@@ -14,7 +14,18 @@
     <div class="mx-auto sm:px-6">
       <ng-container *ngIf="!isEmpty">
         <p-toolbar styleClass="p-mb-4">
-          <ng-template pTemplate="left"> </ng-template>
+          <ng-template pTemplate="left">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="applyFilterGlobal($event, 'contains')"
+                  placeholder="Buscar..."
+                />
+              </span></div
+          ></ng-template>
           <ng-template pTemplate="right">
             <button
               (click)="goToPage('invoice-add')"
@@ -45,39 +56,46 @@
           dataKey="id"
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} facturas"
           [showCurrentPageReport]="true"
+          tableStyleClass="min-w-full divide-y divide-gray-300 text-center"
         >
-          <ng-template pTemplate="caption">
-            <div class="p-d-flex p-ai-center p-jc-between">
-              <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="applyFilterGlobal($event, 'contains')"
-                  placeholder="Buscar..."
-                />
-              </span>
-            </div>
-          </ng-template>
+          <!-- <ng-template pTemplate="caption"> </ng-template> -->
           <ng-template pTemplate="header">
-            <tr>
+            <tr class="divide-x divide-gray-200">
               <th class="text-xs">Ver detalles</th>
-              <th pSortableColumn="Client.fullName">
+              <th
+                pSortableColumn="Client.fullName"
+                class="py-3.5 pl-4 pr-4 text-left text-base font-semibold text-gray-900"
+              >
                 Cliente <p-sortIcon field="Client.fullName"></p-sortIcon>
               </th>
-              <th pSortableColumn="number">
+              <th
+                pSortableColumn="number"
+                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+              >
                 Número <p-sortIcon field="number"></p-sortIcon>
               </th>
-              <th pSortableColumn="date">
+              <th
+                pSortableColumn="date"
+                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+              >
                 Fecha emisión <p-sortIcon field="date"></p-sortIcon>
               </th>
-              <th pSortableColumn="dueDate">
+              <th
+                pSortableColumn="dueDate"
+                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+              >
                 Fecha vencimiento <p-sortIcon field="dueDate"></p-sortIcon>
               </th>
-              <th pSortableColumn="total">
+              <th
+                pSortableColumn="total"
+                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+              >
                 Total <p-sortIcon field="total"></p-sortIcon>
               </th>
-              <th pSortableColumn="status">
+              <th
+                pSortableColumn="status"
+                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+              >
                 Estado <p-sortIcon field="status"></p-sortIcon>
               </th>
               <th class="text-xs">Editar</th>
@@ -85,8 +103,8 @@
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-invoice>
-            <tr>
-              <td>
+            <tr class="divide-x divide-gray-200">
+              <td class="whitespace-nowrap text-base font-medium text-gray-900">
                 <a routerLink="{{ invoice.id }}">
                   <button
                     pButton
@@ -96,12 +114,26 @@
                   ></button
                 ></a>
               </td>
-              <td>{{ invoice.Client.fullName }}</td>
-              <td>{{ invoice.number }}</td>
-              <td>{{ invoice.date | date: "longDate":"es" }}</td>
-              <td>{{ invoice.dueDate | date: "longDate":"es" }}</td>
-              <td>{{ invoice.total | currency: "EUR" }}</td>
-              <td>{{ invoice.status }}</td>
+              <td
+                class="whitespace-nowrap p-4 text-base font-medium text-gray-900"
+              >
+                {{ invoice.Client.fullName }}
+              </td>
+              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+                {{ invoice.number }}
+              </td>
+              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+                {{ invoice.date | date: "longDate":"es" }}
+              </td>
+              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+                {{ invoice.dueDate | date: "longDate":"es" }}
+              </td>
+              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+                {{ invoice.total | currency: "EUR" }}
+              </td>
+              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+                {{ invoice.status }}
+              </td>
               <td>
                 <a routerLink="/invoice-add/{{ invoice.id }}">
                   <button
