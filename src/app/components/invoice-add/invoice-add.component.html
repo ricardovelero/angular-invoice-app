@@ -354,7 +354,8 @@
           type="submit"
           (click)="saveNewInvoice()"
         >
-          Crear
+          <div *ngIf="!isEditting; else editlabel">Crear Factura</div>
+          <ng-template #editlabel>Guardar Factura</ng-template>
         </button>
       </div>
     </div>
