@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Invoice } from "src/app/models/invoice.model";
 import { Client } from "../../models/client.model";
 import { Item } from "../../models/item.model";
@@ -6,11 +7,12 @@ import { ItemList } from "../../models/item-list.model";
 import { ClientService } from "../../services/client.service";
 import { ItemService } from "../../services/item.service";
 import { InvoiceService } from "src/app/services/invoice.service";
-import { MessageService } from "primeng/api";
-import { ConfirmationService } from "primeng/api";
 
-import { PrimeNGConfig } from "primeng/api";
-import { ActivatedRoute, Router } from "@angular/router";
+import {
+  PrimeNGConfig,
+  ConfirmationService,
+  MessageService,
+} from "primeng/api";
 
 @Component({
   selector: "app-invoice-add",
@@ -223,10 +225,32 @@ export class InvoiceAddComponent implements OnInit {
         this.messageService.add({
           severity: "error",
           summary: "Error",
-          detail: e,
+          detail: e.message,
           life: 5000,
         }),
     });
+    this.router.navigate(["invoices"]);
+  }
+  updateTheInvoice() {
+    this.invoiceService
+      .updateInvoice(this.newInvoice.id, this.newInvoice)
+      .subscribe({
+        next: (res) => {
+          this.messageService.add({
+            severity: "success",
+            summary: "Exitoso",
+            detail: "Factura guardada",
+            life: 3000,
+          });
+        },
+        error: (e) =>
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: e.message,
+            life: 5000,
+          }),
+      });
     this.router.navigate(["invoices"]);
   }
   showModalDialog() {
