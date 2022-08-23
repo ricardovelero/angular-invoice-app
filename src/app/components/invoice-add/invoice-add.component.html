@@ -196,6 +196,7 @@
                       <p-cellEditor>
                         <ng-template pTemplate="input">
                           <p-inputNumber
+                            styleClass="ml-5"
                             [size]="1"
                             [(ngModel)]="product.item.quantity"
                             (ngModelChange)="
@@ -287,9 +288,9 @@
                     <td [attr.colspan]="cols.length">
                       <button
                         (click)="onAddItemRow()"
-                        class="underline text-indigo-500"
+                        class="md:ml-5 p-5 underline text-indigo-500"
                       >
-                        Por favor, haga click aqui para agregar un ítem.
+                        Click aquí para gregar ítem a facturar
                       </button>
                     </td>
                     <td></td>
@@ -349,14 +350,25 @@
           >
             Cancelar
           </button></a
-        ><button
-          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          type="submit"
-          (click)="saveNewInvoice()"
         >
-          <div *ngIf="!isEditting; else editlabel">Crear Factura</div>
-          <ng-template #editlabel>Guardar Factura</ng-template>
-        </button>
+        <div *ngIf="!isEditting; else editlabel">
+          <button
+            class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            type="submit"
+            (click)="saveNewInvoice()"
+          >
+            Crear Factura
+          </button>
+        </div>
+        <ng-template #editlabel>
+          <button
+            class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            type="submit"
+            (click)="updateTheInvoice()"
+          >
+            Guardar Factura
+          </button></ng-template
+        >
       </div>
     </div>
     <!-- <ul>
