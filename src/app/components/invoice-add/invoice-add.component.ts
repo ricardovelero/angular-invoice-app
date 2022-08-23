@@ -215,7 +215,7 @@ export class InvoiceAddComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Exitoso",
-          detail: "Factura creada",
+          detail: "Nueva Factura guardada",
           life: 3000,
         });
       },
