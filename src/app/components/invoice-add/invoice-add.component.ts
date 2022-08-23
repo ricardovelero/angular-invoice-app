@@ -211,6 +211,12 @@ export class InvoiceAddComponent implements OnInit {
     }
   }
 
+  calculateItemTotal($event: any, product: any) {
+    product.item.total =
+      $event * product.item.cost * (1 + product.item.tax1 / 100);
+    product.item.subtotal = $event * product.item.cost;
+  }
+
   saveNewInvoice() {
     this.invoiceService.createInvoice(this.newInvoice).subscribe({
       next: (res) => {
