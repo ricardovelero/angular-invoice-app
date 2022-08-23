@@ -72,7 +72,7 @@ export class ItemsListComponent implements OnInit {
             this.messageService.add({
               severity: "success",
               summary: "Operación exitosa",
-              detail: "Item borrado",
+              detail: "Items borrados",
               life: 3000,
             });
           },
@@ -80,7 +80,7 @@ export class ItemsListComponent implements OnInit {
             this.messageService.add({
               severity: "error",
               summary: "Error en la operación",
-              detail: "El ítem no ha podido ser borrado",
+              detail: "Los ítems no han podido ser borrados",
               life: 5000,
             });
           },
@@ -167,7 +167,7 @@ export class ItemsListComponent implements OnInit {
               detail: "Item creado",
               life: 3000,
             });
-            this.items.push(this.item);
+            this.items.push(res);
           },
           error: (e) =>
             this.messageService.add({
