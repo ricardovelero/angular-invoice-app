@@ -197,29 +197,16 @@
                         <ng-template pTemplate="input">
                           <p-inputNumber
                             styleClass="ml-5"
-                            [size]="1"
                             [(ngModel)]="product.item.quantity"
                             (ngModelChange)="
-                              product.item.total =
-                                $event *
-                                product.item.cost *
-                                (1 + product.item.tax1 / 100);
-                              product.item.subtotal = $event * product.item.cost
+                              calculateItemTotal($event, product);
+                              calculateInvoiceTotal(products)
                             "
-                            [min]="1"
-                            [showButtons]="false"
-                            buttonLayout="horizontal"
-                            spinnerMode="horizontal"
-                            decrementButtonClass="ui-button-success"
-                            incrementButtonClass="ui-button-success"
-                            incrementButtonIcon="pi pi-plus"
-                            decrementButtonIcon="pi pi-minus"
+                            [size]="4"
                             value="number"
                             name="quantity"
                             title="quantity"
                             mode="decimal"
-                            [allowEmpty]="false"
-                            (onInput)="calculateInvoiceTotal(products)"
                           ></p-inputNumber>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -268,7 +255,11 @@
                         icon="pi pi-check"
                         class="p-button-rounded p-button-text p-button-success p-mr-2"
                         style="margin-right: 0.5em"
-                        (click)="onRowEditSave(product, ri); clicked = false"
+                        (click)="
+                          onRowEditSave(product, ri);
+                          clicked = false;
+                          calculateInvoiceTotal(products)
+                        "
                       ></button>
                       <button
                         *ngIf="editing"
@@ -290,7 +281,7 @@
                         (click)="onAddItemRow()"
                         class="md:ml-5 p-5 underline text-indigo-500"
                       >
-                        Click aquí para gregar ítem a facturar
+                        Click aquí para agregar ítem a facturar
                       </button>
                     </td>
                     <td></td>
