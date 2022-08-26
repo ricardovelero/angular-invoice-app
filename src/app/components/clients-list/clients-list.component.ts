@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Client } from "../../models/client.model";
 import { ClientService } from "../../services/client.service";
+import { Table } from "primeng/table";
 
 @Component({
   selector: "app-clients-list",
@@ -9,6 +10,10 @@ import { ClientService } from "../../services/client.service";
   styleUrls: ["./clients-list.component.css"],
 })
 export class ClientsListComponent implements OnInit {
+  @ViewChild("dt") dt: Table | undefined;
+  applyFilterGlobal($event: any, stringVal: any) {
+    this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
+  }
   @Input() viewMode = false;
 
   modalToggle: boolean = false;
