@@ -8,7 +8,7 @@
   </h1>
 </div>
 <div class="sm:max-w-4xl mx-auto">
-  <form class="space-y-8" #invoiceForm="ngForm">
+  <form class="space-y-8" #invoiceForm="ngForm" appAddEditInvoice>
     <div class="grid grid-cols-1 sm:grid-cols-7 gap-y-6 gap-x-4">
       <!-- Cliente -->
       <div class="mb-4 sm:col-span-3">
@@ -16,15 +16,24 @@
           Cliente
         </label>
         <p-autoComplete
-          styleClass="form-control w-full rounded-l-md"
+          [showTransitionOptions]="'50ms'"
+          [hideTransitionOptions]="'100ms'"
+          styleClass="w-full rounded-l-md"
           [(ngModel)]="client"
           [suggestions]="filteredClients"
-          (completeMethod)="filterClient($event)"
+          (completeMethod)="filterClient($event); isSubmitDissabled = false"
           (ngModelChange)="newInvoice.ClientId = $event.id"
           field="fullName"
           name="fullName"
           title="Cliente a facturar"
           [dropdown]="true"
+          [forceSelection]="true"
+          [required]="true"
+          [showEmptyMessage]="true"
+          emptyMessage="No se encontraron resultados"
+          #theclient="ngModel"
+          [lazy]="true"
+          placeholder="Busca o selecciona un cliente..."
         >
           <ng-template let-client pTemplate="item">
             <div class="client-item">
@@ -32,6 +41,12 @@
             </div>
           </ng-template>
         </p-autoComplete>
+        <div
+          *ngIf="theclient.invalid && (theclient.dirty || theclient.touched)"
+          class="text-xs text-red-500"
+        >
+          Campo requerido
+        </div>
       </div>
       <!-- Boton Nuevo Cliente-->
       <div class="mb-4 mt-5 sm:col-span-2">
@@ -56,7 +71,15 @@
           [(ngModel)]="newInvoice.number"
           name="number"
           title="Número de factura"
+          [required]="true"
+          #number="ngModel"
         />
+        <div
+          [hidden]="number.valid || number.pristine"
+          class="text-xs text-red-500"
+        >
+          Campo requerido
+        </div>
       </div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-8 gap-y-6 gap-x-4">
@@ -76,7 +99,15 @@
           autocomplete="date"
           styleClass="w-full"
           inputStyleClass="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          [required]="true"
+          #date="ngModel"
         ></p-calendar>
+        <div
+          [hidden]="date.valid || date.pristine"
+          class="text-xs text-red-500"
+        >
+          Campo requerido
+        </div>
       </div>
       <!--Fecha Vencimiento-->
       <div class="sm:col-span-3">
@@ -95,7 +126,15 @@
           autocomplete="dueDate"
           styleClass="w-full"
           inputStyleClass="shadow-sm block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          [required]="true"
+          #duedate="ngModel"
         ></p-calendar>
+        <div
+          [hidden]="duedate.valid || duedate.pristine"
+          class="text-xs text-red-500"
+        >
+          Campo requerido
+        </div>
       </div>
       <!-- Es recurrente?-->
       <div class="sm:col-span-2 flex items-center mt-5">
@@ -162,7 +201,8 @@
             class="flex items-center sm:w-1/12 px-4 py-4 sm:pl-6 sm:pr-1 sm:mt-3 divide-y divide-gray-200"
           >
             <button
-              (click)="onRemoveItemRow(i); calculateInvoiceTotal(products)"
+              [disabled]="isDissabled"
+              (click)="itemViewDetails(product)"
               class="underline text-indigo-500"
             >
               <svg
@@ -194,12 +234,14 @@
               [(ngModel)]="product.item"
               [suggestions]="filteredItems"
               (completeMethod)="filterItem($event)"
-              (onSelect)="calculateInvoiceTotal(products)"
+              (onSelect)="calculateInvoiceTotal(products); isDissabled = false"
               (ngModelChange)="newInvoice.items.push($event)"
               field="name"
               title="Buscar ítem a facturar"
               name="name{{ i }}"
               [dropdown]="false"
+              [lazy]="true"
+              placeholder="Buscar un ítem..."
             >
               <ng-template let-item pTemplate="item">
                 {{ item.name }}
@@ -338,6 +380,7 @@
       </div>
     </div>
     <!--Botones de Guardar o Cancelar Operacion-->
+    <hr />
     <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-7">
       <div class="sm:col-span-7">
         <div class="flex justify-end">
@@ -354,6 +397,11 @@
               class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               type="submit"
               (click)="saveNewInvoice()"
+              [ngClass]="{
+                'bg-indigo-400 hover:bg-indigo-400 focus:ring-indigo-400':
+                  !invoiceForm.form.valid || isSubmitDissabled
+              }"
+              [disabled]="!invoiceForm.form.valid || isSubmitDissabled"
             >
               Crear Factura
             </button>
@@ -373,7 +421,7 @@
   </form>
 </div>
 
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<!-- <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-6xl mx-auto">
     <div class="pt-8">
       <div class="mt-8 flex flex-col">
@@ -383,21 +431,21 @@
           >
             <div
               class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
-            ></div>
+            >
+              <ul>
+                <li>client: {{ client | json }}</li>
+                <li>products: {{ products | json }}</li>
+                <li>newInvoice: {{ newInvoice | json }}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <ul>
-      <li>client: {{ client | json }}</li>
-      <li>products: {{ products | json }}</li>
-      <li>newInvoice: {{ newInvoice | json }}</li>
-    </ul>
   </div>
-</div>
+</div> -->
 <p-dialog
-  header="Agregar Cliente"
+  header="Nuevo Cliente"
   [(visible)]="displayModal"
   [modal]="true"
   [style]="{ width: '50vw' }"
@@ -415,7 +463,7 @@
 </p-dialog>
 
 <p-dialog
-  header="Agregar Ítem"
+  header="Nuevo Ítem"
   [(visible)]="displayItemModal"
   [modal]="true"
   [style]="{ width: '40vw' }"
@@ -429,4 +477,21 @@
     (displayItemModal)="displayItemModal = false"
     (theItem)="itemFromChild($event)"
   ></app-item-add>
+</p-dialog>
+
+<p-dialog
+  header="Detalles del Ítem"
+  [(visible)]="displayItemViewModal"
+  [modal]="true"
+  [style]="{ width: '30vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  [focusTrap]="true"
+>
+  <app-item-details
+    [inItem]="theViewItem"
+    (displayModal)="displayItemViewModal = false"
+  ></app-item-details>
 </p-dialog>
