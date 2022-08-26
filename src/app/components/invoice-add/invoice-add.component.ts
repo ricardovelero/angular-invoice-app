@@ -21,40 +21,29 @@ import {
   providers: [ClientService, ItemService, InvoiceService],
 })
 export class InvoiceAddComponent implements OnInit {
-  newInvoice: any = {};
-
   clients: Client[] = [];
   client: any = {};
   items: Item[] = [];
-  item: any = {};
+  products: any = [];
+  newProduct: any = {};
+
+  newInvoice: any = {};
   lastInvoice: Invoice[] = [];
   newNumber: any;
 
-  selectedClient?: Client[];
   filteredClients: any[] | any;
-
   filteredItems: any[] | any;
-  newProduct: any = {};
-  products: any = [];
 
   cols: any[] | any;
 
-  clonedItems: { [s: string]: Item } = {};
-
-  productDialog?: boolean;
-
-  submitted?: boolean;
-
-  clicked: boolean = false;
-
   today: Date = new Date();
-
   defaultDueDate: Date = new Date();
 
   displayModal: boolean = false;
   displayItemModal: boolean = false;
 
   isEditting: boolean = false;
+  isEmpty: boolean = true;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -89,7 +78,7 @@ export class InvoiceAddComponent implements OnInit {
       };
       this.newInvoice.date = this.today;
       this.newInvoice.dueDate = this.addDays(this.today, 30);
-      // this.onAddItemRow();
+      this.onAddItemRow();
       this.invoiceService.getLastInvoice().subscribe((invoices) => {
         if (invoices) {
           this.lastInvoice = invoices;
@@ -159,32 +148,13 @@ export class InvoiceAddComponent implements OnInit {
       item: [],
     };
     this.products.push(this.newProduct);
+    this.isEmpty = false;
   }
 
-  onRowEditInit(item: ItemList | any) {
-    this.clonedItems[item.item.id] = { ...item };
-  }
-
-  onRowEditSave(item: ItemList | any, index: any) {
-    if (item.item.quantity > 0) {
-      delete this.clonedItems[item.id];
-      this.messageService.add({
-        severity: "success",
-        summary: "Éxito",
-        detail: "Ítem actuzalizado con éxito",
-      });
-    } else {
-      this.messageService.add({
-        severity: "error",
-        summary: "Error",
-        detail: "La cantidad no puede ser cero",
-      });
+  onRemoveItemRow(index: number) {
+    if (index > -1) {
+      this.products.splice(index, 1);
     }
-  }
-
-  onRowEditCancel(item: ItemList | any, index: number) {
-    this.items[index] = this.clonedItems[item.item.id];
-    delete this.clonedItems[item.item.id];
   }
 
   filterClient(event: any) {
@@ -209,12 +179,6 @@ export class InvoiceAddComponent implements OnInit {
       this.newInvoice.subtotal += product.item.subtotal;
       this.newInvoice.taxAmount = product.item.total - product.item.subtotal;
     }
-  }
-
-  calculateItemTotal($event: any, product: any) {
-    product.item.total =
-      $event * product.item.cost * (1 + product.item.tax1 / 100);
-    product.item.subtotal = $event * product.item.cost;
   }
 
   saveNewInvoice() {
