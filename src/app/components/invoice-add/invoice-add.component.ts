@@ -26,6 +26,7 @@ export class InvoiceAddComponent implements OnInit {
   items: Item[] = [];
   products: any = [];
   newProduct: any = {};
+  theViewItem: any = {};
 
   newInvoice: any = {};
   lastInvoice: Invoice[] = [];
@@ -41,9 +42,12 @@ export class InvoiceAddComponent implements OnInit {
 
   displayModal: boolean = false;
   displayItemModal: boolean = false;
+  displayItemViewModal: boolean = false;
 
   isEditting: boolean = false;
   isEmpty: boolean = true;
+  isDissabled: boolean = true;
+  isSubmitDissabled: boolean = true;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -238,5 +242,10 @@ export class InvoiceAddComponent implements OnInit {
     obj["item"] = item;
     this.products.push(obj);
     this.newInvoice.items.push(item);
+  }
+
+  itemViewDetails(item: any) {
+    this.displayItemViewModal = true;
+    this.theViewItem = item.item;
   }
 }
