@@ -421,7 +421,7 @@
   </form>
 </div>
 
-<!-- <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-6xl mx-auto">
     <div class="pt-8">
       <div class="mt-8 flex flex-col">
@@ -433,9 +433,9 @@
               class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
             >
               <ul>
-                <li>client: {{ client | json }}</li>
+                <!-- <li>client: {{ client | json }}</li> -->
                 <li>products: {{ products | json }}</li>
-                <li>newInvoice: {{ newInvoice | json }}</li>
+                <!-- <li>newInvoice: {{ newInvoice | json }}</li> -->
               </ul>
             </div>
           </div>
@@ -443,7 +443,7 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 <p-dialog
   header="Nuevo Cliente"
   [(visible)]="displayModal"
