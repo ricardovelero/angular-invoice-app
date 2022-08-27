@@ -46,6 +46,7 @@ export class InvoiceAddComponent implements OnInit {
 
   isEditting: boolean = false;
   isEmpty: boolean = true;
+  // Hacks temporales:
   isDissabled: boolean = true;
   isSubmitDissabled: boolean = true;
 
@@ -120,9 +121,12 @@ export class InvoiceAddComponent implements OnInit {
       next: (data) => {
         this.newInvoice = data;
         var obj: any = {};
-        for (let item of this.newInvoice.Items) {
+        for (let [i, item] of this.newInvoice.Items.entries()) {
           obj["item"] = item;
-          this.products.push(obj);
+          this.products = [...this.products, obj];
+          item.quantity = item.InvoiceItems.quantity;
+          item.total = item.quantity * item.cost * (1 + item.tax1 / 100);
+          obj = {};
         }
         this.client = this.newInvoice.Client;
         this.newInvoice.date = new Date(
