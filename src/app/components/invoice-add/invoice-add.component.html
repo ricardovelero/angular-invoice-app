@@ -234,8 +234,11 @@
               [(ngModel)]="product.item"
               [suggestions]="filteredItems"
               (completeMethod)="filterItem($event)"
-              (onSelect)="calculateInvoiceTotal(products); isDissabled = false"
-              (ngModelChange)="newInvoice.items.push($event)"
+              (onSelect)="
+                calculateInvoiceTotal(products);
+                newInvoice.items.push(product.item);
+                isDissabled = false
+              "
               field="name"
               title="Buscar ítem a facturar"
               name="name{{ i }}"
@@ -279,7 +282,7 @@
           >
             <button
               (click)="onRemoveItemRow(i); calculateInvoiceTotal(products)"
-              class="underline text-red-500"
+              class="text-red-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -433,9 +436,11 @@
               class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
             >
               <ul>
-                <!-- <li>client: {{ client | json }}</li> -->
+                <li>client: {{ client | json }}</li>
+                <hr class="my-5" />
                 <li>products: {{ products | json }}</li>
-                <!-- <li>newInvoice: {{ newInvoice | json }}</li> -->
+                <hr class="my-5" />
+                <li>newInvoice: {{ newInvoice | json }}</li>
               </ul>
             </div>
           </div>
