@@ -125,7 +125,8 @@ export class InvoiceAddComponent implements OnInit {
           obj["item"] = item;
           this.products = [...this.products, obj];
           item.quantity = item.InvoiceItems.quantity;
-          item.total = item.quantity * item.cost * (1 + item.tax1 / 100);
+          item.subtotal = item.quantity * item.cost;
+          item.total = item.subtotal * (1 + item.tax1 / 100);
           obj = {};
         }
         this.client = this.newInvoice.Client;
@@ -135,6 +136,7 @@ export class InvoiceAddComponent implements OnInit {
         this.newInvoice.dueDate = new Date(
           this.newInvoice.dueDate.replace(/-/g, "/")
         );
+        this.calculateInvoiceTotal(this.products);
       },
       error: (e) => console.error(e),
     });
@@ -162,6 +164,7 @@ export class InvoiceAddComponent implements OnInit {
   onRemoveItemRow(index: number) {
     if (index > -1) {
       this.products.splice(index, 1);
+      this.newInvoice.items.splice(index, 1);
     }
   }
 
