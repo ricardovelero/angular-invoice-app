@@ -227,10 +227,11 @@
             </button>
           </div>
           <div
-            class="flex-none w-1/4 h-14 px-4 py-4 sm:pl-1 sm:pr-6 divide-y divide-gray-200"
+            class="flex-none w-full sm:w-1/4 h-14 px-4 py-4 sm:pl-1 sm:pr-6 divide-y divide-gray-200"
           >
             <p-autoComplete
               styleClass="w-full"
+              inputStyleClass="sm:w-56"
               [(ngModel)]="product.item"
               [suggestions]="filteredItems"
               (completeMethod)="filterItem($event)"

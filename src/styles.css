@@ -2335,6 +2335,18 @@ select {
     width: 50%;
   }
 
+  .sm\:w-1\/4 {
+    width: 25%;
+  }
+
+  .sm\:w-1\/5 {
+    width: 20%;
+  }
+
+  .sm\:w-56 {
+    width: 14rem;
+  }
+
   .sm\:max-w-xs {
     max-width: 20rem;
   }
