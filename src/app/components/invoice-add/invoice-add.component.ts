@@ -164,7 +164,7 @@ export class InvoiceAddComponent implements OnInit {
   onRemoveItemRow(index: number) {
     if (index > -1) {
       this.products.splice(index, 1);
-      this.newInvoice.items.splice(index, 1);
+      this.newInvoice.Items.splice(index, 1);
     }
   }
 
@@ -248,7 +248,7 @@ export class InvoiceAddComponent implements OnInit {
     var obj: any = {};
     obj["item"] = item;
     this.products.push(obj);
-    this.newInvoice.items.push(item);
+    this.newInvoice.Items.push(item);
   }
 
   itemViewDetails(item: any) {
