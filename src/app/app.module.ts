@@ -3,14 +3,13 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 import { AuthModule } from "@auth0/auth0-angular";
-import { environment as env } from "../environments/environment";
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthHttpInterceptor } from "@auth0/auth0-angular";
+import { environment as env } from "../environments/environment";
 
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { ClientDetailsComponent } from "./components/client-details/client-details.component";
