@@ -15,4 +15,6 @@ export class Client {
   businessPhone?: string;
   creditLimit?: number;
   isActive?: boolean;
+  UserId?: number;
+  Invoices?: [];
 }

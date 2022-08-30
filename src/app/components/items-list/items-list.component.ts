@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { PrimeNGConfig } from "primeng/api";
 import { Item } from "../../models/item.model";
 import { ItemService } from "../../services/item.service";
-import { ConfirmationService } from "primeng/api";
-import { MessageService } from "primeng/api";
 import { Table } from "primeng/table";
+import {
+  ConfirmationService,
+  MessageService,
+  PrimeNGConfig,
+} from "primeng/api";
 
 @Component({
   selector: "app-items-list",
