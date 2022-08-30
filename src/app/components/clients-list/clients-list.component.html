@@ -9,7 +9,7 @@
     </h2>
   </div>
 </div>
-<div class="bg-gray-100 py-8 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
+<div class="bg-gray-100 py-8 sm:px-6 lg:max-w-7xl lg:mx-auto lg:px-8">
   <div class="mx-auto sm:px-6">
     <ng-container *ngIf="isEmpty">
       <!-- Empty state -->
@@ -46,20 +46,217 @@
       </div>
     </ng-container>
     <ng-container *ngIf="!isEmpty">
-      <div
-        class="flex flex-row-reverse surface-section px-4 py-5 md:px-6 lg:px-8"
-      >
-        <div class="mt-3 lg:mt-0">
+      <p-toolbar styleClass="p-10">
+        <ng-template pTemplate="left">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="applyFilterGlobal($event, 'contains')"
+                placeholder="Buscar..."
+              />
+            </span></div
+        ></ng-template>
+        <ng-template pTemplate="right">
           <button
-            (click)="goToPage('client-add')"
             pButton
             pRipple
             label="Nuevo Cliente"
             icon="pi pi-plus"
             class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            (click)="showModalDialog()"
+            title="Haz click para crear un nuevo cliente"
+            style="margin-right: 1rem; /* 16px */"
           ></button>
-        </div>
-      </div>
+        </ng-template>
+      </p-toolbar>
+      <p-table
+        #dt
+        [value]="clients"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="[
+          'fullName',
+          'nifNumber',
+          'email',
+          'city',
+          'province',
+          'country'
+        ]"
+        [(selection)]="selectedClients"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} clientes"
+        [showCurrentPageReport]="true"
+        responsiveLayout="stack"
+        breakpoint="680px"
+        tableStyleClass="table-fixed divide-y divide-gray-300 text-center"
+      >
+        <ng-template pTemplate="header" styleClass="text-center">
+          <tr class="divide-x divide-gray-200">
+            <th style="width: 3rem"></th>
+            <th
+              scope="col"
+              pSortableColumn="fullName"
+              class="py-3.5 pl-4 pr-4 text-base font-semibold text-gray-900 sm:pl-6"
+            >
+              Nombre <p-sortIcon field="fullName"></p-sortIcon>
+            </th>
+            <th
+              pSortableColumn="nifNumber"
+              class="px-2 py-2 text-base font-semibold text-gray-900"
+            >
+              NIF/CIF <p-sortIcon field="nifNumber"></p-sortIcon>
+            </th>
+            <th
+              pSortableColumn="email"
+              class="px-4 py-3.5 text-base font-semibold text-gray-900"
+            >
+              Correo Electrónico <p-sortIcon field="email"></p-sortIcon>
+            </th>
+            <th
+              pSortableColumn="address"
+              class="px-4 py-3.5 text-base font-semibold text-gray-900"
+            >
+              Dirección <p-sortIcon field="streetAddress"></p-sortIcon>
+            </th>
+            <th class="px-4 py-3.5 text-xs font-semibold text-gray-900">
+              Editar
+            </th>
+            <th
+              class="py-3.5 pl-4 pr-4 text-xs font-semibold text-gray-900 sm:pr-6"
+            >
+              Borrar
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template
+          pTemplate="body"
+          let-client
+          let-expanded="expanded"
+          class="divide-y divide-gray-200 bg-white"
+        >
+          <tr class="divide-x divide-gray-200">
+            <td class="whitespace-nowrap p-1 pl-2 text-xs text-gray-200">
+              <button
+                type="button"
+                pButton
+                pRipple
+                [pRowToggler]="client"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+              ></button>
+            </td>
+            <td class="sm:p-2 text-base font-medium text-gray-900">
+              {{ client.fullName }}
+            </td>
+            <td class="text-base text-gray-500">
+              {{ client.nifNumber }}
+            </td>
+            <td class="text-base text-gray-500">
+              {{ client.email }}
+            </td>
+            <td class="text-base text-gray-500">
+              {{ client.fullAddress }}
+            </td>
+            <td class="whitespace-nowrap text-base text-gray-500">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="up-button-rounded p-button-text"
+                (click)="editClient(client)"
+              ></button>
+            </td>
+            <td class="whitespace-nowrap text-base text-gray-500">
+              <button
+                [disabled]="client.Invoices.length"
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="up-button-rounded p-button-text"
+                (click)="eraseClient(client)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{ clients ? clients.length : 0 }} clientes.
+          </div>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-client>
+          <tr>
+            <td colspan="7">
+              <div class="p-3">
+                <p-table [value]="client.Invoices" dataKey="number">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th pSortableColumn="number">
+                        Número <p-sortIcon field="number"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="date">
+                        Fecha Emisión <p-sortIcon field="date"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="dueDate">
+                        Fecha Vencimiento
+                        <p-sortIcon field="dueDate"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="total">
+                        Total <p-sortIcon field="total"></p-sortIcon>
+                      </th>
+                      <th pSortableColumn="status">
+                        Estado <p-sortIcon field="status"></p-sortIcon>
+                      </th>
+                      <th style="width: 4rem"></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-invoice>
+                    <tr>
+                      <td>{{ invoice.number }}</td>
+                      <td>{{ invoice.date | date: "longDate":"es" }}</td>
+                      <td>{{ invoice.dueDate | date: "longDate":"es" }}</td>
+                      <td>{{ invoice.total | currency: "EUR" }}</td>
+                      <td>
+                        <span
+                          class="p-1.5 rounded-md uppercase text-xs"
+                          [ngClass]="{
+                            ' text-red-500 bg-red-200':
+                              invoice.status == 'Pendiente',
+                            ' text-green-500 bg-green-200':
+                              invoice.status == 'Pagada'
+                          }"
+                          >{{ invoice.status }}</span
+                        >
+                      </td>
+                      <td>
+                        <a routerLink="/invoices/{{ invoice.id }}">
+                          <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi pi-search"
+                            class="p-button-text"
+                          ></button
+                        ></a>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="6">No hay Facturas para este Cliente.</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-container>
+    <ng-container *ngIf="isCard">
       <ul
         role="list"
         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
@@ -206,3 +403,170 @@
     </div>
   </div>
 </div>
+<!-- {{ clients | json }}
+<hr />
+{{ client | json }} -->
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+<p-dialog
+  header="Nuevo Cliente"
+  [(visible)]="clientDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  [focusTrap]="true"
+>
+  <app-client-add
+    [isShort]="true"
+    (displayModal)="clientDialog = false"
+    (theClient)="clientFromChild($event)"
+  ></app-client-add>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="clientEditDialog"
+  header="Editar Cliente"
+  [modal]="true"
+  styleClass="p-fluid w-1/4"
+>
+  <ng-template pTemplate="content">
+    <div class="p-field mt-4">
+      <label for="name">Nombre Completo</label>
+      <input
+        type="text"
+        pInputText
+        id="fullName"
+        [(ngModel)]="client.fullName"
+        #fullName="ngModel"
+        required
+        autofocus
+      />
+      <div
+        [hidden]="fullName.valid || fullName.pristine"
+        class="text-xs text-red-500"
+      >
+        Campo requerido
+      </div>
+    </div>
+    <div class="p-field mt-4">
+      <label for="description">NIF/CIF</label>
+      <input
+        id="nifNumber"
+        pInputText
+        [(ngModel)]="client.nifNumber"
+        #nifNumber="ngModel"
+        required
+      />
+      <div
+        [hidden]="nifNumber.valid || nifNumber.pristine"
+        class="text-xs text-red-500"
+      >
+        Campo requerido
+      </div>
+    </div>
+    <div class="p-field mt-4">
+      <label for="email">Correo Electrónico</label>
+      <input pInputText id="email" [(ngModel)]="client.email" />
+    </div>
+    <div class="p-field mt-4">
+      <label for="streetAddress">Dirección</label>
+      <input
+        pInputText
+        id="streetAddress"
+        [(ngModel)]="client.streetAddress"
+        required
+        #street="ngModel"
+      />
+      <div
+        [hidden]="street.valid || street.pristine"
+        class="text-xs text-red-500"
+      >
+        Campo requerido
+      </div>
+    </div>
+    <div class="p-field mt-4">
+      <label for="city">Ciudad</label>
+      <input
+        pInputText
+        id="city"
+        [(ngModel)]="client.city"
+        required
+        #city="ngModel"
+      />
+      <div [hidden]="city.valid || city.pristine" class="text-xs text-red-500">
+        Campo requerido
+      </div>
+    </div>
+    <div class="p-field mt-4">
+      <label for="zipcode">Código Postal</label>
+      <input
+        pInputText
+        id="zipcode"
+        [(ngModel)]="client.zipcode"
+        required
+        #zipcode="ngModel"
+      />
+      <div
+        [hidden]="zipcode.valid || zipcode.pristine"
+        class="text-xs text-red-500"
+      >
+        Campo requerido
+      </div>
+    </div>
+    <div class="p-field mt-4">
+      <label for="province">Provincia</label>
+      <input
+        pInputText
+        id="province"
+        [(ngModel)]="client.province"
+        required
+        #province="ngModel"
+        (completeMethod)="isSubmitDissabled = true"
+      />
+      <div
+        [hidden]="province.valid || province.pristine"
+        class="text-xs text-red-500"
+      >
+        Campo requerido
+      </div>
+    </div>
+    <div class="p-field mt-4">
+      <label for="country">Country</label>
+      <input
+        pInputText
+        id="country"
+        [(ngModel)]="client.country"
+        required
+        #country="ngModel"
+      />
+      <div
+        [hidden]="country.valid || country.pristine"
+        class="text-xs text-red-500"
+      >
+        Campo requerido
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button"
+      (click)="saveClient()"
+      [disabled]="!isSubmitDissabled"
+    ></button>
+  </ng-template>
+</p-dialog>
