@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Invoice } from "src/app/models/invoice.model";
 import { Client } from "../../models/client.model";
 import { Item } from "../../models/item.model";
-import { ItemList } from "../../models/item-list.model";
 import { ClientService } from "../../services/client.service";
 import { ItemService } from "../../services/item.service";
 import { InvoiceService } from "src/app/services/invoice.service";
