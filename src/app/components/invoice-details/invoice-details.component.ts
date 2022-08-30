@@ -3,6 +3,7 @@ import { Invoice } from "../../models/invoice.model";
 import { InvoiceService } from "../../services/invoice.service";
 import { PrimeNGConfig } from "primeng/api";
 import { ActivatedRoute } from "@angular/router";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-invoice-details",
@@ -16,7 +17,8 @@ export class InvoiceDetailsComponent implements OnInit {
   constructor(
     private invoiceService: InvoiceService,
     private primengConfig: PrimeNGConfig,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -27,5 +29,8 @@ export class InvoiceDetailsComponent implements OnInit {
       },
       error: (e) => console.error(e),
     });
+  }
+  back(): void {
+    this.location.back();
   }
 }
