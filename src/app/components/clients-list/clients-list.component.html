@@ -411,7 +411,6 @@
   header="Nuevo Cliente"
   [(visible)]="clientDialog"
   [modal]="true"
-  [style]="{ width: '50vw' }"
   [baseZIndex]="10000"
   [draggable]="false"
   [resizable]="false"
@@ -429,7 +428,7 @@
   [(visible)]="clientEditDialog"
   header="Editar Cliente"
   [modal]="true"
-  styleClass="p-fluid w-1/4"
+  styleClass="p-fluid"
 >
   <ng-template pTemplate="content">
     <div class="p-field mt-4">
