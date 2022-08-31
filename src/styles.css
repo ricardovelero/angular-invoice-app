@@ -1031,6 +1031,14 @@ select {
   margin-top: -0px;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.mt-7 {
+  margin-top: 1.75rem;
+}
+
 .block {
   display: block;
 }
@@ -1336,6 +1344,14 @@ select {
 
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-cols-8 {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-cols-10 {
+  grid-template-columns: repeat(10, minmax(0, 1fr));
 }
 
 .flex-row {
