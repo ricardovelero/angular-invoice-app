@@ -2,11 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { User } from "../models/user.model";
-// import { address as env } from "../../environments/environment";
+import { address as env } from "../../environments/environment";
 
-// const baseUrl = `${env.remote}/api/users`;
+const baseUrl = `${env.remote}/api/users`;
 // const baseUrl = `${env.local}/api/users`;
-const baseUrl = "https://facturazen-backend-9tcee.ondigitalocean.app/api/users";
 
 @Injectable({
   providedIn: "root",
@@ -19,6 +18,9 @@ export class UserService {
   }
   updateUser(id: any, data: any): Observable<any> {
     return this.http.put(`${baseUrl}/${id}`, data);
+  }
+  changeUserPassword(data: any): Observable<any> {
+    return this.http.patch(`${baseUrl}/`, data);
   }
   deleteUser(id: any): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
