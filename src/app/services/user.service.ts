@@ -20,7 +20,8 @@ export class UserService {
     return this.http.put(`${baseUrl}/${id}`, data);
   }
   changeUserPassword(data: any): Observable<any> {
-    return this.http.patch(`${baseUrl}/`, data);
+    console.log(data);
+    return this.http.put(`${baseUrl}/`, data);
   }
   deleteUser(id: any): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
