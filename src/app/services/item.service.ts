@@ -2,11 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Item } from "../models/item.model";
-//import { address as env } from "../../environments/environment";
+import { address as env } from "../../environments/environment";
 
-//const baseUrl = `${env.remote}/api/items`;
+const baseUrl = `${env.remote}/api/items`;
 // const baseUrl = `${env.local}/api/items`;
-const baseUrl = "https://facturazen-backend-9tcee.ondigitalocean.app/api/items";
 
 @Injectable({
   providedIn: "root",
