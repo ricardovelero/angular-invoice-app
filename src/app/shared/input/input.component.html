@@ -1,28 +1,31 @@
 <div class="field">
-  <label for="" class="label block text-sm font-medium text-gray-700">{{
+  <label [for]="formId" class="label block text-sm font-medium text-gray-700">{{
     label
   }}</label>
   <input
-    type="text"
+    [type]="theType"
     [formControl]="control"
-    id=""
-    class="form-control shadow-sm mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+    [id]="formId"
+    [name]="formId"
+    class="block appearance-none w-full mb-1 text-base leading-normal sm:text-sm shadow-sm mt-1 bg-white focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
     [ngClass]="{ 'ring-red-500 border-red-500': showErrors() }"
   />
   <div *ngIf="showErrors()" class="text-red-500">
     <div *ngIf="control.errors?.['required']">
-      <small id="name-help">Campo requerido</small>
+      <small id="{{ formId }}-help">Campo requerido</small>
     </div>
     <div *ngIf="control.errors?.['minlength']">
-      <small id="name-help"
+      <small id="{{ formId }}-help"
         >Mínimo de
         {{control.errors?.['minlength'].requiredLength}}
         caracteres. Faltan
-        {{ 3 - control.errors?.['minlength'].actualLength }}</small
+        {{ control.errors?.['minlength'].requiredLength - control.errors?.['minlength'].actualLength }}</small
       >
     </div>
     <div *ngIf="control.errors?.['email']">
-      <small id="name-help">Formato de Correo Electrónico incorrecto</small>
+      <small id="{{ formId }}-help"
+        >Formato de Correo Electrónico incorrecto</small
+      >
     </div>
   </div>
 </div>
