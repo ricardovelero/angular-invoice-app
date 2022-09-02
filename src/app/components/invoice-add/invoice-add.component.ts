@@ -78,7 +78,7 @@ export class InvoiceAddComponent implements OnInit {
         notes: "",
         status: "Pendiente",
         billingMonth: "",
-        items: [],
+        Items: [],
       };
       this.newInvoice.date = this.today;
       this.newInvoice.dueDate = this.addDays(this.today, 30);
