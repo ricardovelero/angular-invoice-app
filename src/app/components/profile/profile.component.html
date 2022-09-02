@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div
   class="mt-16 p-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8"
   *ngIf="auth.user$ | async as user"
@@ -5,7 +6,7 @@
   <div class="py-4">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
-        Tu Perfil
+        Ajustes de tu cuenta
       </h2>
     </div>
   </div>
@@ -14,9 +15,57 @@
       <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
           <h3 class="text-lg font-medium leading-6 text-gray-900">
+            Datos de tu perfil
+          </h3>
+          <p class="mt-1 text-sm text-gray-500">Tus datos en FacturaZen</p>
+        </div>
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <div class="grid grid-cols-10 gap-6">
+            <div class="col-span-6 sm:col-span-4">
+              <label
+                for="email-address"
+                class="block text-sm font-medium text-gray-700"
+                >Correo Electrónico</label
+              >
+              <input
+                type="text"
+                name="email-address"
+                id="email-address"
+                autocomplete="email"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                [(ngModel)]="user.email"
+                disabled="true"
+              />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+              <!-- <span class="text-gray-700">
+                <img
+                  class="inline-block h-14 w-14 rounded-full"
+                  src="{{ user.picture }}"
+                  alt="{{ user.name }}'s Avatar"
+                  id="picture"
+              /></span> -->
+              <button
+                type="button"
+                (click)="pwDialog = true"
+                class="mt-6 block rounded-md border p-2.5 text-sm font-medium leading-4 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Cambiar Contraseña
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">
             Información para Facturar
           </h3>
-          <p class="mt-1 text-sm text-gray-500">Utiliza tu dirección fiscal.</p>
+          <p class="mt-1 text-sm text-gray-500">
+            Nombre completo, NIF, y dirección fiscal para facturar.
+          </p>
         </div>
         <div class="mt-5 md:col-span-2 md:mt-0">
           <div class="grid grid-cols-6 gap-6">
@@ -38,26 +87,24 @@
             </div>
 
             <div class="col-span-6 sm:col-span-3">
-              <label
-                for="email-address"
-                class="block text-sm font-medium text-gray-700"
-                >Correo Electrónico</label
+              <label for="nif" class="block text-sm font-medium text-gray-700"
+                >NIF/CIF</label
               >
               <input
                 type="text"
-                name="email-address"
-                id="email-address"
-                autocomplete="email"
+                name="nif"
+                id="nif"
+                autocomplete="nif"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                [(ngModel)]="user.email"
                 disabled="true"
               />
             </div>
+
             <div class="col-span-6">
               <label
                 for="street-address"
                 class="block text-sm font-medium text-gray-700"
-                >Street address</label
+                >Dirección</label
               >
               <input
                 type="text"
@@ -69,7 +116,7 @@
             </div>
             <div class="col-span-6 sm:col-span-6 lg:col-span-2">
               <label for="city" class="block text-sm font-medium text-gray-700"
-                >City</label
+                >Ciudad</label
               >
               <input
                 type="text"
@@ -83,7 +130,7 @@
               <label
                 for="region"
                 class="block text-sm font-medium text-gray-700"
-                >State / Province</label
+                >Provincia</label
               >
               <input
                 type="text"
@@ -98,7 +145,7 @@
               <label
                 for="postal-code"
                 class="block text-sm font-medium text-gray-700"
-                >ZIP / Postal code</label
+                >Código Postal</label
               >
               <input
                 type="text"
@@ -108,45 +155,167 @@
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
+
             <div class="col-span-6 sm:col-span-3">
               <label
                 for="country"
                 class="block text-sm font-medium text-gray-700"
-                >Country</label
+                >País</label
               >
-              <select
-                id="country"
+              <input
+                type="text"
                 name="country"
-                autocomplete="country-name"
-                class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                id="country"
+                autocomplete="country"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label
+                for="telephone"
+                class="block text-sm font-medium text-gray-700"
+                >Teléfono</label
               >
-                <option>United States</option>
-                <option>Canada</option>
-                <option>Mexico</option>
-              </select>
+              <input
+                type="text"
+                name="telephone"
+                id="telephone"
+                autocomplete="telephone"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="flex justify-end">
-      <button
-        type="button"
-        class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        Cancel
-      </button>
-      <button
-        type="submit"
-        class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        Save
-      </button>
+      <div class="flex justify-end mt-5">
+        <ng-container *ngIf="isEditting">
+          <button
+            (click)="isEditting = false"
+            type="button"
+            class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Guardar
+          </button>
+        </ng-container>
+        <ng-container *ngIf="!isEditting">
+          <button
+            type="button"
+            (click)="isEditting = true"
+            class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Editar
+          </button>
+        </ng-container>
+      </div>
     </div>
   </form>
 
-  <div class="row" *ngIf="auth.user$ | async as user">
+  <!-- <div class="row" *ngIf="auth.user$ | async as user">
     <pre class="col-12 text-light bg-dark p-4">{{ user | json }}</pre>
-    <!-- <pre class="col-12 text-light bg-dark p-4">{{ userProfile | json }}</pre> -->
-  </div>
+    <pre class="col-12 text-light bg-dark p-4">{{ userProfile | json }}</pre>
+  </div> -->
+  <!-- {{ user | json }} -->
 </div>
+
+<p-dialog
+  [(visible)]="pwDialog"
+  header="Cambio de Contraseña"
+  [modal]="true"
+  styleClass="p-fluid w-1/4"
+>
+  <ng-template pTemplate="content">
+    <form
+      [formGroup]="passwordForm"
+      (ngSubmit)="changePassword()"
+      autocomplete="off"
+    >
+      <div class="mb-4">
+        <app-input
+          [theType]="showPassword ? 'text' : 'password'"
+          formId="password"
+          label="Nueva Contraseña"
+          [control]="passwordForm.controls.password"
+        ></app-input>
+      </div>
+      <div class="mb-4">
+        <app-input
+          [theType]="showPassword ? 'text' : 'password'"
+          formId="confirmPassword"
+          label="Confirmar Contraseña"
+          [control]="passwordForm.controls.confirmPassword"
+        ></app-input>
+      </div>
+      <div *ngIf="passwordForm.errors" class="-mt-4 mb-4 text-red-500">
+        <small id="name-help">Las contraseñas no coinciden</small>
+      </div>
+      <div
+        *ngIf="showErrors() && passwordForm.controls.password.errors?.['notgood']"
+        class="-mt-4 mb-4 px-4 py-2 text-sm text-gray-500 border-2 rounded-md"
+      >
+        Su contraseña debe contener:
+        <ul class="list-disc list-inside">
+          <li>Letras minúsculas (a-z)</li>
+          <li>Letras mayúsculas (A-Z)</li>
+          <li>Números (0-9)</li>
+          <li>Caracteres especiales (ej. !@#$%^&*)</li>
+        </ul>
+      </div>
+    </form>
+    <div class="flex items-center">
+      <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
+      <button
+        (click)="showHidePassword()"
+        type="button"
+        [ngClass]="{
+          'bg-indigo-600': showPassword,
+          'bg-indigo-200': showPassword
+        }"
+        class="bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        role="switch"
+        aria-checked="false"
+        aria-labelledby="annual-billing-label"
+      >
+        <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+        <span
+          aria-hidden="true"
+          [ngClass]="{
+            'translate-x-5': showPassword,
+            'translate-x-0': showPassword
+          }"
+          class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+        ></span>
+      </button>
+      <span class="ml-3" id="annual-billing-label">
+        <span class="text-sm font-medium text-gray-900"
+          >Mostrar contraseñas</span
+        >
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="pwDialog = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      [disabled]="passwordForm.invalid"
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button"
+      (click)="changePassword()"
+    ></button>
+  </ng-template>
+</p-dialog>
