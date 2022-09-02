@@ -181,7 +181,7 @@
             Cantidad
           </div>
           <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            Costo
+            Importe
           </div>
           <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
             Impuesto
@@ -234,7 +234,7 @@
               inputStyleClass="sm:w-56"
               [(ngModel)]="product.item"
               [suggestions]="filteredItems"
-              (completeMethod)="filterItem($event)"
+              (completeMethod)="filterItem($event); isSubmitDissabled = false"
               (onSelect)="
                 calculateInvoiceTotal(products);
                 newInvoice.Items.push(product.item);
@@ -263,6 +263,7 @@
                 product.item.subtotal = $event * product.item.cost;
                 calculateInvoiceTotal(products)
               "
+              [min]="0"
               [size]="4"
               name="quantity{{ i }}"
               title="Cantidad"
@@ -402,8 +403,7 @@
               type="submit"
               (click)="saveNewInvoice()"
               [ngClass]="{
-                'bg-indigo-400 hover:bg-indigo-400 focus:ring-indigo-400':
-                  !invoiceForm.form.valid || isSubmitDissabled
+                'opacity-40': !invoiceForm.form.valid || isSubmitDissabled
               }"
               [disabled]="!invoiceForm.form.valid || isSubmitDissabled"
             >
@@ -415,6 +415,10 @@
               class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               type="submit"
               (click)="updateTheInvoice()"
+              [ngClass]="{
+                'opacity-40': !invoiceForm.form.valid || isSubmitDissabled
+              }"
+              [disabled]="!invoiceForm.form.valid || isSubmitDissabled"
             >
               Guardar Factura
             </button></ng-template
@@ -425,7 +429,7 @@
   </form>
 </div>
 
-<!-- <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-6xl mx-auto">
     <div class="pt-8">
       <div class="mt-8 flex flex-col">
@@ -449,7 +453,7 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 <p-dialog
   header="Nuevo Cliente"
   [(visible)]="displayModal"
