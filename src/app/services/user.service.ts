@@ -4,8 +4,8 @@ import { Observable } from "rxjs";
 import { User } from "../models/user.model";
 import { address as env } from "../../environments/environment";
 
-const baseUrl = `${env.remote}/api/users`;
-// const baseUrl = `${env.local}/api/users`;
+const baseUrl = "https://facturazen-backend-9tcee.ondigitalocean.app/api/users";
+// const baseUrl = "http://localhost:8080/api/users",;
 
 @Injectable({
   providedIn: "root",
