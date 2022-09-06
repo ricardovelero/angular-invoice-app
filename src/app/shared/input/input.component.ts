@@ -20,4 +20,7 @@ export class InputComponent implements OnInit {
     const { invalid, dirty, touched } = this.control;
     return invalid && (dirty || touched);
   }
+  isDisabled() {
+    return this.control.disabled;
+  }
 }
