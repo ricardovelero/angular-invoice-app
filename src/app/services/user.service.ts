@@ -16,8 +16,8 @@ export class UserService {
   getUser(id: any): Observable<User> {
     return this.http.get(`${baseUrl}/${id}`);
   }
-  updateUser(id: any, data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/${id}`, data);
+  updateUser(data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/edit`, data);
   }
   changeUserPassword(data: any): Observable<any> {
     console.log(data);
@@ -30,6 +30,6 @@ export class UserService {
     return this.http.get<User[]>(`${baseUrl}?name=${name}`);
   }
   findUserByEmail(email: any): Observable<User[]> {
-    return this.http.get<User[]>(`${baseUrl}?email=${email}`);
+    return this.http.get<User[]>(`${baseUrl}/email/${email}`);
   }
 }
