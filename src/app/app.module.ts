@@ -31,6 +31,10 @@ import { SignupButtonComponent } from "./shared/signup-button/signup-button.comp
 import { HomeComponent } from "./components/home/home.component";
 import { ProfileComponent } from "./components/profile/profile.component";
 import { SpinnerComponent } from "./shared/spinner/spinner.component";
+import {
+  AutoFocusDirective,
+  HighlightDirective,
+} from "./shared/trap-focus.directive";
 
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { RippleModule } from "primeng/ripple";
@@ -51,6 +55,7 @@ import { ToggleButtonModule } from "primeng/togglebutton";
 import { MenubarModule } from "primeng/menubar";
 import { InputComponent } from "./shared/input/input.component";
 import { TooltipModule } from "primeng/tooltip";
+import { FileUploadModule } from "primeng/fileupload";
 
 @NgModule({
   declarations: [
@@ -74,6 +79,8 @@ import { TooltipModule } from "primeng/tooltip";
     ProfileComponent,
     SpinnerComponent,
     InputComponent,
+    AutoFocusDirective,
+    HighlightDirective,
   ],
   imports: [
     BrowserModule,
@@ -99,6 +106,7 @@ import { TooltipModule } from "primeng/tooltip";
     ToggleButtonModule,
     MenubarModule,
     TooltipModule,
+    FileUploadModule,
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
