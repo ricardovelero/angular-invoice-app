@@ -56,6 +56,7 @@ import { MenubarModule } from "primeng/menubar";
 import { InputComponent } from "./shared/input/input.component";
 import { TooltipModule } from "primeng/tooltip";
 import { FileUploadModule } from "primeng/fileupload";
+import { SelectButtonModule } from "primeng/selectbutton";
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { FileUploadModule } from "primeng/fileupload";
     MenubarModule,
     TooltipModule,
     FileUploadModule,
+    SelectButtonModule,
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
