@@ -186,6 +186,7 @@
             </td>
             <td class="whitespace-nowrap pl-4 text-base text-gray-500">
               <button
+                [disabled]="item.Invoices.length"
                 pButton
                 pRipple
                 icon="pi pi-trash"
