@@ -125,14 +125,14 @@
               pSortableColumn="tax1"
               class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
             >
-              Impuesto <p-sortIcon field="tax1"></p-sortIcon>
+              IVA <p-sortIcon field="tax1"></p-sortIcon>
             </th>
-            <th
+            <!-- <th
               pSortableColumn="tax2"
               class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
             >
-              Impuesto 2<p-sortIcon field="tax2"></p-sortIcon>
-            </th>
+              IRPF<p-sortIcon field="tax2"></p-sortIcon>
+            </th> -->
             <th
               class="px-4 py-3.5 text-left text-xs font-semibold text-gray-900"
             >
@@ -152,7 +152,10 @@
         >
           <tr class="divide-x divide-gray-200">
             <td class="whitespace-nowrap p-4 pl-6 text-base text-gray-500">
-              <p-tableCheckbox [value]="item"></p-tableCheckbox>
+              <p-tableCheckbox
+                [value]="item"
+                [disabled]="item.Invoices.length"
+              ></p-tableCheckbox>
             </td>
             <td
               class="whitespace-nowrap p-4 text-base font-medium text-gray-900 sm:pl-6"
@@ -170,11 +173,11 @@
             >
               {{ item.tax1 }}
             </td>
-            <td
+            <!-- <td
               class="whitespace-nowrap p-4 text-center text-base text-gray-500"
             >
               {{ item.tax2 }}
-            </td>
+            </td> -->
             <td class="whitespace-nowrap pl-4 text-base text-gray-500">
               <button
                 pButton
