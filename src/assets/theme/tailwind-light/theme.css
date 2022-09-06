@@ -3477,10 +3477,10 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   padding: 1.25rem;
 }
 
-.fc {
-  /* FullCalendar 4 */
-  /* FullCalendar 5 */
-}
+/* .fc {
+  FullCalendar 4
+  FullCalendar 5 
+} */
 .fc.fc-unthemed .fc-view-container th {
   background: #fafafa;
   border: 1px solid #e5e7eb;
@@ -5171,16 +5171,16 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   margin-top: 0;
 }
 
-.p-fileupload-choose:not(.p-disabled):hover {
+/* .p-fileupload-choose:not(.p-disabled):hover {
   background: #4338ca;
   color: #ffffff;
   border-color: #4338ca;
-}
-.p-fileupload-choose:not(.p-disabled):active {
+} */
+/* .p-fileupload-choose:not(.p-disabled):active {
   background: #4338ca;
   color: #ffffff;
   border-color: #4338ca;
-}
+} */
 
 .p-breadcrumb {
   background: #ffffff;
