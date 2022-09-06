@@ -33,13 +33,22 @@ export class ItemsListComponent implements OnInit {
   submitted: boolean = false;
   showSpinner: boolean = true;
   isEmpty: boolean = false;
+  taxOptions: {} | any;
 
   constructor(
     private itemService: ItemService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
-  ) {}
+  ) {
+    this.taxOptions = [
+      { label: "21%", value: 21 },
+      { label: "10%", value: 10 },
+      { label: "4%", value: 4 },
+      { label: "0%", value: 0 },
+      { label: "Otro", value: 1 },
+    ];
+  }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -49,9 +58,9 @@ export class ItemsListComponent implements OnInit {
     });
     this.showSpinner = false;
   }
-
   openNew() {
     this.item = {};
+    this.item.tax1 = 21;
     this.submitted = false;
     this.itemDialog = true;
   }
@@ -102,7 +111,7 @@ export class ItemsListComponent implements OnInit {
 
   eraseItem(item: Item | any) {
     this.confirmationService.confirm({
-      message: "¿Está seguro de que quiere borrar " + item.name + "?",
+      message: "¿Está seguro de que quiere borrar " + item.label + "?",
       header: "Por favor, confirmar...",
       acceptLabel: "Sí",
       rejectLabel: "No",
@@ -140,7 +149,7 @@ export class ItemsListComponent implements OnInit {
 
   saveItem() {
     this.submitted = true;
-    if (this.item.name.trim()) {
+    if (this.item.label.trim()) {
       if (this.item.id) {
         this.items[this.findIndexById(this.item.id)] = this.item;
         this.itemService.updateItem(this.item.id, this.item).subscribe({

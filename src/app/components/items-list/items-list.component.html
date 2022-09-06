@@ -253,12 +253,17 @@
         >
       </div>
       <div class="p-field mt-4">
-        <label for="tax1">Impuesto</label>
-        <p-inputNumber id="tax1" [(ngModel)]="item.tax1"></p-inputNumber>
+        <label for="tax1">IVA</label>
+        <p-selectButton
+          [options]="taxOptions"
+          [(ngModel)]="item.tax1"
+          optionLabel="label"
+          optionValue="value"
+        ></p-selectButton>
       </div>
-      <div class="p-field mt-4">
-        <label for="tax2">Impuesto 2</label>
-        <p-inputNumber id="tax2" [(ngModel)]="item.tax2"></p-inputNumber>
+      <div *ngIf="item.tax1 == 1" class="p-field mt-4">
+        <label for="otherTax1">Otro</label>
+        <p-inputNumber id="otherTax1" [(ngModel)]="item.tax1"></p-inputNumber>
       </div>
     </div>
   </ng-template>
@@ -277,7 +282,6 @@
       pRipple
       label="Guardar"
       icon="pi pi-check"
-      class="p-button-text"
       (click)="saveItem()"
     ></button>
   </ng-template>
