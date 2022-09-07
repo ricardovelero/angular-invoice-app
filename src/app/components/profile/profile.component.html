@@ -156,10 +156,11 @@
 
             <div class="col-span-6 sm:col-span-3">
               <app-input
-                [theType]="'text'"
-                formId="country"
+                theType="select"
                 label="País"
+                formId="country"
                 [control]="profileForm.controls.address.controls.country"
+                [items]="countries"
               ></app-input>
             </div>
 

@@ -11,6 +11,8 @@ import {
 import { passwordMatchingValidator } from "../../shared/input/confirm-password.validator";
 import { passwordStrengthValidator } from "../../shared/input/password-strength.validator";
 import { User } from "src/app/models/user.model";
+import { Country } from "src/app/models/country.model";
+import { CountryService } from "src/app/services/country.service";
 
 @Component({
   selector: "app-profile",
@@ -56,12 +58,19 @@ export class ProfileComponent implements OnInit {
 
   uploadedFiles: any[] = [];
 
+  countries: Country[] | any;
+
   constructor(
     public auth: AuthService,
     private userService: UserService,
     private messageService: MessageService,
+    private countryService: CountryService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.profileForm.controls.address.controls.country?.setValue("España", {
+      onlySelf: true,
+    });
+  }
 
   ngOnInit(): void {
     this.profileForm.disable();
@@ -89,6 +98,9 @@ export class ProfileComponent implements OnInit {
         },
         error: (e) => console.error(e),
       });
+    });
+    this.countryService.getCountries().then((data) => {
+      this.countries = data;
     });
   }
 
@@ -180,5 +192,14 @@ export class ProfileComponent implements OnInit {
   }
   showHidePassword() {
     this.showPassword = !this.showPassword;
+  }
+  changeCountry(e: any) {
+    console.log(e.target.value);
+    this.profileForm.controls.address.controls.country?.setValue(
+      e.target.value,
+      {
+        onlySelf: true,
+      }
+    );
   }
 }
