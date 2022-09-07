@@ -286,9 +286,11 @@
         </div>
         <div class="sm:col-span-2">
           <app-input
-            theType="text"
+            theType="select"
             label="País"
+            formId="country"
             [control]="clientShortForm.controls.country"
+            [items]="countries"
           ></app-input>
         </div>
       </div>
@@ -307,6 +309,7 @@
         ></p-button>
       </div>
     </form>
+    <!-- {{ clientShortForm.value | json }} -->
     <!-- <div>Form contents: {{ clientShortForm.value | json }}</div>
     <div>Form is valid: {{ clientShortForm.valid }}</div>
     <div>

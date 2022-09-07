@@ -11,6 +11,8 @@ export class InputComponent implements OnInit {
   @Input() label: string = "";
   @Input() formId: string = "";
   @Input() theType: string = "";
+  @Input() styleClass: string = "";
+  @Input() items: [] | any;
 
   constructor() {}
 
@@ -22,5 +24,11 @@ export class InputComponent implements OnInit {
   }
   isDisabled() {
     return this.control.disabled;
+  }
+  changeItem(e: any) {
+    console.log(e.target.value);
+    this.control.setValue(e.target.value, {
+      onlySelf: true,
+    });
   }
 }

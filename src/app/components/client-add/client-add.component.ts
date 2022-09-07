@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Client } from "../../models/client.model";
 import { ClientService } from "../../services/client.service";
+import { Country } from "src/app/models/country.model";
+import { CountryService } from "src/app/services/country.service";
 import { Router } from "@angular/router";
 import { AuthService } from "@auth0/auth0-angular";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -14,6 +16,8 @@ export class ClientAddComponent implements OnInit {
   @Input() isShort: boolean = false;
   @Output() displayModal = new EventEmitter<boolean>();
   @Output() theClient = new EventEmitter<object>();
+
+  countries: Country[] | any;
 
   clientShortForm = new FormGroup({
     id: new FormControl(""),
@@ -51,11 +55,20 @@ export class ClientAddComponent implements OnInit {
 
   constructor(
     private clientService: ClientService,
+    private countryService: CountryService,
     private router: Router,
     public auth: AuthService
-  ) {}
+  ) {
+    this.clientShortForm.controls.country?.setValue("España", {
+      onlySelf: true,
+    });
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.countryService.getCountries().then((data) => {
+      this.countries = data;
+    });
+  }
 
   addClient(): void {
     const data = {
@@ -116,5 +129,10 @@ export class ClientAddComponent implements OnInit {
   }
   parentModal(value: boolean) {
     this.displayModal.emit(value);
+  }
+  changeCountry(e: any) {
+    this.clientShortForm.controls.country?.setValue(e.target.value, {
+      onlySelf: true,
+    });
   }
 }
