@@ -147,7 +147,7 @@ export class ProfileComponent implements OnInit {
   }
 
   changePassword() {
-    const data = { newPassword: this.passwordForm.controls.password.value };
+    const data = { password: this.passwordForm.controls.password.value };
     this.userService.changeUserPassword(data).subscribe({
       next: (res) => {
         this.pwDialog = false;

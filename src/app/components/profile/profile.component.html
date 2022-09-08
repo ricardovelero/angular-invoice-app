@@ -62,8 +62,8 @@
           <p-fileUpload
             mode="basic"
             name="image upload"
-            url="https://facturazen-backend-9tcee.ondigitalocean.app/api/users/image"
-            method="put"
+            url="https://facturazen-backend-9tcee.ondigitalocean.app/api/files/image"
+            method="post"
             [multiple]="false"
             accept="image/*"
             [maxFileSize]="1000000"
@@ -259,7 +259,7 @@
       </div>
       <div
         *ngIf="showErrors() && passwordForm.controls.password.errors?.['notgood']"
-        class="-mt-3 mb-4 px-4 py-2 text-sm text-gray-500 border-2 rounded-md"
+        class="-mt-1 mb-4 px-4 py-2 text-sm text-gray-500 border-2 rounded-md"
       >
         Su contraseña debe contener:
         <ul class="list-disc list-inside">
