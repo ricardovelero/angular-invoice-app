@@ -99,7 +99,7 @@
                 Estado <p-sortIcon field="status"></p-sortIcon>
               </th>
               <th class="text-xs">Editar</th>
-              <th class="text-xs">Borrar</th>
+              <th class="text-xs">Estado</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-invoice>
@@ -132,7 +132,14 @@
                 {{ invoice.total | currency: "EUR" }}
               </td>
               <td class="whitespace-nowrap p-4 text-base text-gray-500">
-                {{ invoice.status }}
+                <span
+                  class="p-1.5 rounded-md uppercase text-xs"
+                  [ngClass]="{
+                    ' text-red-500 bg-red-200': invoice.status == 'Pendiente',
+                    ' text-green-500 bg-green-200': invoice.status == 'Pagada'
+                  }"
+                  >{{ invoice.status }}</span
+                >
               </td>
               <td>
                 <a routerLink="/invoice-add/{{ invoice.id }}">
@@ -148,9 +155,9 @@
                 <button
                   pButton
                   pRipple
-                  icon="pi pi-trash"
+                  icon="pi pi-money-bill"
                   class="up-button-rounded p-button-text"
-                  (click)="eraseInvoice(invoice)"
+                  (click)="updateStatus(invoice)"
                 ></button>
               </td>
             </tr>
@@ -198,6 +205,29 @@
       </ng-container>
     </div>
   </div>
+
+  <p-dialog
+    [(visible)]="paymentDialog"
+    header="Cambio Estado"
+    [modal]="true"
+    styleClass="p-fluid w-1/4"
+  >
+    <ng-template pTemplate="content">
+      <div class="p-field mt-4"></div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="paymentDialog = false"
+      ></button>
+      <button pButton pRipple label="Guardar" icon="pi pi-check"></button>
+    </ng-template>
+  </p-dialog>
 
   <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
 </ng-template>

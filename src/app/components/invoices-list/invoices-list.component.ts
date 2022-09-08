@@ -27,6 +27,7 @@ export class InvoicesListComponent implements OnInit {
   es: any;
   showSpinner: boolean = true;
   isEmpty: boolean = false;
+  paymentDialog: boolean = false;
 
   constructor(
     private invoiceService: InvoiceService,
@@ -68,6 +69,34 @@ export class InvoicesListComponent implements OnInit {
 
     return index;
   }
+
+  updateStatus(invoice: Invoice | any) {
+    let status = invoice.status == "Pendiente" ? "Pagada" : "Pendiente";
+    const data = { status: status };
+    this.invoiceService.updateInvoice(invoice.id, data).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.messageService.add({
+          severity: "success",
+          summary: "Operación exitosa",
+          detail: "Estado cambiado",
+          life: 3000,
+        });
+        const invoiceIndex = this.invoices.findIndex(
+          (obj) => obj.id == invoice.id
+        );
+        this.invoices[invoiceIndex].status = status;
+      },
+      error: (e) =>
+        this.messageService.add({
+          severity: "error",
+          summary: "Error en la operación",
+          detail: "El estado no ha podido ser cambiado",
+          life: 5000,
+        }),
+    });
+  }
+
   eraseInvoice(invoice: Invoice | any) {
     this.confirmationService.confirm({
       message:
