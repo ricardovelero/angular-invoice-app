@@ -32,10 +32,10 @@ import { HomeComponent } from "./components/home/home.component";
 import { ProfileComponent } from "./components/profile/profile.component";
 import { SpinnerComponent } from "./shared/spinner/spinner.component";
 import { InputComponent } from "./shared/input/input.component";
-import {
-  AutoFocusDirective,
-  HighlightDirective,
-} from "./shared/trap-focus.directive";
+// import {
+//   AutoFocusDirective,
+//   HighlightDirective,
+// } from "./shared/trap-focus.directive";
 
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { RippleModule } from "primeng/ripple";
@@ -84,8 +84,6 @@ import { StepperComponent } from "./shared/stepper/stepper.component";
     HomeComponent,
     ProfileComponent,
     SpinnerComponent,
-    AutoFocusDirective,
-    HighlightDirective,
     FirstloginComponent,
     StepperComponent,
     InputComponent,
