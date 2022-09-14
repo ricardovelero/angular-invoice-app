@@ -1,58 +1,73 @@
-<div class="pt-8">
-  <form [formGroup]="itemForm" (ngSubmit)="addItem()">
-    <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-      <div class="sm:col-span-2">
-        <app-input
-          theType="text"
-          label="Nombre"
-          [control]="itemForm.controls.name"
-        ></app-input>
-      </div>
-      <div class="sm:col-span-4">
-        <app-input
-          theType="text"
-          label="Descripcion"
-          [control]="itemForm.controls.description"
-        ></app-input>
-      </div>
-      <div class="sm:col-span-2">
-        <app-input
-          theType="text"
-          label="Importe"
-          [control]="itemForm.controls.cost"
-        ></app-input>
-      </div>
-      <div class="sm:col-span-2">
-        <app-input
-          theType="text"
-          label="IVA"
-          [control]="itemForm.controls.tax1"
-        ></app-input>
-      </div>
-      <div class="sm:col-span-2">
-        <app-input
-          theType="text"
-          label="Tax2"
-          [control]="itemForm.controls.tax2"
-        ></app-input>
-      </div>
+<form class="space-y-6" [formGroup]="itemForm" (ngSubmit)="saveItem()">
+  <app-input
+    [theType]="'hidden'"
+    formId="id"
+    [control]="itemForm.controls.id"
+  ></app-input>
+  <div class="p-field mt-4">
+    <app-input
+      [theType]="'text'"
+      formId="name"
+      label="Nombre"
+      [control]="itemForm.controls.name"
+    ></app-input>
+  </div>
+  <div class="p-field mt-4">
+    <app-input
+      [theType]="'textarea'"
+      formId="description"
+      label="Descripción"
+      [control]="itemForm.controls.description"
+      [rows]="3"
+      [cols]="20"
+    ></app-input>
+  </div>
+  <div class="p-formgrid p-grid">
+    <div class="p-field mt-4">
+      <app-input
+        [theType]="'number'"
+        formId="cost"
+        label="Importe"
+        [control]="itemForm.controls.cost"
+      ></app-input>
     </div>
-    <div class="sm:col-span-6 mt-6 float-right">
-      <p-button
-        icon="pi pi-times"
-        (click)="parentModal(false)"
-        label="Cancelar"
-        styleClass="p-button-text mr-6"
-      ></p-button>
-      <p-button
-        [disabled]="itemForm.invalid"
-        icon="pi pi-check"
-        (click)="addItem(); parentModal(false)"
-        label="Guardar"
-      ></p-button>
+    <div class="p-field mt-4">
+      <label for="tax1">IVA</label>
+      <p-selectButton
+        [options]="taxOptions"
+        [formControl]="itemForm.controls.tax1"
+        optionLabel="label"
+        optionValue="value"
+        (onOptionClick)="processTaxOption()"
+      ></p-selectButton>
     </div>
-  </form>
-  <!-- <div>Form contents: {{ itemForm.value | json }}</div>
+    <div *ngIf="showOtherTax" class="p-field mt-4">
+      <app-input
+        [theType]="'number'"
+        formId="other"
+        label="Otro"
+        [control]="itemForm.controls.tax1"
+      ></app-input>
+    </div>
+  </div>
+  <div class="sm:col-span-6 mt-6 float-right">
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog(false)"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Guardar"
+      icon="pi pi-check"
+      (click)="itemForm.invalid ? itemForm.markAllAsTouched() : saveItem()"
+    ></button>
+  </div>
+</form>
+<!-- <div>Form contents: {{ itemForm.value | json }}</div>
   <div>Form is valid: {{ itemForm.valid }}</div>
   <div>Errors around name: {{ itemForm.controls.name.errors | json }}</div> -->
-</div>
