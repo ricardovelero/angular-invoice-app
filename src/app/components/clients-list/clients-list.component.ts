@@ -67,6 +67,8 @@ export class ClientsListComponent implements OnInit {
 
   isSubmitDissabled: boolean = true;
 
+  loading: boolean = false;
+
   constructor(
     private clientService: ClientService,
     private router: Router,
@@ -76,6 +78,7 @@ export class ClientsListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.primengConfig.ripple = true;
     this.retrieveClients();
     this.showSpinner = false;
@@ -85,6 +88,7 @@ export class ClientsListComponent implements OnInit {
       next: (data) => {
         this.clients = data;
         this.isEmpty = this.clients.length < 1 ? true : false;
+        this.loading = false;
       },
       error: (e) => console.error(e),
     });
@@ -184,13 +188,14 @@ export class ClientsListComponent implements OnInit {
               life: 3000,
             });
           },
-          error: (e) =>
+          error: (e) => {
             this.messageService.add({
               severity: "error",
               summary: "Error",
-              detail: e,
+              detail: e.error.message,
               life: 5000,
-            }),
+            });
+          },
         });
       } else {
         this.clientService.createClient(this.client).subscribe({
@@ -201,13 +206,14 @@ export class ClientsListComponent implements OnInit {
               detail: "Item creado",
               life: 3000,
             });
+            res["Invoices"] = [];
             this.clients.push(res);
           },
           error: (e) =>
             this.messageService.add({
               severity: "error",
               summary: "Error",
-              detail: e,
+              detail: e.error.message,
               life: 5000,
             }),
         });

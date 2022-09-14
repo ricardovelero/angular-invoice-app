@@ -28,6 +28,7 @@ export class InvoicesListComponent implements OnInit {
   showSpinner: boolean = true;
   isEmpty: boolean = false;
   paymentDialog: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private invoiceService: InvoiceService,
@@ -38,10 +39,12 @@ export class InvoicesListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.primengConfig.ripple = true;
     this.invoiceService.getAllInvoices().subscribe((invoices) => {
       this.invoices = invoices;
       this.isEmpty = invoices.length < 1 ? true : false;
+      this.loading = false;
     });
     this.showSpinner = false;
   }
@@ -100,9 +103,7 @@ export class InvoicesListComponent implements OnInit {
   eraseInvoice(invoice: Invoice | any) {
     this.confirmationService.confirm({
       message:
-        "¿Está seguro de que quiere borrar la Factura Número " +
-        invoice.number +
-        "?",
+        "¿Está seguro que quiere borrar la Factura Nº " + invoice.number + "?",
       header: "Por favor, confirmar...",
       acceptLabel: "Sí",
       rejectLabel: "No",

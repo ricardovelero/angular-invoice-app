@@ -106,7 +106,7 @@
         <a routerLink="/invoice-add">
           <button
             type="button"
-            class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Facturar
           </button>
@@ -184,7 +184,7 @@
       role="list"
       class="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden"
     >
-      <li>
+      <li *ngFor="let invoice of invoices; let i = index">
         <a href="#" class="block px-4 py-4 bg-white hover:bg-gray-50">
           <span class="flex items-center space-x-4">
             <span class="flex-1 flex space-x-2 truncate">
@@ -203,12 +203,17 @@
                 />
               </svg>
               <span class="flex flex-col text-gray-500 text-sm truncate">
-                <span class="truncate">Factura a Molly Sanders</span>
-                <span
-                  ><span class="text-gray-900 font-medium">$20,000</span>
-                  USD</span
+                <span class="truncate"
+                  >Factura a {{ invoice.Client?.fullName }}</span
                 >
-                <time datetime="2020-07-11">July 11, 2020</time>
+                <span
+                  ><span class="text-gray-900 font-medium">{{
+                    invoice.total | currency: "EUR"
+                  }}</span>
+                </span>
+                <time datetime="">{{
+                  invoice.date | date: "longDate":"es"
+                }}</time>
               </span>
             </span>
             <!-- Heroicon name: solid/chevron-right -->
@@ -290,13 +295,19 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr class="bg-white">
+              <tr
+                class="bg-white"
+                *ngFor="
+                  let invoice of invoices
+                    | paginate: { itemsPerPage: 6, currentPage: page }
+                "
+              >
                 <td
                   class="max-w-0 w-full px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                 >
                   <div class="flex">
                     <a
-                      href="#"
+                      routerLink="/invoices/{{ invoice.id }}"
                       class="group inline-flex space-x-2 truncate text-sm"
                     >
                       <!-- Heroicon name: solid/cash -->
@@ -316,7 +327,7 @@
                       <p
                         class="text-gray-500 truncate group-hover:text-gray-900"
                       >
-                        Factura a Molly Sanders
+                        Factura a {{ invoice.Client?.fullName }}
                       </p>
                     </a>
                   </div>
@@ -324,26 +335,31 @@
                 <td
                   class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500"
                 >
-                  <span class="text-gray-900 font-medium">$20,000 </span>
-                  USD
+                  <span class="text-gray-900 font-medium"
+                    >{{ invoice.total | currency: "EUR" }}
+                  </span>
                 </td>
                 <td
                   class="hidden px-6 py-4 whitespace-nowrap text-sm text-gray-500 md:block"
                 >
                   <span
-                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 capitalize"
+                    class="inline-flex items-center p-1.5 rounded-md text-xs font-medium bg-green-100 text-green-800 capitalize"
+                    [ngClass]="{
+                      ' text-red-500 bg-red-200': invoice.status == 'Pendiente',
+                      ' text-green-500 bg-green-200': invoice.status == 'Pagada'
+                    }"
                   >
-                    pagada
+                    {{ invoice.status }}
                   </span>
                 </td>
                 <td
                   class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500"
                 >
-                  <time datetime="2020-07-11">11 de Julio, 2022</time>
+                  <time datetime="">{{
+                    invoice.date | date: "longDate":"es"
+                  }}</time>
                 </td>
               </tr>
-
-              <!-- More transactions... -->
             </tbody>
           </table>
           <!-- Pagination -->
@@ -351,7 +367,7 @@
             class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
             aria-label="Pagination"
           >
-            <div class="hidden sm:block">
+            <!-- <div class="hidden sm:block">
               <p class="text-sm text-gray-700">
                 Mostrando
                 <span class="font-medium">1</span>
@@ -361,9 +377,20 @@
                 <span class="font-medium">20</span>
                 resultados
               </p>
-            </div>
+            </div> -->
             <div class="flex-1 flex justify-between sm:justify-end">
-              <a
+              <pagination-controls
+                class="dashboard-pagination text-sm text-gray-700"
+                (pageChange)="page = $event"
+                previousLabel="Anterior"
+                nextLabel="Siguiente"
+                screenReaderPaginationLabel="Paginación"
+                screenReaderPageLabel="página"
+                screenReaderCurrentLabel="Estás en la página"
+              >
+                ></pagination-controls
+              >
+              <!-- <a
                 href="#"
                 class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
@@ -374,7 +401,7 @@
                 class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
                 Siguiente
-              </a>
+              </a> -->
             </div>
           </nav>
         </div>
@@ -382,3 +409,4 @@
     </div>
   </div>
 </div>
+<!-- {{ invoices | json }} -->

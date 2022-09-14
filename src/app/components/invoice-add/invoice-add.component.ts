@@ -233,6 +233,37 @@ export class InvoiceAddComponent implements OnInit {
       });
     this.router.navigate(["invoices"]);
   }
+  eraseInvoice(invoice: Invoice | any) {
+    this.confirmationService.confirm({
+      message:
+        "¿Está seguro que quiere borrar la Factura Nº " + invoice.number + "?",
+      header: "Por favor, confirmar...",
+      acceptLabel: "Sí",
+      rejectLabel: "No",
+      icon: "pi pi-exclamation-triangle",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.invoiceService.deleteInvoice(invoice.id).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.messageService.add({
+              severity: "success",
+              summary: "Operación exitosa",
+              detail: "Factura borrada",
+              life: 3000,
+            });
+          },
+          error: (e) =>
+            this.messageService.add({
+              severity: "error",
+              summary: "Error en la operación",
+              detail: "La factura no ha podido ser borrada",
+              life: 5000,
+            }),
+        });
+      },
+    });
+  }
   showModalDialog() {
     this.displayModal = true;
   }

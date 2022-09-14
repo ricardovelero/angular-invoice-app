@@ -31,6 +31,7 @@ import { SignupButtonComponent } from "./shared/signup-button/signup-button.comp
 import { HomeComponent } from "./components/home/home.component";
 import { ProfileComponent } from "./components/profile/profile.component";
 import { SpinnerComponent } from "./shared/spinner/spinner.component";
+import { InputComponent } from "./shared/input/input.component";
 import {
   AutoFocusDirective,
   HighlightDirective,
@@ -48,15 +49,19 @@ import { InputTextModule } from "primeng/inputtext";
 import { ToolbarModule } from "primeng/toolbar";
 import { InputNumberModule } from "primeng/inputnumber";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
-import { ConfirmationService } from "primeng/api";
+import { ConfirmationService, SharedModule } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { MenubarModule } from "primeng/menubar";
-import { InputComponent } from "./shared/input/input.component";
 import { TooltipModule } from "primeng/tooltip";
 import { FileUploadModule } from "primeng/fileupload";
 import { SelectButtonModule } from "primeng/selectbutton";
+
+import { NgxPaginationModule } from "ngx-pagination";
+import { CdkStepperModule } from "@angular/cdk/stepper";
+import { FirstloginComponent } from "./components/firstlogin/firstlogin.component";
+import { StepperComponent } from "./shared/stepper/stepper.component";
 
 @NgModule({
   declarations: [
@@ -79,9 +84,11 @@ import { SelectButtonModule } from "primeng/selectbutton";
     HomeComponent,
     ProfileComponent,
     SpinnerComponent,
-    InputComponent,
     AutoFocusDirective,
     HighlightDirective,
+    FirstloginComponent,
+    StepperComponent,
+    InputComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,11 +116,22 @@ import { SelectButtonModule } from "primeng/selectbutton";
     TooltipModule,
     FileUploadModule,
     SelectButtonModule,
+    NgxPaginationModule,
+    CdkStepperModule,
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
         allowedList: [
           `https://facturazen-backend-9tcee.ondigitalocean.app/api/*`,
+          {
+            uri: "https://fzdev.eu.auth0.com/api/v2/*",
+            tokenOptions: {
+              // The attached token should target this audience
+              audience: "https://fzdev.eu.auth0.com/api/v2/",
+              // The attached token should have these scopes
+              scope: "read:current_user",
+            },
+          },
         ],
       },
     }),

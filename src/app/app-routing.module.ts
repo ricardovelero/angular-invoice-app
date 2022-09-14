@@ -15,7 +15,6 @@ import { ProfileComponent } from "./components/profile/profile.component";
 import { AuthGuard } from "@auth0/auth0-angular";
 
 const routes: Routes = [
-  { path: "", component: DashboardComponent },
   {
     path: "dashboard",
     component: DashboardComponent,
@@ -64,6 +63,8 @@ const routes: Routes = [
   },
   { path: "item-add", component: ItemAddComponent, canActivate: [AuthGuard] },
   { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
+
+  { path: "", component: DashboardComponent },
 ];
 
 @NgModule({

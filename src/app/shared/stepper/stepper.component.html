@@ -1,0 +1,144 @@
+<nav aria-label="Progress">
+  <ol
+    role="list"
+    class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0 bg-white"
+  >
+    <ng-container *ngFor="let step of steps; let i = index">
+      <li class="relative md:flex md:flex-1">
+        <!-- Completed Step -->
+        <a (click)="onClick(i)" class="group flex w-full items-center">
+          <span
+            class="flex items-center px-6 py-4 text-sm font-medium text-gray-500"
+          >
+            <span
+              [ngClass]="{
+                'border-indigo-600 group-hover:border-indigo-600':
+                  selectedIndex === i
+              }"
+              class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 group-hover:border-gray-400"
+            >
+              <!-- Heroicon name: solid/check -->
+              <!-- <svg
+                class="h-6 w-6 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z"
+                  clip-rule="evenodd"
+                />
+              </svg> -->
+              <span
+                class="group-hover:text-gray-900"
+                [ngClass]="{ 'text-indigo-600': selectedIndex === i }"
+                >{{ i + 1 }}</span
+              >
+            </span>
+            <span
+              class="ml-4 text-sm font-medium group-hover:text-gray-900"
+              [ngClass]="{ 'text-gray-900': selectedIndex === i }"
+              ><ng-container
+                *ngIf="step.stepLabel; else showLabelText"
+                [ngTemplateOutlet]="step.stepLabel.template"
+              >
+              </ng-container>
+              <ng-template #showLabelText>
+                {{ step.label }}
+              </ng-template>
+            </span>
+          </span>
+        </a>
+
+        <!-- Arrow separator for lg screens and up -->
+        <div
+          *ngIf="i + 1 != steps.length"
+          class="absolute top-0 right-0 hidden h-full w-5 md:block"
+          aria-hidden="true"
+        >
+          <svg
+            class="h-full w-full text-gray-300"
+            viewBox="0 0 22 80"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0 -2L20 40L0 82"
+              vector-effect="non-scaling-stroke"
+              stroke="currentcolor"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </li>
+    </ng-container>
+  </ol>
+</nav>
+
+<div [style.display]="selected ? 'block' : 'none'">
+  <!-- Content from the CdkStep is projected here -->
+  <ng-container [ngTemplateOutlet]="selected!.content"></ng-container>
+</div>
+
+<div class="mt-3 lg:max-w-6xl lg:mx-auto">
+  <div class="flex flex-row-reverse">
+    <button
+      [disabled]="validity"
+      cdkStepperNext
+      type="button"
+      class="flex-initial w-32 mr-4 mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+    >
+      Siguiente
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 ml-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+        />
+      </svg>
+    </button>
+    <button
+      [disabled]="validity"
+      cdkStepperPrevious
+      class="flex-initial w-32 mr-4 mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 19.5L8.25 12l7.5-7.5"
+        />
+      </svg>
+      Volver
+    </button>
+  </div>
+</div>
+
+<!-- <footer class="step-navigation-bar">
+  <button class="nav-button" cdkStepperPrevious>&larr;</button>
+  <button
+    class="step"
+    *ngFor="let step of steps; let i = index"
+    [ngClass]="{ active: selectedIndex === i }"
+    (click)="onClick(i)"
+  >
+    Step {{ i + 1 }}
+  </button>
+  <button class="nav-button" cdkStepperNext>&rarr;</button>
+</footer> -->

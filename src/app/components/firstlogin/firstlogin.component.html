@@ -1,0 +1,242 @@
+<p-toast></p-toast>
+<div class="mt-16 p-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
+  <div class="py-4 mb-4">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1
+        class="text-center text-3xl leading-6 font-medium mb-10 text-gray-900"
+      >
+        ¡Bienvenido!
+      </h1>
+      <h2 class="text-center text-2xl leading-6 font-medium text-gray-900">
+        Ingresa tus datos para empezar a Facturar
+      </h2>
+    </div>
+  </div>
+
+  <form [formGroup]="frmStepper" (submit)="submit()" class="space-y-6 mt-8">
+    <app-stepper
+      formArrayName="steps"
+      [validity]="formArray.invalid"
+      #cdkStepper
+    >
+      <cdk-step
+        formGroupName="0"
+        [stepControl]="formArray.value[0]"
+        label="Información Personal"
+      >
+        <div class="mt-8 px-4 py-5 shadow sm:rounded-lg sm:p-6 bg-white">
+          <div class="md:grid md:grid-cols-6 md:gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <app-input
+                [theType]="'text'"
+                formId="fullName"
+                label="Nombre Completo"
+                [control]="frmStepper.controls.steps.at(0).controls.fullName"
+                [autoFocus]="false"
+              ></app-input>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <app-input
+                [theType]="'text'"
+                formId="phone"
+                label="Teléfono"
+                [control]="frmStepper.controls.steps.at(0).controls.phone"
+              ></app-input>
+            </div>
+          </div>
+        </div>
+      </cdk-step>
+
+      <cdk-step label="Información Fiscal">
+        <div class="mt-8 px-4 py-5 shadow sm:rounded-lg sm:p-6 bg-white">
+          <div class="md:grid md:grid-cols-6 md:gap-6">
+            <div class="col-span-6 sm:col-span-3">
+              <app-input
+                [theType]="'text'"
+                formId="nif"
+                label="NIF/CIF"
+                [control]="frmStepper.controls.steps.at(0).controls.nif"
+              ></app-input>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <app-input
+                theType="select"
+                label="País"
+                formId="country"
+                [control]="
+                  frmStepper.controls.steps.at(0).controls.address.controls
+                    .country
+                "
+                [items]="countries"
+              ></app-input>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <app-input
+                [theType]="'text'"
+                formId="street"
+                label="Calle"
+                [control]="
+                  frmStepper.controls.steps.at(0).controls.address.controls
+                    .street
+                "
+              ></app-input>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <app-input
+                [theType]="'text'"
+                formId="city"
+                label="Ciudad"
+                [control]="
+                  frmStepper.controls.steps.at(0).controls.address.controls.city
+                "
+              ></app-input>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <app-input
+                [theType]="'text'"
+                formId="region"
+                label="Provincia"
+                [control]="
+                  frmStepper.controls.steps.at(0).controls.address.controls
+                    .region
+                "
+              ></app-input>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <app-input
+                [theType]="'text'"
+                formId="zip"
+                label="Código Postal"
+                [control]="
+                  frmStepper.controls.steps.at(0).controls.address.controls.zip
+                "
+              ></app-input>
+            </div>
+          </div>
+        </div>
+      </cdk-step>
+      <cdk-step label="Revisar y Confirmar">
+        <div class="mt-8 overflow-hidden bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
+              Revisar Información
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+              Revisa que todos tus datos son correctos para poder Facturar.
+            </p>
+          </div>
+          <div class="border-t border-gray-200">
+            <dl>
+              <div
+                class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              >
+                <dt class="text-sm font-medium text-gray-500">
+                  Nombre Completo
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {{ frmStepper.controls.steps.at(0).controls.fullName.value }}
+                </dd>
+              </div>
+              <div
+                class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              >
+                <dt class="text-sm font-medium text-gray-500">Teléfono</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {{ frmStepper.controls.steps.at(0).controls.phone.value }}
+                </dd>
+              </div>
+              <div
+                class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              >
+                <dt class="text-sm font-medium text-gray-500">NIF/CIF</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {{ frmStepper.controls.steps.at(0).controls.nif.value }}
+                </dd>
+              </div>
+              <div
+                class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              >
+                <dt class="text-sm font-medium text-gray-500">Calle</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {{
+                    frmStepper.controls.steps.at(0).controls.address.controls
+                      .street.value
+                  }}
+                </dd>
+              </div>
+              <div
+                class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              >
+                <dt class="text-sm font-medium text-gray-500">Ciudad</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {{
+                    frmStepper.controls.steps.at(0).controls.address.controls
+                      .city.value
+                  }}
+                </dd>
+              </div>
+              <div
+                class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              >
+                <dt class="text-sm font-medium text-gray-500">Provincia</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {{
+                    frmStepper.controls.steps.at(0).controls.address.controls
+                      .region.value
+                  }}
+                </dd>
+              </div>
+              <div
+                class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              >
+                <dt class="text-sm font-medium text-gray-500">Código Postal</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {{
+                    frmStepper.controls.steps.at(0).controls.address.controls
+                      .zip.value
+                  }}
+                </dd>
+              </div>
+              <div
+                class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              >
+                <dt class="text-sm font-medium text-gray-500">País</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {{
+                    frmStepper.controls.steps.at(0).controls.address.controls
+                      .country.value
+                  }}
+                </dd>
+              </div>
+            </dl>
+          </div>
+          <div class="px-4 py-5 sm:px-6">
+            <div class="flex flex-row-reverse">
+              <button
+                (click)="submit()"
+                type="button"
+                class="inline-flex px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+                  />
+                </svg>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </cdk-step>
+    </app-stepper>
+  </form>
+</div>

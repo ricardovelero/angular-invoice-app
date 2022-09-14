@@ -90,6 +90,7 @@
         dataKey="id"
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} clientes"
         [showCurrentPageReport]="true"
+        [loading]="loading"
         responsiveLayout="stack"
         breakpoint="680px"
         tableStyleClass="table-fixed divide-y divide-gray-300 text-center"
@@ -564,7 +565,7 @@
       label="Guardar"
       icon="pi pi-check"
       class="p-button"
-      (click)="saveClient()"
+      (click)="saveClient(); hideDialog()"
       [disabled]="!isSubmitDissabled"
     ></button>
   </ng-template>
