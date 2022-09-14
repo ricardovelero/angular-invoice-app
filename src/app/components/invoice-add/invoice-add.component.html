@@ -7,7 +7,7 @@
     <ng-template #editmode>Editar Factura</ng-template>
   </h1>
 </div>
-<div class="sm:max-w-4xl mx-auto">
+<div class="sm:max-w-7xl mx-auto">
   <form class="space-y-8" #invoiceForm="ngForm" appAddEditInvoice>
     <div class="grid grid-cols-1 sm:grid-cols-8 gap-y-6 gap-x-4">
       <!-- Cliente -->
@@ -21,7 +21,7 @@
           styleClass="w-full rounded-l-md"
           [(ngModel)]="client"
           [suggestions]="filteredClients"
-          (completeMethod)="filterClient($event); isSubmitDissabled = false"
+          (completeMethod)="filterClient($event)"
           (ngModelChange)="newInvoice.ClientId = $event.id"
           field="fullName"
           name="fullName"
@@ -32,7 +32,6 @@
           [showEmptyMessage]="true"
           emptyMessage="No se encontraron resultados"
           #theclient="ngModel"
-          [lazy]="true"
           placeholder="Busca o selecciona un cliente..."
         >
           <ng-template let-client pTemplate="item">
@@ -50,13 +49,27 @@
       </div>
       <!-- Boton Nuevo Cliente-->
       <div class="mb-4 mt-5 sm:col-span-2">
-        <p-button
+        <button
           (click)="showModalDialog()"
-          icon="pi pi-plus"
-          styleClass="w-full"
-          label="Agregar Cliente"
+          class="w-full py-3 items-center text-indigo-500 bg-white shadow rounded-md"
           title="Haz click para crear un nuevo cliente"
-        ></p-button>
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 inline-block"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 3v18m9-9H3"
+            />
+          </svg>
+          Agregar cliente nuevo
+        </button>
       </div>
       <!-- Numero Factura-->
       <div class="mb-4 sm:col-span-2">
@@ -160,207 +173,208 @@
     </div>
     <!--Titulo Items a Facturar-->
     <div class="grid grid-cols-1 sm:grid-cols-7">
-      <div class="mb-4 sm:col-span-7">
+      <div class="sm:col-span-7">
         <h1 class="mt-10 text-xl text-center font-semibold text-gray-700">
-          Ítems a Facturar
+          Artículos a Facturar
         </h1>
       </div>
     </div>
     <!--Lista items a facturar-->
-    <div class="grid grid-cols-1 gap-y-2 gap-x-4 sm:grid-cols-12">
-      <div
-        class="mb-4 sm:col-span-12 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
-      >
-        <div class="flex flex-wrap bg-white shadow sm:rounded-t-md">
+    <div class="mt-8 flex flex-col">
+      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
           <div
-            class="grow h-14 px-4 py-4 sm:px-6 text-xs divide-y divide-gray-200"
-          ></div>
-          <div
-            class="flex-none w-1/4 h-14 px-4 py-4 sm:pl-1 sm:pr-6 divide-y divide-gray-200"
+            class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
           >
-            Ítem
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr class="divide-x divide-gray-200">
+                  <th
+                    scope="col"
+                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                  >
+                    Nombre
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Cantidad
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Importe
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Impuesto
+                  </th>
+                  <th
+                    scope="col"
+                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-6"
+                  >
+                    Total
+                  </th>
+                  <th
+                    scope="col"
+                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-6"
+                  ></th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <tr
+                  class="divide-x divide-gray-200"
+                  *ngFor="let product of products; let i = index"
+                >
+                  <td
+                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
+                  >
+                    <p-autoComplete
+                      styleClass="w-full"
+                      inputStyleClass="sm:w-56"
+                      [(ngModel)]="product.item"
+                      [suggestions]="filteredItems"
+                      (completeMethod)="filterItem($event)"
+                      (onSelect)="
+                        calculateInvoiceTotal(products);
+                        newInvoice.Items.push(product.item)
+                      "
+                      field="name"
+                      emptyMessage="No se encontraron resultados"
+                      title="Busca o selecciona un artículo"
+                      name="name{{ i }}"
+                      [dropdown]="true"
+                      [forceSelection]="true"
+                      [showEmptyMessage]="true"
+                      placeholder="Busca o selecciona un artículo..."
+                    >
+                      <ng-template let-item pTemplate="item">
+                        {{ item.name }}
+                      </ng-template>
+                    </p-autoComplete>
+                  </td>
+                  <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                    <input
+                      pInputText
+                      class="w-full"
+                      [(ngModel)]="product.item.quantity"
+                      (ngModelChange)="
+                        product.item.total =
+                          $event *
+                          product.item.cost *
+                          (1 + product.item.tax1 / 100);
+                        product.item.subtotal = $event * product.item.cost;
+                        calculateInvoiceTotal(products)
+                      "
+                      [min]="0"
+                      [size]="4"
+                      name="quantity{{ i }}"
+                      title="Cantidad"
+                      mode="decimal"
+                    />
+                  </td>
+                  <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                    {{ product.item.cost | currency: "EUR" }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6"
+                  >
+                    {{ product.item.tax1 }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6"
+                  >
+                    {{ product.item.total | currency: "EUR" }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap text-center text-sm text-gray-500"
+                  >
+                    <button
+                      (click)="
+                        onRemoveItemRow(i); calculateInvoiceTotal(products)
+                      "
+                      class="text-red-500"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4.5 19.5l15-15m-15 0l15 15"
+                        />
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            Cantidad
-          </div>
-          <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            Importe
-          </div>
-          <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            Impuesto
-          </div>
-          <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            Total
-          </div>
-          <div
-            class="grow h-14 px-4 py-4 sm:px-6 text-xs divide-y divide-gray-200"
-          ></div>
-        </div>
-        <div
-          *ngFor="let product of products; let i = index"
-          class="flex flex-wrap bg-white shadow"
-        >
-          <div
-            class="flex items-center sm:w-1/12 px-4 py-4 sm:pl-6 sm:pr-1 sm:mt-3 divide-y divide-gray-200"
-          >
-            <button
-              [disabled]="isDissabled"
-              (click)="itemViewDetails(product)"
-              class="underline text-indigo-500"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </button>
-          </div>
-          <div
-            class="flex-none w-full sm:w-1/4 h-14 px-4 py-4 sm:pl-1 sm:pr-6 divide-y divide-gray-200"
-          >
-            <p-autoComplete
-              styleClass="w-full"
-              inputStyleClass="sm:w-56"
-              [(ngModel)]="product.item"
-              [suggestions]="filteredItems"
-              (completeMethod)="filterItem($event); isSubmitDissabled = false"
-              (onSelect)="
-                calculateInvoiceTotal(products);
-                newInvoice.Items.push(product.item);
-                isDissabled = false
-              "
-              field="name"
-              title="Buscar ítem a facturar"
-              name="name{{ i }}"
-              [dropdown]="false"
-              [lazy]="true"
-              placeholder="Buscar un ítem..."
-            >
-              <ng-template let-item pTemplate="item">
-                {{ item.name }}
-              </ng-template>
-            </p-autoComplete>
-          </div>
-          <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            <input
-              pInputText
-              class="w-full"
-              [(ngModel)]="product.item.quantity"
-              (ngModelChange)="
-                product.item.total =
-                  $event * product.item.cost * (1 + product.item.tax1 / 100);
-                product.item.subtotal = $event * product.item.cost;
-                calculateInvoiceTotal(products)
-              "
-              [min]="0"
-              [size]="4"
-              name="quantity{{ i }}"
-              title="Cantidad"
-              mode="decimal"
-            />
-          </div>
-          <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            {{ product.item.cost | currency: "EUR" }}
-          </div>
-          <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            {{ product.item.tax1 }}
-          </div>
-          <div class="grow h-14 px-4 py-4 sm:px-6 divide-y divide-gray-200">
-            {{ product.item.total | currency: "EUR" }}
-          </div>
-          <div
-            class="flex items-center sm:w-1/12 px-4 py-4 sm:px-6 divide-y divide-gray-200"
-          >
-            <button
-              (click)="onRemoveItemRow(i); calculateInvoiceTotal(products)"
-              class="text-red-500"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4.5 19.5l15-15m-15 0l15 15"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="flex flex-wrap bg-white shadow rounded-b-md">
-          <div
-            class="flex justify-center sm:w-1/2 px-4 py-4 sm:px-6 divide-y divide-gray-200"
-          >
-            <button (click)="onAddItemRow()" class="text-indigo-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 inline-block"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                />
-              </svg>
-              Agregar ítem
-            </button>
-          </div>
-          <div
-            class="flex justify-center sm:w-1/2 px-4 py-4 sm:px-6 divide-y divide-gray-200"
-          >
-            <button (click)="showItemModalDialog()" class="text-indigo-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6 inline-block"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 3v18m9-9H3"
-                />
-              </svg>
-
-              Crear ítem
-            </button>
+          <div class="sm:col-span-12 text-xs mt-2 -mb-2 text-gray-500">
+            Tienes
+            {{ products ? products.length : 0 }}
+            {{ products.length < 2 ? "Ítem." : "Ítems." }}
           </div>
         </div>
       </div>
-      <div class="sm:col-span-12 text-xs -mt-4 text-gray-500">
-        Tienes
-        {{ products ? products.length : 0 }}
-        {{ products.length < 2 ? "Ítem." : "Ítems." }}
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+      <div
+        class="flex justify-center sm:col-span-1 px-4 py-4 sm:px-6 divide-y divide-gray-200 bg-white shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+      >
+        <button (click)="onAddItemRow()" class="text-indigo-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 inline-block"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+            />
+          </svg>
+          Agregar artículo guardado
+        </button>
+      </div>
+      <div
+        class="flex justify-center sm:col-span-1 px-4 py-4 sm:px-6 divide-y divide-gray-200 bg-white shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+      >
+        <button (click)="showItemModalDialog()" class="text-indigo-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 inline-block"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 3v18m9-9H3"
+            />
+          </svg>
+
+          Agregar artículo nuevo
+        </button>
       </div>
     </div>
     <!--Notas y Totales-->
-    <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-7">
-      <div class="sm:col-span-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+      <div class="sm:col-span-1">
         <label class="block mb-1 text-sm font-medium text-gray-700" for="notes">
           Notas</label
         >
@@ -375,7 +389,7 @@
           Condiciones de venta o alguna observación.
         </p>
       </div>
-      <div class="sm:col-span-3 sm:mt-5">
+      <div class="sm:col-span-1 sm:mt-5">
         <div class="text-right">
           Subtotal: {{ newInvoice.subtotal | currency: "EUR" }}
         </div>
@@ -393,29 +407,24 @@
       <div class="sm:col-span-7">
         <div class="flex justify-end">
           <a routerLink="/invoices"
-            ><button
-              class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-lg font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              type="button"
-            >
-              Cancelar
-            </button></a
+            ><button class="btn-secondary" type="button">Cancelar</button></a
           >
           <div *ngIf="!isEditting; else editlabel">
             <button
-              class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="ml-3 btn-primary"
               type="submit"
               (click)="saveNewInvoice()"
               [ngClass]="{
-                'opacity-40': !invoiceForm.form.valid || isSubmitDissabled
+                'opacity-40': !invoiceForm.form.valid
               }"
-              [disabled]="!invoiceForm.form.valid || isSubmitDissabled"
+              [disabled]="!invoiceForm.form.valid"
             >
               Crear Factura
             </button>
           </div>
           <ng-template #editlabel>
             <button
-              class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="ml-3 btn-primary"
               type="submit"
               (click)="updateTheInvoice()"
               [ngClass]="{

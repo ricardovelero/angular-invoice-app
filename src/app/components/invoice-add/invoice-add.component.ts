@@ -21,7 +21,7 @@ import {
 })
 export class InvoiceAddComponent implements OnInit {
   clients: Client[] = [];
-  client: any = {};
+  client: any = null;
   items: Item[] = [];
   products: any = [];
   newProduct: any = {};
