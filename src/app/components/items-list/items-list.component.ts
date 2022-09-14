@@ -173,13 +173,27 @@ export class ItemsListComponent implements OnInit {
     this.submitted = true;
     this.itemForm.disable;
     const { id, name, description, cost, tax1 } = this.itemForm.controls;
-    this.item = {
-      id: id.value,
-      name: name.value,
-      description: description.value,
-      cost: cost.value,
-      tax1: tax1.value,
-    };
+    console.log(this.item);
+    if (this.item.Invoices) {
+      this.item = {
+        id: id.value,
+        name: name.value,
+        description: description.value,
+        cost: cost.value,
+        tax1: tax1.value,
+        Invoices: this.item.Invoices,
+      };
+    } else {
+      this.item = {
+        id: id.value,
+        name: name.value,
+        description: description.value,
+        cost: cost.value,
+        tax1: tax1.value,
+        Invoices: [],
+      };
+    }
+    console.log(this.items);
     if (this.item.name.trim()) {
       if (this.item.id) {
         this.items[this.findIndexById(this.item.id)] = this.item;
