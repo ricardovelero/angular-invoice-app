@@ -9,9 +9,9 @@
 </div>
 <div class="sm:max-w-4xl mx-auto">
   <form class="space-y-8" #invoiceForm="ngForm" appAddEditInvoice>
-    <div class="grid grid-cols-1 sm:grid-cols-7 gap-y-6 gap-x-4">
+    <div class="grid grid-cols-1 sm:grid-cols-8 gap-y-6 gap-x-4">
       <!-- Cliente -->
-      <div class="mb-4 sm:col-span-3">
+      <div class="mb-4 sm:col-span-4">
         <label class="block text-sm font-medium text-gray-700" for="fullName">
           Cliente
         </label>
@@ -53,7 +53,8 @@
         <p-button
           (click)="showModalDialog()"
           icon="pi pi-plus"
-          label="Nuevo Cliente"
+          styleClass="w-full"
+          label="Agregar Cliente"
           title="Haz click para crear un nuevo cliente"
         ></p-button>
       </div>
@@ -86,7 +87,7 @@
       <!--Fechas-->
 
       <!--Fecha-->
-      <div class="sm:col-span-3">
+      <div class="sm:col-span-4">
         <label class="block mb-1 text-sm font-medium text-gray-700" for="date">
           Fecha Emisión</label
         >
@@ -111,7 +112,7 @@
         </div>
       </div>
       <!--Fecha Vencimiento-->
-      <div class="sm:col-span-3">
+      <div class="sm:col-span-4">
         <label
           class="block mb-1 text-sm font-medium text-gray-700"
           for="dueDate"
@@ -139,7 +140,7 @@
         </div>
       </div>
       <!-- Es recurrente?-->
-      <div class="sm:col-span-2 flex items-center mt-5">
+      <!-- <div class="sm:col-span-2 flex items-center mt-5">
         <div class="flex items-center">
           <label
             class="mr-3 block text-sm font-medium text-gray-700"
@@ -155,7 +156,7 @@
             title="Selecciona para programar la frecuencia"
           ></p-toggleButton>
         </div>
-      </div>
+      </div> -->
     </div>
     <!--Titulo Items a Facturar-->
     <div class="grid grid-cols-1 sm:grid-cols-7">
