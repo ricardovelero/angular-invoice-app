@@ -17,4 +17,5 @@ export class Client {
   isActive?: boolean;
   UserId?: number;
   Invoices?: [];
+  fullAddress?: string;
 }

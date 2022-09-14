@@ -10,6 +10,7 @@ import { InvoiceService } from "src/app/services/invoice.service";
 })
 export class DashboardComponent implements OnInit {
   invoices: Invoice[] = [];
+  page: number = 1;
   total: number = 0;
 
   constructor(

@@ -418,20 +418,29 @@
               type="submit"
               (click)="updateTheInvoice()"
               [ngClass]="{
-                'opacity-40': !invoiceForm.form.valid || isSubmitDissabled
+                'opacity-40': !invoiceForm.form.valid
               }"
-              [disabled]="!invoiceForm.form.valid || isSubmitDissabled"
+              [disabled]="!invoiceForm.form.valid"
             >
               Guardar Factura
             </button></ng-template
           >
         </div>
+        <div *ngIf="isEditting" class="flex justify-start sm:-mt-10">
+          <button
+            class="inline-flex justify-center py-2 px-4 border border-transparent text-base font-medium rounded-md text-red-500 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            type="submit"
+            (click)="eraseInvoice(newInvoice)"
+          >
+            Eliminar
+          </button>
+        </div>
       </div>
     </div>
   </form>
 </div>
-
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<p-confirmDialog></p-confirmDialog>
+<!-- <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-6xl mx-auto">
     <div class="pt-8">
       <div class="mt-8 flex flex-col">
@@ -455,7 +464,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <p-dialog
   header="Nuevo Cliente"
   [(visible)]="displayModal"

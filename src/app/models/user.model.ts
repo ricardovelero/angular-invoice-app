@@ -1,4 +1,4 @@
-export interface User {
+export class User {
   id?: number;
   fullName?: string;
   nif?: string;
@@ -10,4 +10,5 @@ export interface User {
   company?: string;
   email?: string;
   phone?: string;
+  profileComplete?: boolean;
 }

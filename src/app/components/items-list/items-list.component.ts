@@ -7,6 +7,7 @@ import {
   MessageService,
   PrimeNGConfig,
 } from "primeng/api";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-items-list",
@@ -32,14 +33,26 @@ export class ItemsListComponent implements OnInit {
 
   submitted: boolean = false;
   showSpinner: boolean = true;
+  loading: boolean = false;
   isEmpty: boolean = false;
   taxOptions: {} | any;
+
+  showOtherTax: boolean = false;
+
+  itemForm = this.fb.group({
+    id: [""],
+    name: ["", Validators.required],
+    description: [""],
+    cost: [0, Validators.required],
+    tax1: ["21", Validators.required],
+  });
 
   constructor(
     private itemService: ItemService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private fb: FormBuilder
   ) {
     this.taxOptions = [
       { label: "21%", value: 21 },
@@ -51,16 +64,17 @@ export class ItemsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.primengConfig.ripple = true;
     this.itemService.getAllItems().subscribe((items) => {
       this.items = items;
       this.isEmpty = this.items.length < 1 ? true : false;
+      this.loading = false;
     });
     this.showSpinner = false;
   }
   openNew() {
     this.item = {};
-    this.item.tax1 = 21;
     this.submitted = false;
     this.itemDialog = true;
   }
@@ -105,6 +119,12 @@ export class ItemsListComponent implements OnInit {
     });
   }
   editItem(item: Item) {
+    const { id, name, description, cost, tax1 } = this.itemForm.controls;
+    id.setValue(item.id!);
+    name.setValue(item.name!);
+    description.setValue(item.description!);
+    cost.setValue(item.cost!);
+    tax1.setValue(item.tax1!);
     this.item = { ...item };
     this.itemDialog = true;
   }
@@ -145,11 +165,22 @@ export class ItemsListComponent implements OnInit {
   hideDialog() {
     this.itemDialog = false;
     this.submitted = false;
+    this.itemForm.reset();
+    this.showOtherTax = false;
   }
 
   saveItem() {
     this.submitted = true;
-    if (this.item.label.trim()) {
+    this.itemForm.disable;
+    const { id, name, description, cost, tax1 } = this.itemForm.controls;
+    this.item = {
+      id: id.value,
+      name: name.value,
+      description: description.value,
+      cost: cost.value,
+      tax1: tax1.value,
+    };
+    if (this.item.name.trim()) {
       if (this.item.id) {
         this.items[this.findIndexById(this.item.id)] = this.item;
         this.itemService.updateItem(this.item.id, this.item).subscribe({
@@ -178,6 +209,7 @@ export class ItemsListComponent implements OnInit {
               detail: "Item creado",
               life: 3000,
             });
+            res["Invoices"] = [];
             this.items.push(res);
           },
           error: (e) =>
@@ -192,6 +224,14 @@ export class ItemsListComponent implements OnInit {
       this.items = [...this.items];
       this.itemDialog = false;
       this.item = {};
+      this.itemForm.reset();
+    } else {
+      this.messageService.add({
+        severity: "error",
+        summary: "Error",
+        detail: "El nombre del Item es requerido",
+        life: 5000,
+      });
     }
   }
   findIndexById(id: string): number {
@@ -204,5 +244,9 @@ export class ItemsListComponent implements OnInit {
     }
 
     return index;
+  }
+
+  processTaxOption() {
+    this.showOtherTax = this.itemForm.controls.tax1.value == "1" ? true : false;
   }
 }

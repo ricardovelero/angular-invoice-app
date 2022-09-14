@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
 
   currentUser: User[] | any;
 
-  isEditting: boolean = false;
+  isEditting: boolean = true;
 
   profileForm = this.fb.group({
     fullName: [""],
@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profileForm.disable();
+    // this.profileForm.disable();
     this.auth.user$.subscribe((profile) => {
       this.userProfile = profile;
       this.userService.findUserByEmail(this.userProfile.email).subscribe({

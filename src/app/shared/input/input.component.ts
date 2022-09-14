@@ -13,6 +13,10 @@ export class InputComponent implements OnInit {
   @Input() theType: string = "";
   @Input() styleClass: string = "";
   @Input() items: [] | any;
+  @Input() rows: number = 1;
+  @Input() cols: number = 1;
+  @Input() initialValue: string = "";
+  @Input() autoFocus: boolean = false;
 
   constructor() {}
 

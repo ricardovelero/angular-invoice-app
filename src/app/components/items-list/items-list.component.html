@@ -91,7 +91,7 @@
         dataKey="id"
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} ítems"
         [showCurrentPageReport]="true"
-        [loading]="showSpinner"
+        [loading]="loading"
         responsiveLayout="stack"
         breakpoint="680px"
         tableStyleClass="min-w-full divide-y divide-gray-300"
@@ -178,7 +178,7 @@
             >
               {{ item.tax2 }}
             </td> -->
-            <td class="whitespace-nowrap pl-4 text-base text-gray-500">
+            <td class="whitespace-nowrap pl-2 text-base text-gray-500">
               <button
                 pButton
                 pRipple
@@ -187,7 +187,7 @@
                 (click)="editItem(item)"
               ></button>
             </td>
-            <td class="whitespace-nowrap pl-4 text-base text-gray-500">
+            <td class="whitespace-nowrap pl-3 text-base text-gray-500">
               <button
                 [disabled]="item.Invoices.length"
                 pButton
@@ -216,59 +216,59 @@
   styleClass="p-fluid w-1/4"
 >
   <ng-template pTemplate="content">
-    <div class="p-field mt-4">
-      <label for="name">Nombre</label>
-      <input
-        type="text"
-        pInputText
-        id="name"
-        [(ngModel)]="item.name"
-        required
-        autofocus
-      />
-      <small class="p-invalid" *ngIf="submitted && !item.name"
-        >Nombre es requerido.</small
-      >
-    </div>
-    <div class="p-field mt-4">
-      <label for="description">Descripción</label>
-      <textarea
-        id="description"
-        pInputTextarea
-        [(ngModel)]="item.description"
-        required
-        rows="3"
-        cols="20"
-      ></textarea>
-    </div>
-    <div class="p-formgrid p-grid">
+    <form class="space-y-6" [formGroup]="itemForm" (ngSubmit)="saveItem()">
+      <app-input
+        [theType]="'hidden'"
+        formId="id"
+        [control]="itemForm.controls.id"
+      ></app-input>
       <div class="p-field mt-4">
-        <label for="price">Importe</label>
-        <p-inputNumber
-          id="cost"
-          [(ngModel)]="item.cost"
-          mode="currency"
-          currency="EUR"
-          locale="es-ES"
-        ></p-inputNumber>
-        <small class="p-invalid" *ngIf="submitted && !item.cost"
-          >El costo es requerido.</small
-        >
+        <app-input
+          [theType]="'text'"
+          formId="name"
+          label="Nombre"
+          [control]="itemForm.controls.name"
+        ></app-input>
       </div>
       <div class="p-field mt-4">
-        <label for="tax1">IVA</label>
-        <p-selectButton
-          [options]="taxOptions"
-          [(ngModel)]="item.tax1"
-          optionLabel="label"
-          optionValue="value"
-        ></p-selectButton>
+        <app-input
+          [theType]="'textarea'"
+          formId="description"
+          label="Descripción"
+          [control]="itemForm.controls.description"
+          [rows]="3"
+          [cols]="20"
+        ></app-input>
       </div>
-      <div *ngIf="item.tax1 == 1" class="p-field mt-4">
-        <label for="otherTax1">Otro</label>
-        <p-inputNumber id="otherTax1" [(ngModel)]="item.tax1"></p-inputNumber>
+      <div class="p-formgrid p-grid">
+        <div class="p-field mt-4">
+          <app-input
+            [theType]="'number'"
+            formId="cost"
+            label="Importe"
+            [control]="itemForm.controls.cost"
+          ></app-input>
+        </div>
+        <div class="p-field mt-4">
+          <label for="tax1">IVA</label>
+          <p-selectButton
+            [options]="taxOptions"
+            [formControl]="itemForm.controls.tax1"
+            optionLabel="label"
+            optionValue="value"
+            (onOptionClick)="processTaxOption()"
+          ></p-selectButton>
+        </div>
+        <div *ngIf="showOtherTax" class="p-field mt-4">
+          <app-input
+            [theType]="'number'"
+            formId="other"
+            label="Otro"
+            [control]="itemForm.controls.tax1"
+          ></app-input>
+        </div>
       </div>
-    </div>
+    </form>
   </ng-template>
 
   <ng-template pTemplate="footer">
@@ -285,9 +285,9 @@
       pRipple
       label="Guardar"
       icon="pi pi-check"
-      (click)="saveItem()"
+      (click)="itemForm.invalid ? itemForm.markAllAsTouched() : saveItem()"
     ></button>
   </ng-template>
 </p-dialog>
 
-<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+<p-confirmDialog></p-confirmDialog>

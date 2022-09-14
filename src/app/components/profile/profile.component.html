@@ -109,6 +109,7 @@
                 formId="fullName"
                 label="Nombre Completo"
                 [control]="profileForm.controls.fullName"
+                [autoFocus]="false"
               ></app-input>
             </div>
             <div class="col-span-6 sm:col-span-3">
@@ -177,13 +178,13 @@
       </div>
       <div class="flex justify-end mt-5">
         <ng-container *ngIf="isEditting">
-          <button
+          <!-- <button
             (click)="isEditting = false; profileForm.disable()"
             type="button"
             class="inline-flex justify-center items-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Cancelar
-          </button>
+          </button> -->
           <button
             type="submit"
             (click)="updateUser()"
@@ -193,7 +194,7 @@
             Guardar
           </button>
         </ng-container>
-        <ng-container *ngIf="!isEditting">
+        <!-- <ng-container *ngIf="!isEditting">
           <button
             type="button"
             (click)="isEditting = true; profileForm.enable()"
@@ -216,7 +217,7 @@
 
             Editar
           </button>
-        </ng-container>
+        </ng-container> -->
       </div>
     </div>
   </form>

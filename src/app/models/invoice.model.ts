@@ -10,4 +10,5 @@ export class Invoice {
   notes?: string;
   status?: string;
   billingMonth?: string;
+  Client?: { fullName?: string };
 }
