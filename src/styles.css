@@ -1387,6 +1387,10 @@ select {
   justify-content: space-between;
 }
 
+.justify-items-end {
+  justify-items: end;
+}
+
 .gap-6 {
   gap: 1.5rem;
 }
