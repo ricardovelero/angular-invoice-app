@@ -22,7 +22,11 @@
           [(ngModel)]="client"
           [suggestions]="filteredClients"
           (completeMethod)="filterClient($event)"
-          (ngModelChange)="newInvoice.ClientId = $event.id"
+          (ngModelChange)="
+            client
+              ? (newInvoice.ClientId = $event.id)
+              : (newInvoice.ClientId = 0)
+          "
           field="fullName"
           name="fullName"
           title="Cliente a facturar"
@@ -175,7 +179,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-7">
       <div class="sm:col-span-7">
         <h1 class="mt-10 text-xl text-center font-semibold text-gray-700">
-          Artículos a Facturar
+          Ítems a Facturar
         </h1>
       </div>
     </div>
@@ -234,6 +238,8 @@
                     class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
                   >
                     <p-autoComplete
+                      [showTransitionOptions]="'50ms'"
+                      [hideTransitionOptions]="'100ms'"
                       styleClass="w-full"
                       inputStyleClass="sm:w-56"
                       [(ngModel)]="product.item"
@@ -241,13 +247,15 @@
                       (completeMethod)="filterItem($event)"
                       (onSelect)="
                         calculateInvoiceTotal(products);
-                        newInvoice.Items.push(product.item)
+                        newInvoice.Items.push(product.item);
+                        calculateItemTotal(product.item.quantity, product)
                       "
                       field="name"
                       emptyMessage="No se encontraron resultados"
                       title="Busca o selecciona un artículo"
                       name="name{{ i }}"
                       [dropdown]="true"
+                      appendTo="body"
                       [forceSelection]="true"
                       [showEmptyMessage]="true"
                       placeholder="Busca o selecciona un artículo..."
@@ -257,38 +265,39 @@
                       </ng-template>
                     </p-autoComplete>
                   </td>
-                  <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                  <td class="whitespace-nowrap w-1/6 p-4 text-sm text-gray-500">
                     <input
-                      pInputText
-                      class="w-full"
-                      [(ngModel)]="product.item.quantity"
+                      type="number"
+                      class="normal-input py-3"
+                      [ngModel]="product.item && product.item.quantity"
                       (ngModelChange)="
-                        product.item.total =
-                          $event *
-                          product.item.cost *
-                          (1 + product.item.tax1 / 100);
-                        product.item.subtotal = $event * product.item.cost;
-                        calculateInvoiceTotal(products)
+                        product.item && (product.item.quantity = $event);
+                        calculateItemTotal($event, product)
                       "
-                      [min]="0"
-                      [size]="4"
+                      min="0"
                       name="quantity{{ i }}"
                       title="Cantidad"
                       mode="decimal"
                     />
                   </td>
                   <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                    {{ product.item.cost | currency: "EUR" }}
+                    <ng-container *ngIf="product.item && product.item.cost">
+                      {{ product.item.cost | currency: "EUR" }}</ng-container
+                    >
                   </td>
                   <td
                     class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6"
                   >
-                    {{ product.item.tax1 }}
+                    <ng-container *ngIf="product.item && product.item.tax1">
+                      {{ product.item.tax1 }}</ng-container
+                    >
                   </td>
                   <td
                     class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6"
                   >
-                    {{ product.item.total | currency: "EUR" }}
+                    <ng-container *ngIf="product.item && product.item.cost">
+                      {{ product.item.total | currency: "EUR" }}</ng-container
+                    >
                   </td>
                   <td
                     class="whitespace-nowrap text-center text-sm text-gray-500"
@@ -346,7 +355,7 @@
               d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
             />
           </svg>
-          Agregar artículo guardado
+          Agregar línea de factura
         </button>
       </div>
       <div
@@ -368,7 +377,7 @@
             />
           </svg>
 
-          Agregar artículo nuevo
+          Agregar ítem nuevo
         </button>
       </div>
     </div>
@@ -450,7 +459,7 @@
   </form>
 </div>
 <p-confirmDialog></p-confirmDialog>
-<!-- <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-6xl mx-auto">
     <div class="pt-8">
       <div class="mt-8 flex flex-col">
@@ -467,6 +476,8 @@
                 <li>products: {{ products | json }}</li>
                 <hr class="my-5" />
                 <li>newInvoice: {{ newInvoice | json }}</li>
+                <hr class="my-5" />
+                <li>items: {{ items | json }}</li>
               </ul>
             </div>
           </div>
@@ -474,7 +485,7 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 <p-dialog
   header="Nuevo Cliente"
   [(visible)]="displayModal"
@@ -496,6 +507,7 @@
   header="Nuevo Ítem"
   [(visible)]="displayItemModal"
   [modal]="true"
+  styleClass="w-1/4"
   [baseZIndex]="10000"
   [draggable]="false"
   [resizable]="false"
