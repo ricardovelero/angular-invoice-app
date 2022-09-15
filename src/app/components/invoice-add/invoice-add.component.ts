@@ -22,7 +22,7 @@ import {
 export class InvoiceAddComponent implements OnInit {
   clients: Client[] = [];
   client: any = null;
-  items: Item[] = [];
+  items: any = [];
   products: any = [];
   newProduct: any = {};
   theViewItem: any = {};
@@ -45,9 +45,6 @@ export class InvoiceAddComponent implements OnInit {
 
   isEditting: boolean = false;
   isEmpty: boolean = true;
-  // Hacks temporales:
-  isDissabled: boolean = true;
-  isSubmitDissabled: boolean = true;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -98,15 +95,11 @@ export class InvoiceAddComponent implements OnInit {
     });
     this.itemService.getAllItems().subscribe((items) => {
       this.items = items;
+      this.items.forEach((element: any) => {
+        Object.assign(element, { quantity: 0 });
+        element = { ...this.items };
+      });
     });
-
-    this.cols = [
-      { field: "name", header: "Item" },
-      { field: "quantity", header: "Cantidad" },
-      { field: "cost", header: "Precio" },
-      { field: "tax1", header: "Impuesto" },
-      { field: "total", header: "Valor" },
-    ];
   }
 
   addDays(date: Date, days: number) {
@@ -178,17 +171,36 @@ export class InvoiceAddComponent implements OnInit {
     let query = event.query;
     this.itemService.findItemByName(query).subscribe((items) => {
       this.filteredItems = items;
+      this.filteredItems.forEach((element: any) => {
+        Object.assign(element, { quantity: 1 });
+        element = { ...this.items };
+        element = { ...this.filteredItems };
+      });
     });
   }
 
   calculateInvoiceTotal(products: any) {
     this.newInvoice.subtotal = 0;
+    this.newInvoice.taxAmount = 0;
     this.newInvoice.total = 0;
     for (let product of products) {
-      this.newInvoice.total += product.item.total;
-      this.newInvoice.subtotal += product.item.subtotal;
-      this.newInvoice.taxAmount = product.item.total - product.item.subtotal;
+      if (product.item && product.item.total && product.item.subtotal) {
+        this.newInvoice.total += product.item.total;
+        this.newInvoice.subtotal += product.item.subtotal;
+        this.newInvoice.taxAmount += product.item.total - product.item.subtotal;
+      }
     }
+  }
+
+  calculateItemTotal(event: any, product: any) {
+    if (!isFinite(event) || !event || event < 0) event = 0;
+    if (product.item) {
+      product.item.total =
+        event * product.item.cost * (1 + product.item.tax1 / 100);
+      product.item.subtotal = event * product.item.cost;
+    }
+
+    this.calculateInvoiceTotal(this.products);
   }
 
   saveNewInvoice() {
@@ -261,6 +273,7 @@ export class InvoiceAddComponent implements OnInit {
               life: 5000,
             }),
         });
+        this.router.navigate(["invoices"]);
       },
     });
   }
@@ -276,8 +289,13 @@ export class InvoiceAddComponent implements OnInit {
   }
   itemFromChild(item: any) {
     var obj: any = {};
+    Object.assign(item, { quantity: 1 });
     obj["item"] = item;
-    this.products.push(obj);
+    if (Object.keys(this.products[0].item).length === 0) {
+      this.products[0].item = { ...item };
+    } else {
+      this.products.push(obj);
+    }
     this.newInvoice.Items.push(item);
   }
 
