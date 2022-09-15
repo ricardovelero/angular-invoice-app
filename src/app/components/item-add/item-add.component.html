@@ -1,4 +1,4 @@
-<form class="space-y-6" [formGroup]="itemForm" (ngSubmit)="saveItem()">
+<form class="space-y-6" [formGroup]="itemForm">
   <app-input
     [theType]="'hidden'"
     formId="id"
@@ -57,7 +57,7 @@
       label="Cancelar"
       icon="pi pi-times"
       class="p-button-text"
-      (click)="hideDialog(false)"
+      (click)="hideDialog()"
     ></button>
     <button
       pButton
