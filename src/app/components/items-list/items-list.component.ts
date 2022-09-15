@@ -173,7 +173,6 @@ export class ItemsListComponent implements OnInit {
     this.submitted = true;
     this.itemForm.disable;
     const { id, name, description, cost, tax1 } = this.itemForm.controls;
-    console.log(this.item);
     if (this.item.Invoices) {
       this.item = {
         id: id.value,
@@ -193,7 +192,6 @@ export class ItemsListComponent implements OnInit {
         Invoices: [],
       };
     }
-    console.log(this.items);
     if (this.item.name.trim()) {
       if (this.item.id) {
         this.items[this.findIndexById(this.item.id)] = this.item;
