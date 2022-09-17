@@ -6,9 +6,6 @@ import { CountryService } from "src/app/services/country.service";
 import { UserService } from "../../services/user.service";
 import { MessageService } from "primeng/api";
 import { Router } from "@angular/router";
-import { AuthService } from "@auth0/auth0-angular";
-import { HttpClient } from "@angular/common/http";
-import { concatMap, tap } from "rxjs";
 
 @Component({
   selector: "app-firstlogin",
@@ -42,9 +39,7 @@ export class FirstloginComponent implements OnInit {
     private countryService: CountryService,
     private userService: UserService,
     private messageService: MessageService,
-    private router: Router,
-    public auth: AuthService,
-    private http: HttpClient
+    private router: Router
   ) {
     this.frmStepper.controls.steps
       .at(0)
@@ -85,29 +80,6 @@ export class FirstloginComponent implements OnInit {
       country: country,
       profileComplete: true,
     };
-    const auth0Data = {
-      name: fullName,
-      phone_number: phone.value,
-      user_metadata: {
-        nif: nif.value,
-        address: `${street}, ${city}, ${region}, ${zip}, ${country}`,
-        profileComplete: true,
-      },
-    };
-    this.auth.user$
-      .pipe(
-        concatMap((user) =>
-          // Use HttpClient to make the call
-          this.http.patch(
-            encodeURI(`https://fzdev.eu.auth0.com/api/v2/users/${user?.sub}`),
-            auth0Data
-          )
-        ),
-        tap((res) => {
-          console.log(res);
-        })
-      )
-      .subscribe();
     this.userService.updateUser(data).subscribe({
       next: (res) => {
         sessionStorage.setItem("profileComplete", "true");
