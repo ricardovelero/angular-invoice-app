@@ -5,7 +5,7 @@ import { Country } from "src/app/models/country.model";
 import { CountryService } from "src/app/services/country.service";
 import { Router } from "@angular/router";
 import { AuthService } from "@auth0/auth0-angular";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-client-add",
@@ -14,24 +14,22 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 })
 export class ClientAddComponent implements OnInit {
   @Input() isShort: boolean = false;
+  @Input() clientToEdit: {} = {};
   @Output() displayModal = new EventEmitter<boolean>();
   @Output() theClient = new EventEmitter<object>();
 
   countries: Country[] | any;
 
-  clientShortForm = new FormGroup({
-    id: new FormControl(""),
-    fullName: new FormControl("", [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
-    email: new FormControl("", [Validators.email]),
-    nifNumber: new FormControl("", [Validators.required]),
-    streetAddress: new FormControl("", [Validators.required]),
-    zipcode: new FormControl("", [Validators.required]),
-    city: new FormControl("", [Validators.required]),
-    province: new FormControl("", [Validators.required]),
-    country: new FormControl("", [Validators.required]),
+  clientShortForm = this.fb.group({
+    id: [0],
+    fullName: ["", Validators.required, Validators.minLength(3)],
+    email: ["", Validators.email],
+    nifNumber: ["", Validators.required],
+    streetAddress: ["", Validators.required],
+    city: ["", Validators.required],
+    zipcode: ["", Validators.required],
+    province: ["", Validators.required],
+    country: ["", Validators.required],
   });
 
   client: Client = {
@@ -56,6 +54,7 @@ export class ClientAddComponent implements OnInit {
   constructor(
     private clientService: ClientService,
     private countryService: CountryService,
+    private fb: FormBuilder,
     private router: Router,
     public auth: AuthService
   ) {
@@ -104,6 +103,31 @@ export class ClientAddComponent implements OnInit {
       error: (e) => console.error(e),
     });
   }
+
+  editClient(client: Client) {
+    const {
+      id,
+      fullName,
+      email,
+      nifNumber,
+      streetAddress,
+      city,
+      province,
+      zipcode,
+      country,
+    } = this.clientShortForm.controls;
+    id.setValue(client.id!);
+    fullName.setValue(client.fullName!);
+    email.setValue(client.email!);
+    nifNumber.setValue(client.nifNumber!);
+    streetAddress.setValue(client.streetAddress!);
+    city.setValue(client.city!);
+    province.setValue(client.province!);
+    zipcode.setValue(client.zipcode!);
+    country.setValue(client.country!);
+    this.client = { ...client };
+  }
+
   newClient(): void {
     this.submitted = false;
     this.client = {
