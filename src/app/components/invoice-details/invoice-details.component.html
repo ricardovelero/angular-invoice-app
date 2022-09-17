@@ -11,14 +11,14 @@
     </div>
     <div class="flex flex-row justify-between">
       <ul class="text-sm">
-        <li>{{ currentInvoice.Client.fullName }}</li>
-        <li>NIF: {{ currentInvoice.Client.nifNumber }}</li>
-        <li>Teléfono: {{ currentInvoice.Client.phone }}</li>
-        <li>Empresa: {{ currentInvoice.Client.businessName }}</li>
+        <li class="font-bold">De:</li>
+        <li>{{ currentUser.fullName }}</li>
+        <li class="w-40">{{ currentUser.fullAddress }}</li>
+        <li><span class="font-medium">NIF:</span> {{ currentUser.nif }}</li>
       </ul>
-
       <ul class="text-sm">
-        <li class="text-gray-500">Dirección:</li>
+        <li class="font-bold">Para:</li>
+        <li>{{ currentInvoice.Client.fullName }}</li>
         <li>
           {{ currentInvoice.Client.streetAddress }}
         </li>
@@ -29,14 +29,32 @@
           {{ currentInvoice.Client.province }},
           {{ currentInvoice.Client.country }}
         </li>
+        <li>
+          <span class="font-medium">NIF:</span>
+          {{ currentInvoice.Client.nifNumber }}
+        </li>
       </ul>
+      <table class="text-sm table-fixed leading-none">
+        <tr>
+          <td>Número Factura:</td>
+          <td class="text-right text-lg font-bold">
+            {{ currentInvoice.number }}
+          </td>
+        </tr>
 
-      <ul class="text-sm">
-        <li>Número de Factura: {{ currentInvoice.number }}</li>
-        <li>Fecha emisión: {{ currentInvoice.date }}</li>
-        <li>Fecha límite: {{ currentInvoice.dueDate }}</li>
-        <li>Estado: {{ currentInvoice.status }}</li>
-      </ul>
+        <tr>
+          <td>Fecha emisión:</td>
+          <td class="text-right">{{ currentInvoice.date | date }}</td>
+        </tr>
+        <tr>
+          <td>Fecha límite:</td>
+          <td class="text-right">{{ currentInvoice.dueDate | date }}</td>
+        </tr>
+        <!-- <tr>
+          <td>Estado:</td>
+          <td class="text-right">{{ currentInvoice.status }}</td>
+        </tr> -->
+      </table>
     </div>
     <div class="-mx-4 mt-8 flex flex-col sm:-mx-6 md:mx-0">
       <table class="min-w-full divide-y divide-gray-300">
