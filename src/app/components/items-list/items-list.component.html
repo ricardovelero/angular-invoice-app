@@ -87,6 +87,8 @@
         [paginator]="true"
         [globalFilterFields]="['name', 'description']"
         [(selection)]="selectedItems"
+        sortField="name"
+        [sortOrder]="1"
         [rowHover]="true"
         dataKey="id"
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} ítems"
