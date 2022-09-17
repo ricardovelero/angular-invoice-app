@@ -10,7 +10,7 @@
       [formControl]="control"
       [id]="formId"
       [name]="formId"
-      class="block appearance-none w-full mb-1 text-base leading-normal sm:text-sm shadow-sm mt-1 bg-white focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+      class="normal-input"
       [ngClass]="{ 'ring-red-500 border-red-500': showErrors() }"
       [value]="initialValue"
       trapFocus
@@ -33,7 +33,7 @@
       [formControl]="control"
       [class]="styleClass"
       [ngClass]="{ 'ring-red-500 border-red-500': showErrors() }"
-      class="block appearance-none w-full mb-1 text-base leading-normal sm:text-sm shadow-sm mt-1 bg-white focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+      class="normal-input"
     >
       <option *ngFor="let item of items" [ngValue]="item.country">
         {{ item.country }}
@@ -47,7 +47,7 @@
       [formControl]="control"
       [rows]="rows"
       [cols]="cols"
-      class="block appearance-none w-full mb-1 text-base leading-normal sm:text-sm shadow-sm mt-1 bg-white focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+      class="normal-input"
       [ngClass]="{ 'ring-red-500 border-red-500': showErrors() }"
     ></textarea>
   </ng-container>
