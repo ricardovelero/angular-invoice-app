@@ -54,6 +54,7 @@ import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { MenubarModule } from "primeng/menubar";
+import { MenuModule } from "primeng/menu";
 import { TooltipModule } from "primeng/tooltip";
 import { FileUploadModule } from "primeng/fileupload";
 import { SelectButtonModule } from "primeng/selectbutton";
@@ -111,6 +112,7 @@ import { StepperComponent } from "./shared/stepper/stepper.component";
     DropdownModule,
     ToggleButtonModule,
     MenubarModule,
+    MenuModule,
     TooltipModule,
     FileUploadModule,
     SelectButtonModule,
