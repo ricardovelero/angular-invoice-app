@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Invoice } from "src/app/models/invoice.model";
 import { Client } from "../../models/client.model";
-import { Item } from "../../models/item.model";
 import { ClientService } from "../../services/client.service";
 import { ItemService } from "../../services/item.service";
 import { InvoiceService } from "src/app/services/invoice.service";
@@ -33,8 +32,6 @@ export class InvoiceAddComponent implements OnInit {
 
   filteredClients: any[] | any;
   filteredItems: any[] | any;
-
-  cols: any[] | any;
 
   today: Date = new Date();
   defaultDueDate: Date = new Date();
@@ -135,14 +132,18 @@ export class InvoiceAddComponent implements OnInit {
   }
 
   checkInvoiceNumber(data: any) {
-    let lastChar: number = data.number.charAt(data.number.length - 1);
-    if (isFinite(lastChar)) {
-      lastChar = lastChar * 1 + 1;
-      this.newNumber = data.number.replace(/[0-9]$/, lastChar);
+    if (isFinite(data.number)) {
+      this.newNumber = data.number * 1 + 1;
     } else {
-      this.newNumber = data.number;
+      let lastChar = data.number.charAt(data.number.length - 1);
+      if (isFinite(lastChar)) {
+        lastChar = lastChar * 1 + 1;
+        this.newNumber = data.number.replace(/[0-9]$/, lastChar);
+      } else {
+        this.newNumber = data.number;
+      }
+      this.newInvoice.number = this.newNumber;
     }
-    this.newInvoice.number = this.newNumber;
   }
 
   onAddItemRow() {
@@ -289,7 +290,10 @@ export class InvoiceAddComponent implements OnInit {
   }
   itemFromChild(item: any) {
     var obj: any = {};
-    Object.assign(item, { quantity: 1 });
+    const qty = 1;
+    var total: number = qty * item.cost * (1 + item.tax1 / 100);
+    var subtotal: number = qty * item.cost;
+    Object.assign(item, { quantity: qty, total: total, subtotal: subtotal });
     obj["item"] = item;
     if (Object.keys(this.products[0].item).length === 0) {
       this.products[0].item = { ...item };
@@ -297,6 +301,8 @@ export class InvoiceAddComponent implements OnInit {
       this.products.push(obj);
     }
     this.newInvoice.Items.push(item);
+    console.log(this.products);
+    this.calculateInvoiceTotal(this.products);
   }
 
   itemViewDetails(item: any) {
