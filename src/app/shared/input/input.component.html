@@ -1,7 +1,5 @@
 <div class="field">
-  <label [for]="formId" class="label block text-sm font-medium text-gray-700">{{
-    label
-  }}</label>
+  <label [for]="formId" class="normal-label-input">{{ label }}</label>
   <ng-container
     *ngIf="theType == 'text' || theType == 'number' || theType == 'password'"
   >
