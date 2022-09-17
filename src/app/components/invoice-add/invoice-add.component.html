@@ -337,10 +337,11 @@
       </div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
-      <div
-        class="flex justify-center sm:col-span-1 px-4 py-4 sm:px-6 divide-y divide-gray-200 bg-white shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
-      >
-        <button (click)="onAddItemRow()" class="text-indigo-500">
+      <div class="flex justify-center sm:col-span-1">
+        <button
+          (click)="onAddItemRow()"
+          class="w-full py-3 items-center text-indigo-500 bg-white shadow rounded-md"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -358,10 +359,11 @@
           Agregar línea de factura
         </button>
       </div>
-      <div
-        class="flex justify-center sm:col-span-1 px-4 py-4 sm:px-6 divide-y divide-gray-200 bg-white shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
-      >
-        <button (click)="showItemModalDialog()" class="text-indigo-500">
+      <div class="flex justify-center sm:col-span-1">
+        <button
+          (click)="showItemModalDialog()"
+          class="w-full py-3 items-center text-indigo-500 bg-white shadow rounded-md"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -459,7 +461,7 @@
   </form>
 </div>
 <p-confirmDialog></p-confirmDialog>
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<!-- <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-6xl mx-auto">
     <div class="pt-8">
       <div class="mt-8 flex flex-col">
@@ -485,7 +487,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <p-dialog
   header="Nuevo Cliente"
   [(visible)]="displayModal"
@@ -518,20 +520,4 @@
     (displayItemModal)="displayItemModal = false"
     (theItem)="itemFromChild($event)"
   ></app-item-add>
-</p-dialog>
-
-<p-dialog
-  header="Detalles del Ítem"
-  [(visible)]="displayItemViewModal"
-  [modal]="true"
-  [baseZIndex]="10000"
-  [draggable]="false"
-  [resizable]="false"
-  [closeOnEscape]="true"
-  [focusTrap]="true"
->
-  <app-item-details
-    [inItem]="theViewItem"
-    (displayModal)="displayItemViewModal = false"
-  ></app-item-details>
 </p-dialog>
