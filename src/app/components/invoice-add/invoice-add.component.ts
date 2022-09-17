@@ -142,8 +142,8 @@ export class InvoiceAddComponent implements OnInit {
       } else {
         this.newNumber = data.number;
       }
-      this.newInvoice.number = this.newNumber;
     }
+    this.newInvoice.number = this.newNumber;
   }
 
   onAddItemRow() {
