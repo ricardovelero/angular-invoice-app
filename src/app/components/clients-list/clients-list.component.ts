@@ -2,43 +2,19 @@ import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Client } from "../../models/client.model";
 import { ClientService } from "../../services/client.service";
+import { Country } from "src/app/models/country.model";
+import { CountryService } from "src/app/services/country.service";
 import { Table } from "primeng/table";
 import {
   ConfirmationService,
   MessageService,
   PrimeNGConfig,
 } from "primeng/api";
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from "@angular/animations";
 
 @Component({
   selector: "app-clients-list",
   templateUrl: "./clients-list.component.html",
   styleUrls: ["./clients-list.component.css"],
-  animations: [
-    trigger("rowExpansionTrigger", [
-      state(
-        "void",
-        style({
-          transform: "translateX(-10%)",
-          opacity: 0,
-        })
-      ),
-      state(
-        "active",
-        style({
-          transform: "translateX(0)",
-          opacity: 1,
-        })
-      ),
-      transition("* <=> *", animate("400ms cubic-bezier(0.86, 0, 0.07, 1)")),
-    ]),
-  ],
   providers: [ClientService],
 })
 export class ClientsListComponent implements OnInit {
@@ -47,6 +23,8 @@ export class ClientsListComponent implements OnInit {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
   @Input() viewMode = false;
+
+  countries: Country[] | any;
 
   modalToggle: boolean = false;
   clients: Client[] = [];
@@ -74,13 +52,17 @@ export class ClientsListComponent implements OnInit {
     private router: Router,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private countryService: CountryService
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.primengConfig.ripple = true;
     this.retrieveClients();
+    this.countryService.getCountries().then((data) => {
+      this.countries = data;
+    });
     this.showSpinner = false;
   }
   retrieveClients(): void {
