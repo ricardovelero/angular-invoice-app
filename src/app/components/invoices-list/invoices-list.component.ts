@@ -48,7 +48,9 @@ export class InvoicesListComponent implements OnInit {
     });
     this.showSpinner = false;
   }
-
+  toEditSelectedInvoice(invoice: any) {
+    this.router.navigate([`invoice-add/${invoice.id}`]);
+  }
   goToPage(pageName: string) {
     this.router.navigate([`${pageName}`]);
   }
