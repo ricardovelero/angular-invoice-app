@@ -6,12 +6,14 @@ import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { Table } from "primeng/table";
 import { Router } from "@angular/router";
+import { DropDownAnimation, CogRotation } from "./animations";
 
 @Component({
   selector: "app-invoices-list",
   templateUrl: "./invoices-list.component.html",
   styleUrls: ["./invoices-list.component.css"],
   providers: [InvoiceService],
+  animations: [DropDownAnimation, CogRotation],
 })
 export class InvoicesListComponent implements OnInit {
   @ViewChild("dt") dt: Table | undefined;
@@ -30,6 +32,10 @@ export class InvoicesListComponent implements OnInit {
   paymentDialog: boolean = false;
   loading: boolean = false;
 
+  state: string = "default";
+  rotate() {
+    this.state = this.state === "default" ? "rotated" : "default";
+  }
   constructor(
     private invoiceService: InvoiceService,
     private primengConfig: PrimeNGConfig,
@@ -50,6 +56,9 @@ export class InvoicesListComponent implements OnInit {
   }
   toEditSelectedInvoice(invoice: any) {
     this.router.navigate([`invoice-add/${invoice.id}`]);
+  }
+  toDuplicateSelectedInvoice(invoice: any) {
+    this.router.navigate([`invoice-add/duplicate/${invoice.id}`]);
   }
   goToPage(pageName: string) {
     this.router.navigate([`${pageName}`]);
