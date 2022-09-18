@@ -126,6 +126,20 @@ export class InvoiceAddComponent implements OnInit {
           this.newInvoice.dueDate.replace(/-/g, "/")
         );
         this.calculateInvoiceTotal(this.products);
+        if (this.route.snapshot.url[1].path === "duplicate") {
+          this.isEditting = false;
+          this.invoiceService.getLastInvoice().subscribe((invoices) => {
+            if (invoices) {
+              this.lastInvoice = invoices;
+              this.checkInvoiceNumber(this.lastInvoice);
+            } else {
+              this.newInvoice.number = "100";
+            }
+          });
+          this.newInvoice.id = null;
+          this.newInvoice.date = this.today;
+          this.newInvoice.dueDate = this.addDays(this.today, 30);
+        }
       },
       error: (e) => console.error(e),
     });
