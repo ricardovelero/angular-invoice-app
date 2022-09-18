@@ -62,6 +62,9 @@ export class InvoicesListComponent implements OnInit {
   toDuplicateSelectedInvoice(invoice: any) {
     this.router.navigate([`invoice-add/duplicate/${invoice.id}`]);
   }
+  toDetailsInvoice(invoice: any) {
+    this.router.navigate([`invoices/${invoice.id}`]);
+  }
   goToPage(pageName: string) {
     this.router.navigate([`${pageName}`]);
   }
