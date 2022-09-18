@@ -129,8 +129,7 @@
                   [cdkMenuTriggerFor]="menu"
                   pRipple
                   class="btn-rotation text-indigo-500"
-                  [@cogRotation]="state"
-                  (click)="rotate()"
+                  id="button-{{ invoice.id }}"
                 >
                   <div>
                     <svg

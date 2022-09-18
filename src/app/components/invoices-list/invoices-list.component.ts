@@ -33,7 +33,9 @@ export class InvoicesListComponent implements OnInit {
   loading: boolean = false;
 
   state: string = "default";
-  rotate() {
+  queryId: string = "";
+  rotate(id: any) {
+    this.queryId = id;
     this.state = this.state === "default" ? "rotated" : "default";
   }
   constructor(
