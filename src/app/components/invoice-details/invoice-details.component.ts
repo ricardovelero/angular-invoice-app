@@ -41,7 +41,6 @@ export class InvoiceDetailsComponent implements OnInit {
       this.userService.findUserByEmail(this.userProfile.email).subscribe({
         next: (data) => {
           this.currentUser = data;
-          console.log(this.currentUser);
         },
         error: (e) => console.error(e),
       });
