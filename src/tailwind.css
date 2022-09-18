@@ -1,3 +1,5 @@
+@import "@angular/cdk/overlay-prebuilt.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,5 +16,14 @@
   }
   .normal-label-input {
     @apply block text-sm font-medium text-gray-700;
+  }
+  .cdkmenu {
+    @apply inline-flex flex-col min-w-max max-w-xs drop-shadow bg-white py-4;
+  }
+  .cdkmenu-item {
+    @apply flex items-center flex-row flex-1 leading-9 px-4 text-gray-600;
+  }
+  .cdkmenu-item:hover {
+    @apply bg-gray-100;
   }
 }
