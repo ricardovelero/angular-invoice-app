@@ -54,13 +54,13 @@ import { MessageService } from "primeng/api";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ToggleButtonModule } from "primeng/togglebutton";
 import { MenubarModule } from "primeng/menubar";
-import { MenuModule } from "primeng/menu";
 import { TooltipModule } from "primeng/tooltip";
 import { FileUploadModule } from "primeng/fileupload";
 import { SelectButtonModule } from "primeng/selectbutton";
 
 import { NgxPaginationModule } from "ngx-pagination";
 import { CdkStepperModule } from "@angular/cdk/stepper";
+import { CdkMenuModule } from "@angular/cdk/menu";
 import { FirstloginComponent } from "./components/firstlogin/firstlogin.component";
 import { StepperComponent } from "./shared/stepper/stepper.component";
 
@@ -112,12 +112,12 @@ import { StepperComponent } from "./shared/stepper/stepper.component";
     DropdownModule,
     ToggleButtonModule,
     MenubarModule,
-    MenuModule,
     TooltipModule,
     FileUploadModule,
     SelectButtonModule,
     NgxPaginationModule,
     CdkStepperModule,
+    CdkMenuModule,
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
