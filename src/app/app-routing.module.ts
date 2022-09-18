@@ -36,6 +36,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: "invoice-add/duplicate/:id",
+    component: InvoiceAddComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: "invoices/:id",
     component: InvoiceDetailsComponent,
     canActivate: [AuthGuard],
