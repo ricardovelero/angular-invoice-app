@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-row justify-between" *ngIf="currentUser">
       <ul class="text-sm">
         <li class="font-bold">De:</li>
         <li>{{ currentUser.fullName }}</li>
