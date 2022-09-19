@@ -1,0 +1,22 @@
+<ngx-file-drop
+  [multiple]="false"
+  [directory]="false"
+  [showBrowseBtn]="true"
+  browseBtnLabel="Cargar foto"
+  browseBtnClassName="items-center text-indigo-500 bg-white"
+  (onFileDrop)="onFilesDropped($event)"
+>
+  <ng-template
+    ngx-file-drop-content-tmp
+    let-openFileSelector="openFileSelector"
+  >
+    Arrastra foto aquí o
+    <button
+      class="p-1 btn btn-link underline"
+      type="button"
+      (click)="openFileSelector()"
+    >
+      click para cargar foto
+    </button>
+  </ng-template>
+</ngx-file-drop>

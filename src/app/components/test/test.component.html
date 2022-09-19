@@ -1,0 +1,24 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+  <div class="mx-auto max-w-3xl">
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="md:flex md:items-center md:justify-between">
+      <div class="min-w-0 flex-1">
+        <h2
+          class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"
+        >
+          Lista de Archivos
+        </h2>
+      </div>
+    </div>
+    <div class="mx-auto mt-10 max-w-3xl">
+      <app-file-drop
+        class="d-block my-4"
+        (filesDropped)="onFilesDropped($event)"
+      ></app-file-drop>
+      <app-uploads [uploads]="uploads$ | async"></app-uploads>
+      <app-files *ngIf="showFileList" [files]="files$ | async"></app-files>
+    </div>
+  </div>
+</div>

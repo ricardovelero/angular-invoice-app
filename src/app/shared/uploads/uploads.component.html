@@ -1,0 +1,19 @@
+<div *ngFor="let upload of uploads" class="flex flex-wrap mx-0 mt-2">
+  <div class="w-1/2 px-0">
+    <span [class.text-danger]="upload.failed">{{ upload.name }}</span>
+    <span *ngIf="upload.done && !upload.failed" class="text-green-500 pl-2">
+      ✓
+    </span>
+    <span *ngIf="upload.done && upload.failed" class="text-red-600 pl-2">
+      𐄂
+    </span>
+  </div>
+  <div class="w-1/2 pt-2 px-0">
+    <p-progressBar
+      [ngClass]="upload.failed ? 'danger' : 'success'"
+      textType="white"
+      [value]="upload.progress"
+      [showValue]="true"
+    ></p-progressBar>
+  </div>
+</div>

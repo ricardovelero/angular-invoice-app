@@ -13,6 +13,7 @@ import { ItemsListComponent } from "./components/items-list/items-list.component
 import { ProfileComponent } from "./components/profile/profile.component";
 
 import { AuthGuard } from "@auth0/auth0-angular";
+import { TestComponent } from "./components/test/test.component";
 
 const routes: Routes = [
   {
@@ -68,6 +69,8 @@ const routes: Routes = [
   },
   { path: "item-add", component: ItemAddComponent, canActivate: [AuthGuard] },
   { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
+
+  { path: "test", component: TestComponent, canActivate: [AuthGuard] },
 
   { path: "", component: DashboardComponent },
 ];
