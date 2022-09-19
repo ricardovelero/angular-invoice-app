@@ -49,38 +49,26 @@
           <div class="col-span-6 sm:col-span-2">
             <div class="flex">
               <span class="text-gray-700">
-                <img
-                  class="inline-block h-14 w-14 rounded-full"
-                  src="{{ user.picture }}"
-                  alt="{{ user.name }}'s Avatar"
-                  id="picture"
-              /></span>
+                <ng-container *ngIf="picture; else auth0pic">
+                  <img
+                    class="inline-block h-14 w-14 rounded-full"
+                    src="{{ picture }}"
+                    alt="{{ user.name }}'s Avatar"
+                    id="picture"
+                  />
+                </ng-container>
+                <ng-template #auth0pic>
+                  <img
+                    class="inline-block h-14 w-14 rounded-full"
+                    src="{{ user.picture }}"
+                    alt="{{ user.name }}'s Avatar"
+                    id="picture" /></ng-template
+              ></span>
             </div>
           </div>
         </div>
-        <div class="mt-2 sm:flex sm:justify-end">
-          <p-fileUpload
-            mode="basic"
-            name="image upload"
-            url="https://facturazen-backend-9tcee.ondigitalocean.app/api/files/image"
-            method="post"
-            [multiple]="false"
-            accept="image/*"
-            [maxFileSize]="1000000"
-            [fileLimit]="1"
-            (onUpload)="onUpload($event)"
-            (onError)="showUploadError($event)"
-            [auto]="true"
-            styleClass="text-xs p-button-text hover:p-button-text"
-            chooseLabel="Subir foto"
-            chooseIcon="pi pi-upload"
-          ></p-fileUpload>
-          <!-- <button
-            type="button"
-            class="block rounded-md border p-1 text-xs leading-4 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Cambiar
-          </button> -->
+        <div class="mx-auto mt-10 max-w-3xl">
+          <app-file-uploader></app-file-uploader>
         </div>
       </div>
     </div>

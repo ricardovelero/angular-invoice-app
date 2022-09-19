@@ -13,6 +13,9 @@ import { passwordStrengthValidator } from "../../shared/input/password-strength.
 import { User } from "src/app/models/user.model";
 import { Country } from "src/app/models/country.model";
 import { CountryService } from "src/app/services/country.service";
+import { Observable } from "rxjs";
+import { HttpEvent } from "@angular/common/http";
+import { v4 as uuid } from "uuid";
 
 @Component({
   selector: "app-profile",
@@ -25,6 +28,8 @@ export class ProfileComponent implements OnInit {
   currentUser: User[] | any;
 
   isEditting: boolean = true;
+
+  fileId: string = uuid();
 
   profileForm = this.fb.group({
     fullName: [""],
@@ -55,6 +60,7 @@ export class ProfileComponent implements OnInit {
   repeatPassword: string | any;
   pwDialog: boolean = false;
   showPassword: boolean = false;
+  picture: string = "";
 
   uploadedFiles: any[] = [];
 
@@ -95,6 +101,7 @@ export class ProfileComponent implements OnInit {
             phone,
             address: { street, city, zip: zipcode, region: province, country },
           });
+          this.picture = this.currentUser.picture;
         },
         error: (e) => console.error(e),
       });
@@ -168,9 +175,7 @@ export class ProfileComponent implements OnInit {
       },
     });
   }
-
   onUpload(event: any) {
-    console.log(event);
     this.messageService.add({
       severity: "info",
       summary: "Imagen Cargada",
@@ -179,6 +184,7 @@ export class ProfileComponent implements OnInit {
   }
 
   showUploadError(event: any) {
+    console.log(event);
     this.messageService.add({
       severity: "error",
       summary: "Error",

@@ -32,6 +32,11 @@ import { HomeComponent } from "./components/home/home.component";
 import { ProfileComponent } from "./components/profile/profile.component";
 import { SpinnerComponent } from "./shared/spinner/spinner.component";
 import { InputComponent } from "./shared/input/input.component";
+import { FirstloginComponent } from "./components/firstlogin/firstlogin.component";
+import { StepperComponent } from "./shared/stepper/stepper.component";
+import { FilesComponent } from "./shared/files/files.component";
+import { TestComponent } from "./components/test/test.component";
+import { FileDropComponent } from "./shared/file-drop/file-drop.component";
 // import {
 //   AutoFocusDirective,
 //   HighlightDirective,
@@ -57,12 +62,14 @@ import { MenubarModule } from "primeng/menubar";
 import { TooltipModule } from "primeng/tooltip";
 import { FileUploadModule } from "primeng/fileupload";
 import { SelectButtonModule } from "primeng/selectbutton";
+import { ProgressBarModule } from "primeng/progressbar";
 
 import { NgxPaginationModule } from "ngx-pagination";
 import { CdkStepperModule } from "@angular/cdk/stepper";
 import { CdkMenuModule } from "@angular/cdk/menu";
-import { FirstloginComponent } from "./components/firstlogin/firstlogin.component";
-import { StepperComponent } from "./shared/stepper/stepper.component";
+import { NgxFileDropModule } from "@bugsplat/ngx-file-drop";
+import { UploadsComponent } from "./shared/uploads/uploads.component";
+import { FileUploaderComponent } from './shared/file-uploader/file-uploader.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +95,11 @@ import { StepperComponent } from "./shared/stepper/stepper.component";
     FirstloginComponent,
     StepperComponent,
     InputComponent,
+    FilesComponent,
+    TestComponent,
+    FileDropComponent,
+    UploadsComponent,
+    FileUploaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,6 +130,8 @@ import { StepperComponent } from "./shared/stepper/stepper.component";
     NgxPaginationModule,
     CdkStepperModule,
     CdkMenuModule,
+    NgxFileDropModule,
+    ProgressBarModule,
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
