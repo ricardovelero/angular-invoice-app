@@ -29,4 +29,10 @@
   .cdkmenu-item:hover {
     @apply bg-gray-100;
   }
+  .table-td-highlight {
+    @apply px-4 py-3.5 text-base font-medium text-gray-900;
+  }
+  .table-td-normal {
+    @apply px-4 py-3.5 text-base text-gray-500;
+  }
 }
