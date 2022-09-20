@@ -1099,6 +1099,22 @@ select{
   grid-column:span 6 / span 6
 }
 
+.col-span-12{
+  grid-column:span 12 / span 12
+}
+
+.col-start-1{
+  grid-column-start:1
+}
+
+.col-end-3{
+  grid-column-end:3
+}
+
+.col-end-5{
+  grid-column-end:5
+}
+
 .float-right{
   float:right
 }
@@ -1608,6 +1624,10 @@ select{
   flex-wrap:wrap
 }
 
+.items-end{
+  align-items:flex-end
+}
+
 .items-center{
   align-items:center
 }
@@ -1626,6 +1646,10 @@ select{
 
 .justify-between{
   justify-content:space-between
+}
+
+.justify-items-end{
+  justify-items:end
 }
 
 .gap-6{
@@ -2631,6 +2655,10 @@ select{
 
   .sm\:col-span-1{
     grid-column:span 1 / span 1
+  }
+
+  .sm\:col-span-5{
+    grid-column:span 5 / span 5
   }
 
   .sm\:col-start-1{

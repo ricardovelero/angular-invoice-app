@@ -31,6 +31,8 @@ export class ProfileComponent implements OnInit {
 
   fileId: string = uuid();
 
+  showLoader: boolean = false;
+
   profileForm = this.fb.group({
     fullName: [""],
     nif: [""],
