@@ -114,7 +114,9 @@
             /></ng-template>
             <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"
               ><span class="sr-only">Abrir menu para </span
-              >{{ user.name }}</span
+              ><ng-container *ngIf="user.name">{{
+                user.name
+              }}</ng-container></span
             >
             <!-- Heroicon name: solid/chevron-down -->
             <svg
