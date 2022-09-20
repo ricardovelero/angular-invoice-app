@@ -48,73 +48,72 @@
           dataKey="id"
           [loading]="loading"
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} facturas"
-          [showCurrentPageReport]="true"
-          tableStyleClass="min-w-full divide-y divide-gray-300 text-center"
+          responsiveLayout="stack"
+          breakpoint="720px"
+          tableStyleClass="table-fixed divide-y divide-gray-300 text-center"
           sortField="date"
           [sortOrder]="-1"
         >
           <!-- <ng-template pTemplate="caption"> </ng-template> -->
-          <ng-template pTemplate="header">
+          <ng-template pTemplate="header" styleClass="text-center">
             <tr class="divide-x divide-gray-200">
               <th
                 pSortableColumn="Client.fullName"
-                class="py-3.5 pl-4 pr-4 text-center text-base font-semibold text-gray-900"
+                class="py-3.5 px-4 text-center text-base font-semibold text-gray-900"
               >
                 Cliente <p-sortIcon field="Client.fullName"></p-sortIcon>
               </th>
               <th
                 pSortableColumn="number"
-                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+                class="px-4 py-3.5 text-base font-semibold text-gray-900"
               >
                 Número <p-sortIcon field="number"></p-sortIcon>
               </th>
               <th
                 pSortableColumn="date"
-                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+                class="px-4 py-3.5 text-base font-semibold text-gray-900"
               >
                 Fecha emisión <p-sortIcon field="date"></p-sortIcon>
               </th>
               <th
                 pSortableColumn="dueDate"
-                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+                class="px-4 py-3.5 text-base font-semibold text-gray-900"
               >
                 Fecha vencimiento <p-sortIcon field="dueDate"></p-sortIcon>
               </th>
               <th
                 pSortableColumn="total"
-                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+                class="px-4 py-3.5 text-base font-semibold text-gray-900"
               >
                 Total <p-sortIcon field="total"></p-sortIcon>
               </th>
               <th
                 pSortableColumn="status"
-                class="px-4 py-3.5 text-left text-base font-semibold text-gray-900"
+                class="px-4 py-3.5 text-base font-semibold text-gray-900"
               >
-                Estado <p-sortIcon field="status"></p-sortIcon>
+                Pago <p-sortIcon field="status"></p-sortIcon>
               </th>
               <th class="text-xs"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-invoice>
             <tr class="divide-x divide-gray-200">
-              <td
-                class="whitespace-nowrap p-4 text-base font-medium text-gray-900"
-              >
+              <td class="table-td-highlight">
                 {{ invoice.Client.fullName }}
               </td>
-              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+              <td class="table-td-normal">
                 {{ invoice.number }}
               </td>
-              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+              <td class="table-td-normal">
                 {{ invoice.date | date: "longDate":"es" }}
               </td>
-              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+              <td class="table-td-normal">
                 {{ invoice.dueDate | date: "longDate":"es" }}
               </td>
-              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+              <td class="table-td-normal">
                 {{ invoice.total | currency: "EUR":"symbol":"1.2-2":"es" }}
               </td>
-              <td class="whitespace-nowrap p-4 text-base text-gray-500">
+              <td class="table-td-normal">
                 <span
                   class="p-1.5 rounded-md uppercase text-xs"
                   [ngClass]="{
@@ -257,7 +256,7 @@
                           />
                         </svg>
                       </div>
-                      Estado
+                      Pago
                     </button>
                   </div>
                 </ng-template>
