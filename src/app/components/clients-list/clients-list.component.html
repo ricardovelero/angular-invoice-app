@@ -72,6 +72,7 @@
           ></button>
         </ng-template>
       </p-toolbar>
+
       <p-table
         #dt
         [value]="clients"
@@ -94,7 +95,7 @@
         [showCurrentPageReport]="true"
         [loading]="loading"
         responsiveLayout="stack"
-        breakpoint="680px"
+        breakpoint="720px"
         tableStyleClass="table-fixed divide-y divide-gray-300 text-center"
       >
         <ng-template pTemplate="header" styleClass="text-center">
@@ -103,7 +104,7 @@
             <th
               scope="col"
               pSortableColumn="fullName"
-              class="py-3.5 pl-4 pr-4 text-base font-semibold text-gray-900 sm:pl-6"
+              class="py-3.5 px-4 text-base font-semibold text-gray-900 sm:pl-6"
             >
               Nombre <p-sortIcon field="fullName"></p-sortIcon>
             </th>
@@ -152,19 +153,19 @@
                 [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
               ></button>
             </td>
-            <td class="sm:p-2 text-base font-medium text-gray-900">
+            <td class="table-td-highlight">
               {{ client.fullName }}
             </td>
-            <td class="text-base text-gray-500">
+            <td class="table-td-normal">
               {{ client.nifNumber }}
             </td>
-            <td class="text-base text-gray-500">
+            <td class="table-td-normal">
               {{ client.email }}
             </td>
-            <td class="text-base text-gray-500">
+            <td class="table-td-normal">
               {{ client.fullAddress }}
             </td>
-            <td class="whitespace-nowrap text-base text-gray-500">
+            <td class="whitespace-nowrap table-td-normal">
               <button
                 pButton
                 pRipple
@@ -173,7 +174,7 @@
                 (click)="editClient(client)"
               ></button>
             </td>
-            <td class="whitespace-nowrap text-base text-gray-500">
+            <td class="whitespace-nowrap table-td-normal">
               <button
                 [disabled]="client.Invoices.length"
                 pButton
