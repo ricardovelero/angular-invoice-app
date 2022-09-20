@@ -51,6 +51,7 @@
               <span class="text-gray-700">
                 <ng-container *ngIf="picture; else auth0pic">
                   <img
+                    crossorigin="anonymous"
                     class="inline-block h-14 w-14 rounded-full"
                     src="{{ picture }}"
                     alt="{{ user.name }}'s Avatar"
@@ -79,7 +80,9 @@
         </div>
         <ng-container *ngIf="showLoader">
           <div class="mx-auto mt-10 max-w-3xl">
-            <app-file-uploader></app-file-uploader>
+            <app-file-uploader
+              (picture)="refreshPicture($event)"
+            ></app-file-uploader>
           </div>
         </ng-container>
       </div>
