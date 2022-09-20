@@ -221,7 +221,11 @@
                       <td>{{ invoice.number }}</td>
                       <td>{{ invoice.date | date: "longDate":"es" }}</td>
                       <td>{{ invoice.dueDate | date: "longDate":"es" }}</td>
-                      <td>{{ invoice.total | currency: "EUR" }}</td>
+                      <td>
+                        {{
+                          invoice.total | currency: "EUR":"symbol":"1.2-2":"es"
+                        }}
+                      </td>
                       <td>
                         <span
                           class="p-1.5 rounded-md uppercase text-xs"
