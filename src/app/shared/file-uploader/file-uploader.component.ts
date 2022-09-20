@@ -4,7 +4,7 @@ import {
   HttpEventType,
   HttpUploadProgressEvent,
 } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { NgxFileDropEntry } from "@bugsplat/ngx-file-drop";
 import {
   BehaviorSubject,
@@ -29,9 +29,12 @@ import { FilesTableEntry } from "src/app/models/files-table-entry";
   styleUrls: ["./file-uploader.component.css"],
 })
 export class FileUploaderComponent implements OnInit {
+  @Output() picture = new EventEmitter<string>();
+
   uploads$?: Observable<FileUploadProgress[]>;
   files$?: Observable<FilesTableEntry[]>;
   id: string = uuid();
+  fileExt: string | any;
 
   private getFilesSubject = new BehaviorSubject<any>(null);
 
@@ -86,7 +89,12 @@ export class FileUploaderComponent implements OnInit {
         };
       }, {} as Record<string, FileUploadProgress>),
       map((progress) => Object.values(progress)),
-      finalize(() => this.getFilesSubject.next(null))
+      finalize(() => {
+        this.getFilesSubject.next(null);
+        this.picture.emit(
+          `https://facturazen-backend-9tcee.ondigitalocean.app/api/files/${this.id}.${this.fileExt}`
+        );
+      })
     );
   }
   private uploadFile(file: File): Observable<HttpEvent<unknown>> {
@@ -94,6 +102,7 @@ export class FileUploaderComponent implements OnInit {
       "https://facturazen-backend-9tcee.ondigitalocean.app/api/files/upload";
     const formData: FormData = new FormData();
     const fileExt = file.name.split(".").pop();
+    this.fileExt = fileExt;
 
     formData.append("file", file, `${this.id}.${fileExt}`);
 
