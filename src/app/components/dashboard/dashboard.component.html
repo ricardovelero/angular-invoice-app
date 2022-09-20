@@ -7,18 +7,24 @@
         <!-- Profile -->
         <ng-container *ngIf="auth.user$ | async as user">
           <div class="flex items-center">
-            <img
-              class="hidden h-16 w-16 rounded-full sm:block"
-              [src]="user.picture"
-              alt="User Profile picture"
-            />
             <div>
               <div class="flex items-center">
-                <img
-                  class="h-16 w-16 rounded-full sm:hidden"
-                  [src]="user.picture"
-                  alt="User Profile picture"
-                />
+                <ng-container *ngIf="picture; else auth0pic">
+                  <img
+                    crossorigin="anonymous"
+                    class="inline-block h-16 w-16 rounded-full"
+                    src="{{ picture }}"
+                    alt="{{ user.name }}'s Avatar"
+                    id="picture"
+                  />
+                </ng-container>
+                <ng-template #auth0pic>
+                  <img
+                    class="inline-block h-16 w-16 rounded-full"
+                    src="{{ user.picture }}"
+                    alt="{{ user.name }}'s Avatar"
+                    id="picture"
+                /></ng-template>
                 <h1
                   class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate"
                 >

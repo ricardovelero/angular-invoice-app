@@ -96,13 +96,25 @@
             aria-haspopup="true"
             (click)="opencloseMenu()"
           >
-            <img
-              class="h-8 w-8 rounded-full"
-              [src]="user.picture"
-              alt="User profile picture"
-            />
+            <ng-container *ngIf="picture; else auth0pic">
+              <img
+                crossorigin="anonymous"
+                class="inline-block h-8 w-8 rounded-full"
+                src="{{ picture }}"
+                alt="{{ user.name }}'s Avatar"
+                id="picture"
+              />
+            </ng-container>
+            <ng-template #auth0pic>
+              <img
+                class="inline-block h-8 w-8 rounded-full"
+                src="{{ user.picture }}"
+                alt="{{ user.name }}'s Avatar"
+                id="picture"
+            /></ng-template>
             <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"
-              ><span class="sr-only">Abrir menu para </span>Usuario</span
+              ><span class="sr-only">Abrir menu para </span
+              >{{ user.name }}</span
             >
             <!-- Heroicon name: solid/chevron-down -->
             <svg
