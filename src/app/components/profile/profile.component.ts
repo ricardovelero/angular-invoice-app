@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { AuthService } from "@auth0/auth0-angular";
 import { UserService } from "../../services/user.service";
 import { MessageService } from "primeng/api";
@@ -23,6 +23,8 @@ import { v4 as uuid } from "uuid";
   styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
+  @Input() picture: string = "";
+
   userProfile: string | any;
 
   currentUser: User[] | any;
@@ -62,7 +64,6 @@ export class ProfileComponent implements OnInit {
   repeatPassword: string | any;
   pwDialog: boolean = false;
   showPassword: boolean = false;
-  picture: string = "";
 
   uploadedFiles: any[] = [];
 
@@ -154,7 +155,10 @@ export class ProfileComponent implements OnInit {
       },
     });
   }
-
+  refreshPicture(picture: any) {
+    this.picture = picture;
+    this.showLoader = false;
+  }
   changePassword() {
     const data = { password: this.passwordForm.controls.password.value };
     this.userService.changeUserPassword(data).subscribe({
@@ -175,22 +179,6 @@ export class ProfileComponent implements OnInit {
           life: 5000,
         });
       },
-    });
-  }
-  onUpload(event: any) {
-    this.messageService.add({
-      severity: "info",
-      summary: "Imagen Cargada",
-      detail: "",
-    });
-  }
-
-  showUploadError(event: any) {
-    console.log(event);
-    this.messageService.add({
-      severity: "error",
-      summary: "Error",
-      detail: "Error al cargar el archivo",
     });
   }
 
