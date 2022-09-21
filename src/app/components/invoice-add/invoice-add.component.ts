@@ -77,14 +77,22 @@ export class InvoiceAddComponent implements OnInit {
       this.newInvoice.date = this.today;
       this.newInvoice.dueDate = this.addDays(this.today, 30);
       this.onAddItemRow();
-      this.invoiceService.getLastInvoice().subscribe((invoices) => {
-        if (invoices) {
-          this.lastInvoice = invoices;
-          this.checkInvoiceNumber(this.lastInvoice);
-        } else {
-          this.newInvoice.number = "100";
-        }
-      });
+      this.invoiceService.getLastInvoice().subscribe(
+        (invoices) => {
+          if (invoices) {
+            this.lastInvoice = invoices;
+            this.checkInvoiceNumber(this.lastInvoice);
+          } else {
+            this.newInvoice.number = "100";
+          }
+        },
+        (err) => {
+          err.error = "Cannont find last Invoice"
+            ? (this.newInvoice.number = "100")
+            : console.log(err.error);
+        },
+        () => console.log("Processing Last Invoice Complete.")
+      );
     }
 
     this.clientService.getAllClients().subscribe((clients) => {
