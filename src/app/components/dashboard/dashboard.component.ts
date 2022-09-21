@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   picture: string = "";
   userProfile: string | any;
   currentUser: User[] | any;
+  fullName: string = "";
 
   constructor(
     public auth: AuthService,
@@ -32,6 +33,9 @@ export class DashboardComponent implements OnInit {
         next: (data) => {
           this.currentUser = data;
           this.picture = this.currentUser.picture;
+          this.currentUser.fullName
+            ? (this.fullName = this.currentUser.fullName)
+            : this.userProfile.name;
         },
         error: (e) => console.error(e),
       });

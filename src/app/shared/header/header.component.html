@@ -101,7 +101,7 @@
                 crossorigin="anonymous"
                 class="inline-block h-8 w-8 rounded-full"
                 src="{{ picture }}"
-                alt="{{ user.name }}'s Avatar"
+                alt=""
                 id="picture"
               />
             </ng-container>
@@ -114,8 +114,8 @@
             /></ng-template>
             <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"
               ><span class="sr-only">Abrir menu para </span
-              ><ng-container *ngIf="user.name">{{
-                user.name
+              ><ng-container *ngIf="fullName">{{
+                fullName
               }}</ng-container></span
             >
             <!-- Heroicon name: solid/chevron-down -->

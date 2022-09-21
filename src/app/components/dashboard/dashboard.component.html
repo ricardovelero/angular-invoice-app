@@ -14,7 +14,7 @@
                     crossorigin="anonymous"
                     class="inline-block h-16 w-16 rounded-full"
                     src="{{ picture }}"
-                    alt="{{ user.name }}'s Avatar"
+                    alt=""
                     id="picture"
                   />
                 </ng-container>
@@ -28,7 +28,7 @@
                 <h1
                   class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate"
                 >
-                  Hola, {{ user.name }}
+                  <ng-container *ngIf="fullName">{{ fullName }}</ng-container>
                 </h1>
               </div>
               <dl
