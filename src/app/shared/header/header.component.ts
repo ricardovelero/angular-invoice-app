@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   picture: string = "";
   userProfile: string | any;
   currentUser: User[] | any;
+  fullName: string = "";
 
   opencloseMenu() {
     if (!this.menuToggle) {
@@ -38,6 +39,9 @@ export class HeaderComponent implements OnInit {
         next: (data) => {
           this.currentUser = data;
           this.picture = this.currentUser.picture;
+          this.currentUser.fullName
+            ? (this.fullName = this.currentUser.fullName)
+            : this.userProfile.name;
         },
         error: (e) => console.error(e),
       });

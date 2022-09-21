@@ -9,9 +9,7 @@
       <div class="lg:pl-64 flex flex-col flex-1">
         <app-header></app-header>
         <main class="flex-1 pb-8">
-          <ng-container
-            *ngIf="this.loginsCount == 1 && !this.profileComplete; else go"
-          >
+          <ng-container *ngIf="!this.profileComplete; else go">
             <app-firstlogin></app-firstlogin>
           </ng-container>
           <ng-template #go>

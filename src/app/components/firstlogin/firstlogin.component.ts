@@ -88,7 +88,7 @@ export class FirstloginComponent implements OnInit {
     const auth0Data = {
       name: fullName,
       phone_number: phone.value,
-      user_metadata: {
+      app_metadata: {
         nif: nif.value,
         address: `${street}, ${city}, ${region}, ${zip}, ${country}`,
         profileComplete: true,
