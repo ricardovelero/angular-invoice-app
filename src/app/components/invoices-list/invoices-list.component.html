@@ -51,7 +51,11 @@
           responsiveLayout="stack"
           breakpoint="720px"
           tableStyleClass="table-fixed divide-y divide-gray-300 text-center"
-          sortField="date"
+          sortMode="multiple"
+          [multiSortMeta]="[
+            { field: 'number', order: -1 },
+            { field: 'date', order: -1 }
+          ]"
           [sortOrder]="-1"
         >
           <!-- <ng-template pTemplate="caption"> </ng-template> -->
