@@ -227,6 +227,7 @@ export class InvoiceAddComponent implements OnInit {
   }
 
   saveNewInvoice() {
+    this.reformatDates();
     this.invoiceService.createInvoice(this.newInvoice).subscribe({
       next: (res) => {
         this.messageService.add({
@@ -247,6 +248,7 @@ export class InvoiceAddComponent implements OnInit {
     this.router.navigate(["invoices"]);
   }
   updateTheInvoice() {
+    this.reformatDates();
     this.invoiceService
       .updateInvoice(this.newInvoice.id, this.newInvoice)
       .subscribe({
@@ -330,5 +332,21 @@ export class InvoiceAddComponent implements OnInit {
   itemViewDetails(item: any) {
     this.displayItemViewModal = true;
     this.theViewItem = item.item;
+  }
+  reformatDates() {
+    this.newInvoice.date = new Date(
+      Date.UTC(
+        this.newInvoice.date.getFullYear(),
+        this.newInvoice.date.getMonth(),
+        this.newInvoice.date.getDate()
+      )
+    );
+    this.newInvoice.dueDate = new Date(
+      Date.UTC(
+        this.newInvoice.dueDate.getFullYear(),
+        this.newInvoice.dueDate.getMonth(),
+        this.newInvoice.dueDate.getDate()
+      )
+    );
   }
 }
