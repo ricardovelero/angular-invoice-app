@@ -107,12 +107,6 @@ export class InvoiceAddComponent implements OnInit {
     });
   }
 
-  addDays(date: Date, days: number) {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  }
-
   getInvoice(id: string): void {
     this.invoiceService.getInvoice(id).subscribe({
       next: (data) => {
@@ -249,6 +243,7 @@ export class InvoiceAddComponent implements OnInit {
   }
   updateTheInvoice() {
     this.reformatDates();
+    this.checkDuplicateItems();
     this.invoiceService
       .updateInvoice(this.newInvoice.id, this.newInvoice)
       .subscribe({
@@ -302,6 +297,17 @@ export class InvoiceAddComponent implements OnInit {
       },
     });
   }
+
+  checkDuplicateItems() {
+    let values = this.newInvoice.Items;
+    const lookup = values.reduce((a: any, e: any) => {
+      a[e.id] = ++a[e.id] || 0;
+      return a;
+    }, {});
+
+    console.log(values.filter((e: { id: string | number }) => lookup[e.id]));
+  }
+
   showModalDialog() {
     this.displayModal = true;
   }
@@ -333,6 +339,13 @@ export class InvoiceAddComponent implements OnInit {
     this.displayItemViewModal = true;
     this.theViewItem = item.item;
   }
+
+  addDays(date: Date, days: number) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+
   reformatDates() {
     this.newInvoice.date = new Date(
       Date.UTC(
