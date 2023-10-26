@@ -139,7 +139,7 @@ import { FileUploaderComponent } from "./shared/file-uploader/file-uploader.comp
       ...env.auth,
       httpInterceptor: {
         allowedList: [
-          `https://facturazen-backend-9tcee.ondigitalocean.app/api/*`,
+          `http://localhost:8080/api/*`,
           {
             uri: "https://dev-gyc750vd.us.auth0.com/api/v2/*",
             tokenOptions: {
