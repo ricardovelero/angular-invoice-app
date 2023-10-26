@@ -4,9 +4,7 @@ import { Observable } from "rxjs"
 import { Client } from "../models/client.model"
 import { address as env } from "../../environments/environment"
 
-//const baseUrl =
-//  "https://facturazen-backend-9tcee.ondigitalocean.app/api/clients"
-const baseUrl = "http://localhost:8080/api/clients"
+const baseUrl = `${env.local}/api/clients`
 
 @Injectable({ providedIn: "root" })
 export class ClientService {
