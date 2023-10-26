@@ -1,9 +1,9 @@
-import { Component, Input } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { AuthService } from "@auth0/auth0-angular";
-import { UserInfo } from "../app/services/user-info";
-import { UserService } from "../app/services/user.service";
-import { User } from "../app/models/user.model";
+import { Component, Input } from "@angular/core"
+import { HttpClient } from "@angular/common/http"
+import { AuthService } from "@auth0/auth0-angular"
+import { UserInfo } from "../app/services/user-info"
+import { UserService } from "../app/services/user.service"
+import { User } from "../app/models/user.model"
 
 @Component({
   selector: "app-root",
@@ -11,10 +11,10 @@ import { User } from "../app/models/user.model";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  profileComplete: boolean = false;
-  loginsCount: {} | any;
-  userProfile: string | any;
-  currentUser: User[] | any;
+  profileComplete: boolean = false
+  loginsCount: {} | any
+  userProfile: string | any
+  currentUser: User[] | any
 
   constructor(
     public auth: AuthService,
@@ -25,13 +25,13 @@ export class AppComponent {
   ngOnInit(): void {
     sessionStorage.getItem("profileComplete") === "true"
       ? (this.profileComplete = true)
-      : (this.profileComplete = false);
+      : (this.profileComplete = false)
     if (!this.profileComplete) {
-      this.auth.user$.subscribe((profile) => {
-        this.userProfile = profile;
+      this.auth.user$.subscribe((profile: any) => {
+        this.userProfile = profile
         this.userService.findUserByEmail(this.userProfile.email).subscribe({
-          next: (data) => {
-            this.currentUser = data;
+          next: (data: any) => {
+            this.currentUser = data
             const {
               fullName,
               nif,
@@ -43,16 +43,16 @@ export class AppComponent {
               country,
               profileComplete,
               id,
-            } = this.currentUser;
-            sessionStorage.setItem("UserId", id);
-            UserInfo.UserId = id;
-            sessionStorage.setItem("profileComplete", profileComplete);
-            UserInfo.profileComplete = profileComplete;
-            this.profileComplete = profileComplete;
+            } = this.currentUser
+            sessionStorage.setItem("UserId", id)
+            UserInfo.UserId = id
+            sessionStorage.setItem("profileComplete", profileComplete)
+            UserInfo.profileComplete = profileComplete
+            this.profileComplete = profileComplete
           },
-          error: (e) => console.error(e),
-        });
-      });
+          error: (e: any) => console.error(e),
+        })
+      })
     }
   }
 
