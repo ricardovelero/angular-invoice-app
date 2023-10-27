@@ -1,4 +1,4 @@
-export class User {
+export class Account {
   id?: number
   fullName?: string
   nif?: string
@@ -8,8 +8,6 @@ export class User {
   province?: string
   country?: string
   company?: string
-  email?: string
-  password?: string
   phone?: string
   profileComplete?: boolean
 }

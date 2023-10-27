@@ -1,19 +1,20 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { ClientAddComponent } from "./components/client-add/client-add.component";
-import { ClientDetailsComponent } from "./components/client-details/client-details.component";
-import { ClientsListComponent } from "./components/clients-list/clients-list.component";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
-import { InvoiceAddComponent } from "./components/invoice-add/invoice-add.component";
-import { InvoiceDetailsComponent } from "./components/invoice-details/invoice-details.component";
-import { InvoicesListComponent } from "./components/invoices-list/invoices-list.component";
-import { ItemAddComponent } from "./components/item-add/item-add.component";
-import { ItemDetailsComponent } from "./components/item-details/item-details.component";
-import { ItemsListComponent } from "./components/items-list/items-list.component";
-import { ProfileComponent } from "./components/profile/profile.component";
+import { NgModule } from "@angular/core"
+import { RouterModule, Routes } from "@angular/router"
+import { ClientAddComponent } from "./components/client-add/client-add.component"
+import { ClientDetailsComponent } from "./components/client-details/client-details.component"
+import { ClientsListComponent } from "./components/clients-list/clients-list.component"
+import { DashboardComponent } from "./components/dashboard/dashboard.component"
+import { InvoiceAddComponent } from "./components/invoice-add/invoice-add.component"
+import { InvoiceDetailsComponent } from "./components/invoice-details/invoice-details.component"
+import { InvoicesListComponent } from "./components/invoices-list/invoices-list.component"
+import { ItemAddComponent } from "./components/item-add/item-add.component"
+import { ItemDetailsComponent } from "./components/item-details/item-details.component"
+import { ItemsListComponent } from "./components/items-list/items-list.component"
+import { ProfileComponent } from "./components/profile/profile.component"
 
-import { AuthGuard } from "@auth0/auth0-angular";
-import { TestComponent } from "./components/test/test.component";
+import { AuthGuard } from "@auth0/auth0-angular"
+import { TestComponent } from "./components/test/test.component"
+import { AuthSigninComponent } from "./components/auth-signin/auth-signin.component"
 
 const routes: Routes = [
   {
@@ -72,8 +73,10 @@ const routes: Routes = [
 
   { path: "test", component: TestComponent, canActivate: [AuthGuard] },
 
+  { path: "signin", component: AuthSigninComponent },
+
   { path: "", component: DashboardComponent },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
