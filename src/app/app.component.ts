@@ -1,5 +1,4 @@
 import { Component, Input } from "@angular/core"
-import { HttpClient } from "@angular/common/http"
 import { AuthService } from "@auth0/auth0-angular"
 import { UserInfo } from "../app/services/user-info"
 import { UserService } from "../app/services/user.service"
@@ -14,13 +13,9 @@ export class AppComponent {
   profileComplete: boolean = false
   loginsCount: {} | any
   userProfile: string | any
-  currentUser: User[] | any
+  currentUser?: User
 
-  constructor(
-    public auth: AuthService,
-    private http: HttpClient,
-    private userService: UserService
-  ) {}
+  constructor(public auth: AuthService, private userService: UserService) {}
 
   ngOnInit(): void {
     sessionStorage.getItem("profileComplete") === "true"
@@ -32,18 +27,7 @@ export class AppComponent {
         this.userService.findUserByEmail(this.userProfile.email).subscribe({
           next: (data: any) => {
             this.currentUser = data
-            const {
-              fullName,
-              nif,
-              phone,
-              street,
-              city,
-              zipcode,
-              province,
-              country,
-              profileComplete,
-              id,
-            } = this.currentUser
+            const { profileComplete, id } = data
             sessionStorage.setItem("UserId", id)
             UserInfo.UserId = id
             sessionStorage.setItem("profileComplete", profileComplete)
