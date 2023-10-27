@@ -73,6 +73,7 @@ import { CdkMenuModule } from "@angular/cdk/menu"
 import { NgxFileDropModule } from "@bugsplat/ngx-file-drop"
 import { UploadsComponent } from "./shared/uploads/uploads.component"
 import { FileUploaderComponent } from "./shared/file-uploader/file-uploader.component"
+import { AuthSigninComponent } from "./components/auth-signin/auth-signin.component"
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { FileUploaderComponent } from "./shared/file-uploader/file-uploader.comp
     FileDropComponent,
     UploadsComponent,
     FileUploaderComponent,
+    AuthSigninComponent,
   ],
   imports: [
     BrowserModule,
